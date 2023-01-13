@@ -1,5 +1,6 @@
 import { Box, Container, Stack } from '@chakra-ui/react'
 import { DarkMode } from './DarkMode'
+import { LoginModal } from './LoginModal'
 
 export const NavBar = (props:any) => {
   return (
@@ -12,6 +13,7 @@ export const NavBar = (props:any) => {
             flexGrow={1}
             mt={{ base: 5, md: 0 }}/>
         <DarkMode/>
+        <LoginModal/>
       </Container>
   </Box>
   )
