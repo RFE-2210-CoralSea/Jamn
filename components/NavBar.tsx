@@ -1,7 +1,7 @@
 import { Box, Container, Stack } from '@chakra-ui/react'
 import { DarkMode } from './DarkMode'
 import { LoginModal } from './LoginModal'
-import Link from 'next/link'
+import { BandModal } from './BandModal'
 
 export const NavBar = (props:any) => {
   return (
@@ -13,9 +13,11 @@ export const NavBar = (props:any) => {
             alignItems='center'
             flexGrow={1}
             mt={{ base: 5, md: 0 }}/>
-        <DarkMode/>
-        <LoginModal/>
-        <Link href='/api/auth/signin'>Login</Link>
+        <Stack direction='row'>
+          <LoginModal/>
+          <BandModal/>
+          <DarkMode/>
+        </Stack>
       </Container>
   </Box>
   )

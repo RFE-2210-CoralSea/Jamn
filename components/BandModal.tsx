@@ -1,24 +1,22 @@
-import { useDisclosure, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, ModalFooter, Editable, EditablePreview, EditableInput, Stack, IconButton, ButtonGroup } from '@chakra-ui/react'
-import { AiOutlineUser } from 'react-icons/ai'
-import Link from 'next/link'
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button } from '@chakra-ui/react'
+import { useDisclosure } from '@chakra-ui/react'
+import { IconButton, ButtonGroup, Stack, Editable, EditableInput, EditablePreview } from '@chakra-ui/react'
+import { AiOutlineUsergroupAdd } from 'react-icons/ai'
 
-export const LoginModal = () => {
+export const BandModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-
-
   return (
     <>
-      <IconButton aria-label='login' onClick={onOpen} bg='teal' icon={<AiOutlineUser/>}/>
+      <IconButton aria-label='create band' bg='pink.300' icon={<AiOutlineUsergroupAdd/>} onClick={onOpen}/>
 
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Manage Your Account</ModalHeader>
+          <ModalHeader>Create a new band!</ModalHeader>
           <ModalCloseButton />
-
           <ModalBody>
             <Stack direction='column' spacing='5'>
-              <Editable defaultValue='Username' bg='black' borderRadius='5'>
+              <Editable defaultValue='Band Name' bg='black' borderRadius='5'>
                 <EditablePreview/>
                 <EditableInput/>
               </Editable>
@@ -33,11 +31,8 @@ export const LoginModal = () => {
           <ModalFooter>
             <ButtonGroup>
               <Button>Sign Up</Button>
-              <Button><Link href='/api/auth/signin'> Other Logins </Link></Button>
-              <Button >Login</Button>
             </ButtonGroup>
           </ModalFooter>
-
         </ModalContent>
       </Modal>
     </>
