@@ -13,7 +13,7 @@ export default function Home() {
       </Head>
 
       <Container>
-        <NavBar/>
+        {/* <NavBar/> */}
         Hello WOrld
       </Container>
     </>
