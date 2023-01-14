@@ -2,8 +2,11 @@ import {
   Table,
   Column,
   DataType,
-  Model
+  Model,
+  HasMany
 } from 'sequelize-typescript';
+
+import { Users } from '../users/Users'
 
 @Table({
   timestamps: true,
@@ -36,5 +39,8 @@ export class Bands extends Model {
     allowNull: false,
   })
   name!: string;
+
+  @HasMany(() => Users)
+  users!: Users[]
 
 }
