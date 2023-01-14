@@ -1,5 +1,6 @@
-import { Box, Container, Stack } from '@chakra-ui/react'
+import { Box, Container, Stack, Button } from '@chakra-ui/react'
 import { DarkMode } from './DarkMode'
+import Link from 'next/link'
 
 export const NavBar = (props:any) => {
   return (
@@ -12,6 +13,7 @@ export const NavBar = (props:any) => {
             flexGrow={1}
             mt={{ base: 5, md: 0 }}/>
         <DarkMode/>
+        <Link href='/api/auth/signin'>Login</Link>
       </Container>
   </Box>
   )
