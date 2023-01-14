@@ -2,8 +2,8 @@
 
 ## Contributors
 
-<a href="https://github.com/RFE-2210-CoralSea/Blue-Ocean/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=RFE-2210-CoralSea/Blue-Ocean" />
+<a href="https://github.com/RFE-2210-CoralSea/Jamn/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=RFE-2210-CoralSea/Jamn" />
 </a>
 
 •[Joe Lin](https://github.com/joelinnn) - <br />
