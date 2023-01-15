@@ -1,6 +1,6 @@
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, ModalFooter } from '@chakra-ui/react'
 import { useDisclosure, useColorModeValue } from '@chakra-ui/react'
-import { Stack, Editable, EditablePreview, EditableInput, Button, ButtonGroup, IconButton } from '@chakra-ui/react'
+import { Stack, Editable, EditablePreview, EditableInput, Button, ButtonGroup, IconButton, Tooltip } from '@chakra-ui/react'
 import { AiOutlineUser } from 'react-icons/ai'
 import Link from 'next/link'
 
@@ -10,7 +10,7 @@ export const LoginModal = () => {
 
   return (
     <>
-      <IconButton aria-label='login' onClick={onOpen} bg='teal.500' icon={<AiOutlineUser/>}/>
+    <Tooltip hasArrow label='User Login'><IconButton aria-label='login' onClick={onOpen} bg='teal.500' icon={<AiOutlineUser/>}/></Tooltip>
 
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />

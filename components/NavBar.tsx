@@ -1,4 +1,4 @@
-import { Box, Flex, Stack, Heading } from '@chakra-ui/react'
+import { Box, Flex, Stack, Heading, Tooltip } from '@chakra-ui/react'
 import { DarkMode } from './DarkMode'
 import { LoginModal } from './LoginModal'
 import { BandModal } from './BandModal'
@@ -10,10 +10,10 @@ export const NavBar = (props:any) => {
       <Flex justifyContent='space-between' p={2}>
         <Heading>Musi 🎸</Heading>
         <Stack direction='row'>
-          <LoginModal/>
-          <BandModal/>
-          <RecordingModal/>
-          <DarkMode/>
+            <LoginModal/>
+            <BandModal/>
+            <RecordingModal/>
+            <DarkMode/>
         </Stack>
       </Flex>
   </Box>

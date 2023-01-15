@@ -1,5 +1,5 @@
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton } from '@chakra-ui/react'
-import { IconButton, Button, ButtonGroup, Stack, Editable, EditableInput, EditablePreview } from '@chakra-ui/react'
+import { IconButton, Button, ButtonGroup, Stack, Editable, EditableInput, EditablePreview, Tooltip } from '@chakra-ui/react'
 import { AiOutlineUsergroupAdd } from 'react-icons/ai'
 import { useDisclosure, useColorModeValue } from '@chakra-ui/react'
 
@@ -7,7 +7,7 @@ export const BandModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   return (
     <>
-      <IconButton aria-label='create band' bg='pink.300' icon={<AiOutlineUsergroupAdd/>} onClick={onOpen}/>
+      <Tooltip hasArrow label='Band Login'><IconButton aria-label='create band' bg='pink.300' icon={<AiOutlineUsergroupAdd/>} onClick={onOpen}/></Tooltip>
 
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
