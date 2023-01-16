@@ -1,10 +1,10 @@
 import { useDisclosure, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, ModalFooter, Editable, EditablePreview, EditableInput, Stack, IconButton, ButtonGroup } from '@chakra-ui/react'
 import { AiOutlineUser } from 'react-icons/ai'
 import Link from 'next/link'
+import { signIn } from 'next-auth/react'
 
 export const LoginModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-
 
   return (
     <>
@@ -33,7 +33,7 @@ export const LoginModal = () => {
           <ModalFooter>
             <ButtonGroup>
               <Button>Sign Up</Button>
-              <Button><Link href='/api/auth/signin'> Other Logins </Link></Button>
+              <Button onClick={() => signIn('google')}>Login with Google</Button>
               <Button >Login</Button>
             </ButtonGroup>
           </ModalFooter>

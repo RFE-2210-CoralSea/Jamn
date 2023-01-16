@@ -1,9 +1,7 @@
 import Head from 'next/head'
-import { Inter } from '@next/font/google'
 import { Container } from '@chakra-ui/react'
 import { NavBar } from '../components/NavBar'
-
-const inter = Inter({ subsets: ['latin'] })
+import { getProviders } from 'next-auth/react'
 
 export default function Home() {
   return (
@@ -14,7 +12,7 @@ export default function Home() {
 
       <Container>
         <NavBar/>
-        Hello WOrld
+        Hello World
       </Container>
     </>
   )
