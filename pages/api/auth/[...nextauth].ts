@@ -1,5 +1,6 @@
 import NextAuth, { NextAuthOptions } from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
+import CredentialsProvider from 'next-auth/providers/credentials'
 
 export const authOptions: NextAuthOptions = {
   session: {
@@ -30,6 +31,23 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET
+    }),
+    CredentialsProvider({
+      name: 'Credentials',
+      credentials: {
+        username: { label: 'Username', type: 'text', placeholder: 'jsmith' },
+        password: { label: 'Password', type: 'password' }
+      },
+      async authorize(
+        credentials: Record<'username' | 'password', string> | undefined
+      ) {
+        /**
+         * This function returns a user object or null
+         * It should check the password against the hashed DB pass
+         * If the credentials are valid, return a User object for the session
+         */
+        return null
+      }
     })
   ]
 }
