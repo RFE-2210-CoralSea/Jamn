@@ -46,6 +46,15 @@ export const authOptions: NextAuthOptions = {
          * It should check the password against the hashed DB pass
          * If the credentials are valid, return a User object for the session
          */
+
+        // example user object
+        if (credentials) {
+          return {
+            id: 'random_id',
+            name: credentials.username
+          }
+        }
+
         return null
       }
     })

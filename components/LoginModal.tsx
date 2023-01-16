@@ -1,6 +1,5 @@
-import { useDisclosure, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, ModalFooter, Editable, EditablePreview, EditableInput, Stack, IconButton, ButtonGroup } from '@chakra-ui/react'
+import { useDisclosure, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, ModalFooter, Editable, EditablePreview, EditableInput, Stack, IconButton, ButtonGroup, Input, FormControl, FormLabel } from '@chakra-ui/react'
 import { AiOutlineUser } from 'react-icons/ai'
-import Link from 'next/link'
 import { signIn } from 'next-auth/react'
 
 export const LoginModal = () => {
@@ -18,15 +17,14 @@ export const LoginModal = () => {
 
           <ModalBody>
             <Stack direction='column' spacing='5'>
-              <Editable defaultValue='Username' bg='black' borderRadius='5'>
-                <EditablePreview/>
-                <EditableInput/>
-              </Editable>
-
-              <Editable defaultValue='Password' bg='black' borderRadius='5'>
-                <EditablePreview/>
-                <EditableInput/>
-              </Editable>
+              <FormControl isRequired>
+                <FormLabel>Username</FormLabel>
+                <Input placeholder='Username' bg='black' borderRadius='5'/>
+              </FormControl>
+              <FormControl isRequired>
+                <FormLabel>Password</FormLabel>
+                <Input placeholder='Password' bg='black' borderRadius='5'/>
+              </FormControl>
             </Stack>
           </ModalBody>
 
