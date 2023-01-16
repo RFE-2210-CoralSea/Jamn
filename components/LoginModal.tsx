@@ -10,7 +10,9 @@ export const LoginModal = () => {
 
   return (
     <>
-    <Tooltip hasArrow label='User Login'><IconButton aria-label='login' onClick={onOpen} bg='teal.500' icon={<AiOutlineUser/>}/></Tooltip>
+    <Tooltip hasArrow label='User Login'>
+      <IconButton aria-label='login' onClick={onOpen} bg='teal.500' icon={<AiOutlineUser/>}/>
+    </Tooltip>
 
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />

@@ -7,12 +7,14 @@ export const BandModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   return (
     <>
-      <Tooltip hasArrow label='Band Login'><IconButton aria-label='create band' bg='pink.300' icon={<AiOutlineUsergroupAdd/>} onClick={onOpen}/></Tooltip>
+      <Tooltip hasArrow label='Band Login'>
+        <IconButton aria-label='create band' bg='pink.300' icon={<AiOutlineUsergroupAdd/>} onClick={onOpen}/>
+      </Tooltip>
 
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Create a new band!</ModalHeader>
+          <ModalHeader>Manage Your Band!</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Stack direction='column' spacing='5'>
@@ -31,6 +33,7 @@ export const BandModal = () => {
           <ModalFooter>
             <ButtonGroup>
               <Button>Sign Up</Button>
+              <Button >Login</Button>
             </ButtonGroup>
           </ModalFooter>
         </ModalContent>
