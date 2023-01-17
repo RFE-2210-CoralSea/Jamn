@@ -10,6 +10,7 @@ const breakpoints = {
   xl: '80em',
 }
 
+
 const theme = extendTheme({
   semanticTokens: {
     colors: {
@@ -17,7 +18,7 @@ const theme = extendTheme({
         default: '#16161D',
         _dark: '#ade3b8',
       },
-    }
+    },
   },
   colors: {
     black: '#16161D',
