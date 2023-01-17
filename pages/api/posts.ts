@@ -15,7 +15,7 @@ type Data = {
   pdf: string,
   date: string,
   comments: Comment[]
-};
+}
 
 const SampleData = {
   name: 'Ivan',

@@ -8,9 +8,10 @@ export const CommentSection = () => {
   const [submitting, setSubmitting] = useState(false)
 
   useEffect(() => {
-    // grab all comments for posts
-    // pass in necessary props to usercomment
-    // map all comments
+    fetch('/api/posts')
+      .then((response) => {
+        console.log(response)
+      })
   })
 
   const postCommentHandler = () => {
@@ -28,7 +29,7 @@ export const CommentSection = () => {
           <Heading size='md'>Comments</Heading>
         </CardHeader>
         <CardBody>
-          <Stack divider={<StackDivider/>} spacing='4'>
+          <Stack divider={<StackDivider/>} spacing='3'>
             <UserComment/>
             <StackDivider/>
           </Stack>

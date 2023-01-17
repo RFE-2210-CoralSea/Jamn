@@ -3,18 +3,18 @@ import { Box, Heading, Tag, Avatar, TagLabel, Text } from '@chakra-ui/react'
 export const UserComment = ({}) => {
   return (
     <Box>
-      <Heading size='xs' >
+      <Heading size='xs'>
         <Tag size='lg' colorScheme='orange' borderRadius='full'>
           <Avatar
-            src=''
+            src='/pfp.jpeg'
             size='xs'
-            name='joe lin'
+            name='Jackson Zhu'
             ml={-1}
             mr={2}/>
-          <TagLabel>Joe Lin</TagLabel>
+          <TagLabel fontWeight='bold'>Jackson Zhu</TagLabel>
         </Tag>
       </Heading>
-      <Text pt='2' fontSize='sm'>Test Comment</Text>
+      <Text pt='3' fontSize='md'>Test Comment</Text>
     </Box>
   )
 }

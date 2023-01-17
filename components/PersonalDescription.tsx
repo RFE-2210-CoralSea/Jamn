@@ -1,4 +1,4 @@
-import { VStack } from "@chakra-ui/react"
+import { Card, CardHeader, CardBody, Stack, Box } from '@chakra-ui/react'
 import { List, Heading } from "@chakra-ui/react"
 import { ItemList } from "./ItemList"
 type PersonalDescriptionProps = {
@@ -8,13 +8,20 @@ type PersonalDescriptionProps = {
 
 export const PersonalDescription = (props:PersonalDescriptionProps ) => {
     return(
-      <VStack width="376px" height="462px" top="487px" left="42px" bgColor="#87D8C8" pos="absolute" rounded={10} boxShadow='dark-lg'>
-        <Heading color="black" borderBottom="1px solid black" mt={8}>
-          Instruments
-        </Heading>
-        <List color="black" spacing={1} fontSize="4xl" textAlign="center">
-          <ItemList items={props.instruments}/>
-        </List>
-      </VStack>
+      <Box display='center'>
+          <Card boxShadow='dark-lg' bg='teal.600' rounded={10}>
+            <CardHeader>
+              <Heading borderBottom="1px solid black" >Instruments</Heading>
+            </CardHeader>
+              <CardBody mt='-2rem'>
+                <Stack spacing='3rem'>
+                  <List fontSize="2xl" textAlign="center">
+                  <ItemList items={props.instruments}/>
+                  </List>
+                </Stack>
+              </CardBody>
+          </Card>
+      </Box>
     )
 }
+
