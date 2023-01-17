@@ -47,8 +47,22 @@ export default function Home() {
             bgColor="transparent"
           >
           </Container>
-          <Container border="1px" textStyle="center">
-            <Text textAlign="center">Possible Slogan</Text>
+          <Container
+            border="1px"
+            borderBottomLeftRadius="100px"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <Text textAlign="center" fontSize="3xl">
+              Something Something Something Something Something Something <Text
+                fontSize="6xl"
+                bgGradient={useColorModeValue("linear(to-r, #9B9B9B, #87D8C8)",'linear(to-r, #F9A824, #87D8C8)' )}
+                bgClip='text'
+              >
+                  Sonically Inclined
+              </Text>
+            </Text>
           </Container>
         </Box>
 
