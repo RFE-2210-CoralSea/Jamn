@@ -1,6 +1,6 @@
 import { VStack } from "@chakra-ui/react"
 import { List, Heading } from "@chakra-ui/react"
-import { ItemList } from "./itemList"
+import { ItemList } from "./ItemList"
 type PersonalDescriptionProps = {
   instruments: string[],
   sectionName: string,
