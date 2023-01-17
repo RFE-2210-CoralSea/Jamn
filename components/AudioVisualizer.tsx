@@ -1,7 +1,7 @@
 import { Grid, Text, Image, IconButton, Flex } from '@chakra-ui/react'
 import { useEffect } from 'react'
 import { AiOutlineRight } from 'react-icons/ai'
-import { useColorModeValue } from '@chakra-ui/react'
+
 export default function AudioVisualizer () {
 
   useEffect(() => {
