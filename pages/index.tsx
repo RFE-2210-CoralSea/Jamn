@@ -1,14 +1,14 @@
 import Head from 'next/head'
 import dynamic from 'next/dynamic'
-import { Inter } from '@next/font/google'
 import { Container, Box, Text} from '@chakra-ui/react'
 import { NavBar } from '../components/NavBar'
 import { useColorMode, useColorModeValue, IconButton } from '@chakra-ui/react'
+import { motion, useAnimationControls } from 'framer-motion'
+import { useState } from 'react'
 
 const LazyVisualizer = dynamic(() => import('../components/AudioVisualizer'), {
   ssr: false
 })
-const inter = Inter({ subsets: ['latin'] })
 
 const innerBoxStyles = {
     display: 'flex',
@@ -22,8 +22,32 @@ const innerBoxStyles = {
     fontSize: '20px',
   }
 
+// animation variants
+const vinylVariants = {
+  spinning: {
+    rotate: 360,
+    transition: {
+      duration: 5,
+      repeat: Infinity,
+      ease: 'linear'
+    }
+  },
+  stopped: {
+    transition: { duration: 0 }
+  }
+}
+const armVariants = {
+  playing: {
+    transform: 'rotate(15deg)'
+  },
+  stopped: {
+    transform: 'rotate(0deg)'
+  }
+}
 
 export default function Home() {
+  // vinyl playing state
+  const [ playing, setPlaying ] = useState(false)
 
   return (
     <>
@@ -48,12 +72,35 @@ export default function Home() {
           justifyContent="center"
           flexWrap="wrap"
         >
-          <Container
-            border="1px"
-            width="200px"
-            height="200px"
-            bgColor="transparent"
-          >
+          <Container pos="relative" width="445" height="300" onClick={() => setPlaying(s => !s)}>
+            <motion.img
+              src="/table.svg"
+              width="445" height="300" alt="vinyl player"
+            />
+            <motion.img
+              src="/vinyl.svg"
+              width="250" height="250" alt="vinyl"
+              style={{
+                position: 'absolute',
+                left: '40px',
+                top: '30px'
+              }}
+              variants={vinylVariants}
+              animate={playing ? "spinning" : "stopped" }
+            />
+            <motion.img src='/arm.svg' width="75" height="204" alt="player arm"
+              style={{
+                position: 'absolute',
+                left: '280px',
+                top: '50px',
+                transformOrigin: 'center 25px'
+              }}
+              transition={{
+                duration: 0.2,
+              }}
+              variants={armVariants}
+              animate={playing ? "playing" : "stopped"}
+            />
           </Container>
           <Container
             border="1px"
