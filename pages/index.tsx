@@ -33,7 +33,9 @@ export default function Home() {
 
       <Box
         height="100vh"
+        background="center/cover"
         backgroundImage={useColorModeValue("white", "animatedBackground.svg")}
+        backgroundRepeat="no-repeat"
         >
         <Container>
           <NavBar/>
