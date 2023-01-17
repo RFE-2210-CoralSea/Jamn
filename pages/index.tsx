@@ -1,7 +1,8 @@
 import Head from 'next/head'
 import { Inter } from '@next/font/google'
-import { Container, Box, Text } from '@chakra-ui/react'
+import { Container, Box, Text} from '@chakra-ui/react'
 import { NavBar } from '../components/NavBar'
+import { useColorMode, useColorModeValue, IconButton } from '@chakra-ui/react'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -28,9 +29,7 @@ export default function Home() {
 
       <Box
         height="100vh"
-        backgroundImage="url('animatedBackground.svg')"
-        backgroundPosition="center"
-        backgroundRepeat="no-repeat"
+        backgroundImage={useColorModeValue("white", "animatedBackground.svg")}
         >
         <Container>
           <NavBar/>
@@ -51,8 +50,6 @@ export default function Home() {
           <Container border="1px" textStyle="center">
             <Text textAlign="center">Possible Slogan</Text>
           </Container>
-
-
         </Box>
 
       </Box>
