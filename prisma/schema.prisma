@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model bands {
+  id          Int     @id @default(autoincrement())
+  logo        String  @db.VarChar(100)
+  description String  @db.VarChar(255)
+  name        String  @db.VarChar(50)
+  posts       posts[]
+  roles       roles[]
+}
+
+model comments {
+  id      Int    @id @default(autoincrement())
+  postId Int
+  userId Int
+  content String @db.VarChar(255)
+  posts   posts  @relation(fields: [postId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users   users  @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model posts {
+  id       Int        @id @default(autoincrement())
+  bandId  Int
+  userId  Int
+  audio    String     @db.VarChar(200)
+  pdf      String     @db.VarChar(200)
+  comments comments[]
+  bands    bands      @relation(fields: [bandId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users    users      @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model roles {
+  id      Int      @id @default(autoincrement())
+  bandId Int
+  userId Int
+  admin   Boolean? @default(false)
+  bands   bands    @relation(fields: [bandId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users   users    @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model users {
+  id       Int        @id @default(autoincrement())
+  picture  String     @db.VarChar(255)
+  email    String     @db.VarChar(50)
+  name     String     @db.VarChar(50)
+  bio      String     @db.VarChar(255)
+  comments comments[]
+  posts    posts[]
+  roles    roles[]
+  instruments instruments[]
+}
+
+model instruments {
+  id          Int       @id @default(autoincrement())
+  userId      Int
+  instrument  String    @db.VarChar(255)
+  users       users     @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
