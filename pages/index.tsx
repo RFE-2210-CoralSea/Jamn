@@ -1,7 +1,14 @@
 import Head from 'next/head'
+import dynamic from 'next/dynamic'
+import { Inter } from '@next/font/google'
 import { Container, Box, Text} from '@chakra-ui/react'
 import { NavBar } from '../components/NavBar'
 import { useColorMode, useColorModeValue, IconButton } from '@chakra-ui/react'
+
+const LazyVisualizer = dynamic(() => import('../components/AudioVisualizer'), {
+  ssr: false
+})
+const inter = Inter({ subsets: ['latin'] })
 
 const innerBoxStyles = {
     display: 'flex',
@@ -30,12 +37,14 @@ export default function Home() {
         >
         <Container>
           <NavBar/>
+          <LazyVisualizer/>
         </Container>
         <Box
           height="50%"
           display="flex"
           alignItems="center"
           justifyContent="center"
+          flexWrap="wrap"
         >
           <Container
             border="1px"
@@ -52,9 +61,10 @@ export default function Home() {
             justifyContent="center"
           >
             <Text textAlign="center" fontSize="3xl">
-              Something Something Something Something Something Something <Text
+              Something Something Something Something Something Something <Text as="span"
                 fontSize="6xl"
-                bgGradient={useColorModeValue("linear(to-r, #9B9B9B, #87D8C8)",'linear(to-r, #F9A824, #87D8C8)' )}
+                fontWeight="extrabold"
+                bgGradient={useColorModeValue('linear(to-r, #F9A824, #87D8C8)',"linear(to-r, #9B9B9B, #87D8C8)" )}
                 bgClip='text'
               >
                   Sonically Inclined
@@ -62,7 +72,6 @@ export default function Home() {
             </Text>
           </Container>
         </Box>
-
       </Box>
     </>
   )
