@@ -1,10 +1,7 @@
 import Head from 'next/head'
-import { Container } from '@chakra-ui/react'
 import { Container, Box, Text} from '@chakra-ui/react'
 import { NavBar } from '../components/NavBar'
 import { useColorMode, useColorModeValue, IconButton } from '@chakra-ui/react'
-
-const inter = Inter({ subsets: ['latin'] })
 
 const innerBoxStyles = {
     display: 'flex',
