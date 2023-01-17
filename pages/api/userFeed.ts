@@ -39,7 +39,5 @@ export default function handler (
   if (req.method === 'GET') {
     res.send([SampleData]);
     res.status(200).end();
-  } else if (req.method === 'POST') {
-    res.status(201).end();
   }
 };
