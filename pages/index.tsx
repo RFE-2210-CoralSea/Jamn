@@ -95,17 +95,17 @@ export default function Home() {
             />
           </Container>
           <Container
-            border="1px"
-            borderBottomLeftRadius="100px"
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
+            border='1px'
+            borderBottomLeftRadius='100px'
+            display='flex'
+            alignItems='center'
+            justifyContent='center'
           >
-            <Text textAlign="center" fontSize="3xl">
-              Something Something Something Something Something Something <Text as="span"
-                fontSize="6xl"
-                fontWeight="extrabold"
-                bgGradient={useColorModeValue('linear(to-r, #F9A824, #87D8C8)',"linear(to-r, #9B9B9B, #87D8C8)" )}
+            <Text textAlign='center' fontSize='3xl' fontWeight='bold'>
+              A Social Media Platform for The <Text as='span'
+                fontSize='6xl'
+                fontWeight='extrabold'
+                bgGradient={useColorModeValue('linear(to-r, #F9A824, #87D8C8)','linear(to-r, #9B9B9B, #87D8C8)' )}
                 bgClip='text'
               >
                   Sonically Inclined
