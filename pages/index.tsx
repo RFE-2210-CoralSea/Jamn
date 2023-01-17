@@ -3,6 +3,7 @@ import dynamic from 'next/dynamic'
 import { Inter } from '@next/font/google'
 import { Container, Box, Text} from '@chakra-ui/react'
 import { NavBar } from '../components/NavBar'
+import {HomeNavBar} from '../components/HomeNavBar'
 import { useColorMode, useColorModeValue, IconButton } from '@chakra-ui/react'
 
 const LazyVisualizer = dynamic(() => import('../components/AudioVisualizer'), {
@@ -37,8 +38,8 @@ export default function Home() {
         backgroundImage={useColorModeValue("white", "animatedBackground.svg")}
         backgroundRepeat="no-repeat"
         >
-        <Container>
-          <NavBar/>
+        <Container border="1px">
+          <HomeNavBar/>
           <LazyVisualizer/>
         </Container>
         <Box
