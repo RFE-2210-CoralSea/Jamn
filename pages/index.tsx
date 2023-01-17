@@ -25,8 +25,10 @@ export default function Home() {
       </Head>
 
       <Box
-        height='100vh'
-        backgroundImage={useColorModeValue('white', 'animatedBackground.svg')}
+        height="100vh"
+        background="center/cover"
+        backgroundImage={useColorModeValue("white", "animatedBackground.svg")}
+        backgroundRepeat="no-repeat"
         >
         <Container>
           <NavBar/>
