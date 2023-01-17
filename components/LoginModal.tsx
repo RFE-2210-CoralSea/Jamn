@@ -50,7 +50,7 @@ export const LoginModal = () => {
           <ModalBody>
             <Stack direction='column' spacing='5'>
               <FormControl>
-                <FormLabel>Username</FormLabel>
+                <FormLabel>Username </FormLabel>
                 <Input ref={user} placeholder='Username' bg='black' borderRadius='5'/>
               </FormControl>
               <FormControl isInvalid={invalid}>
