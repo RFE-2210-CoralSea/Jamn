@@ -1,14 +1,9 @@
 import Head from 'next/head'
-import dynamic from 'next/dynamic'
 import { Container, Box, Text} from '@chakra-ui/react'
 import { NavBar } from '../components/NavBar'
-import { useColorMode, useColorModeValue, IconButton } from '@chakra-ui/react'
-import { motion, useAnimationControls } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { useState } from 'react'
-
-const LazyVisualizer = dynamic(() => import('../components/AudioVisualizer'), {
-  ssr: false
-})
+import { useColorModeValue } from '@chakra-ui/react'
 
 const innerBoxStyles = {
     display: 'flex',
@@ -61,10 +56,7 @@ export default function Home() {
         backgroundImage={useColorModeValue("white", "animatedBackground.svg")}
         backgroundRepeat="no-repeat"
         >
-        <Container>
-          <NavBar/>
-          <LazyVisualizer/>
-        </Container>
+        <NavBar/>
         <Box
           height="50%"
           display="flex"
