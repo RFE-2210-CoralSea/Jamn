@@ -25,7 +25,7 @@ const personal = () => {
 
 
   return(
-    <Container>
+    <>
       <NavBar />
       <Container>
         <ProfileImage imgURL={data.imgURL} name={data.name}/>
@@ -33,7 +33,7 @@ const personal = () => {
         <LazyVisualizer/>
         <CommentSection/>
       </Container>
-    </Container>
+    </>
   )
 }
 

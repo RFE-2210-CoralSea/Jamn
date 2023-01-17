@@ -30,16 +30,15 @@ export default function Home() {
         backgroundImage={useColorModeValue("white", "animatedBackground.svg")}
         backgroundRepeat="no-repeat"
         >
-        <Container>
           <NavBar/>
-        </Container>
-        <Box
-          height='50%'
-          display='flex'
-          alignItems='center'
-          justifyContent='center'
-          flexWrap='wrap'
-        >
+
+          <Box
+            height='50%'
+            display='flex'
+            alignItems='center'
+            justifyContent='center'
+            flexWrap='wrap'
+          >
           <Container
             border='1px'
             width='200px'

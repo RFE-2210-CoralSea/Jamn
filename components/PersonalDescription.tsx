@@ -8,7 +8,7 @@ type PersonalDescriptionProps = {
 
 export const PersonalDescription = (props:PersonalDescriptionProps ) => {
     return(
-      <VStack width="376px" height="462px" top="487px" left="42px" bgColor="#87D8C8" pos="absolute" rounded={10}>
+      <VStack width="376px" height="462px" top="487px" left="42px" bgColor="#87D8C8" pos="absolute" rounded={10} boxShadow='dark-lg'>
         <Heading color="black" borderBottom="1px solid black" mt={8}>
           Instruments
         </Heading>

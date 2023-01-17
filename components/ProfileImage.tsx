@@ -16,6 +16,7 @@ const ProfileImage = (props: ProfileImageProps) => {
       position='absolute'
       direction='column'
       justify='center'
+      boxShadow='dark-lg'
       rounded={10}>
       <Image
       src={props.imgURL}
