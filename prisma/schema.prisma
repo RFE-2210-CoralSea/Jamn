@@ -50,7 +50,16 @@ model users {
   picture  String     @db.VarChar(255)
   email    String     @db.VarChar(50)
   name     String     @db.VarChar(50)
+  bio      String     @db.VarChar(255)
   comments comments[]
   posts    posts[]
   roles    roles[]
+  instruments instruments[]
+}
+
+model instruments {
+  id          Int       @id @default(autoincrement())
+  userId      Int
+  instrument  String    @db.VarChar(255)
+  users       users     @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
