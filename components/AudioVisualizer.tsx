@@ -1,7 +1,7 @@
 import { Grid, Text, Image, IconButton, Flex } from '@chakra-ui/react'
 import { useEffect } from 'react'
 import { AiOutlineRight } from 'react-icons/ai'
-
+import { useColorModeValue } from '@chakra-ui/react'
 export default function AudioVisualizer () {
 
   useEffect(() => {
@@ -13,9 +13,9 @@ export default function AudioVisualizer () {
       <Image src='/slide.jpg' alt='' boxSize='10rem' objectFit='cover' borderRadius='0.5rem'/>
 
       <Grid gridTemplateColumns='1fr 4rem' p='1rem'>
-        <Text fontSize='1.5rem' fontWeight='bold'>
+        <Text fontSize='1.5rem' fontWeight='bold' color='white'>
           Slide - Frank Ocean
-          <Flex fontWeight='normal' fontSize='0.8rem'>
+          <Flex fontSize='0.8rem'>
             <span id='current'>0:00 /<span id='duration'>0:00</span></span>
           </Flex>
         </Text>

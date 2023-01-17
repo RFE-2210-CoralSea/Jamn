@@ -16,7 +16,8 @@ const timeCalc = (val:number) => {
   let sec = Math.floor(val - min * 60)
 
   if (sec < 10) {
-    sec = '0' + sec.toString()
+    let seconds = '0' + sec.toString()
+    return min + ':' + seconds
   }
   return min + ':' + sec
 }
