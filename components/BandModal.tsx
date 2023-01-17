@@ -1,27 +1,29 @@
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button } from '@chakra-ui/react'
-import { useDisclosure } from '@chakra-ui/react'
-import { IconButton, ButtonGroup, Stack, Editable, EditableInput, EditablePreview } from '@chakra-ui/react'
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton } from '@chakra-ui/react'
+import { IconButton, Button, ButtonGroup, Stack, Editable, EditableInput, EditablePreview, Tooltip } from '@chakra-ui/react'
 import { AiOutlineUsergroupAdd } from 'react-icons/ai'
+import { useDisclosure, useColorModeValue } from '@chakra-ui/react'
 
 export const BandModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   return (
     <>
-      <IconButton aria-label='create band' bg='pink.300' icon={<AiOutlineUsergroupAdd/>} onClick={onOpen}/>
+      <Tooltip hasArrow label='Band Login'>
+        <IconButton aria-label='create band' bg='pink.300' icon={<AiOutlineUsergroupAdd/>} onClick={onOpen}/>
+      </Tooltip>
 
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Create a new band!</ModalHeader>
+          <ModalHeader>Manage Your Band!</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Stack direction='column' spacing='5'>
-              <Editable defaultValue='Band Name' bg='black' borderRadius='5'>
+              <Editable defaultValue='Band Name' bg={useColorModeValue('gray.200', 'black')} borderRadius='5'>
                 <EditablePreview/>
                 <EditableInput/>
               </Editable>
 
-              <Editable defaultValue='Password' bg='black' borderRadius='5'>
+              <Editable defaultValue='Password' bg={useColorModeValue('gray.200', 'black')} borderRadius='5'>
                 <EditablePreview/>
                 <EditableInput/>
               </Editable>
@@ -31,6 +33,7 @@ export const BandModal = () => {
           <ModalFooter>
             <ButtonGroup>
               <Button>Sign Up</Button>
+              <Button >Login</Button>
             </ButtonGroup>
           </ModalFooter>
         </ModalContent>

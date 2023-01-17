@@ -1,9 +1,13 @@
 import Head from 'next/head'
+import dynamic from 'next/dynamic'
 import { Inter } from '@next/font/google'
 import { Container, Box, Text} from '@chakra-ui/react'
 import { NavBar } from '../components/NavBar'
 import { useColorMode, useColorModeValue, IconButton } from '@chakra-ui/react'
 
+const LazyVisualizer = dynamic(() => import('../components/AudioVisualizer'), {
+  ssr: false
+})
 const inter = Inter({ subsets: ['latin'] })
 
 const innerBoxStyles = {
@@ -33,6 +37,7 @@ export default function Home() {
         >
         <Container>
           <NavBar/>
+          <LazyVisualizer/>
         </Container>
         <Box
           height="50%"
