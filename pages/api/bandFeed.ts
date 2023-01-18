@@ -1,4 +1,5 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
+import type { NextApiRequest, NextApiResponse } from 'next';
+import prisma from '../../lib/Prisma';
 
 type Comment = {
   name: string,
@@ -26,7 +27,7 @@ type Band = {
   image: string,
   description: string,
   posts: Post[],
-  members: Member []
+  roles: Member []
 }
 
 const sampleData = {
@@ -67,7 +68,18 @@ export default function handler (
   res: NextApiResponse<Band>
 ) {
   if (req.method === 'GET') {
+    let bandPage : Band;
     //this request will take in a band name, query db for the band id, then query for posts and users related to that band id
+    prisma.bands.findUnique({where: {id: 1}, include: {roles: true, posts: true}})
+    .then((response) => {
+      console.log(response);
+      // bandPage = response;
+      // return prisma.roles.findMany({where: {bandId: 1}});
+    })
+    // .then((response) => {
+    //   console.log('members', response);
+    //   bandPage.members = response;
+    // });
     res.send(sampleData);
     res.status(200).end();
   } else if (req.method === 'POST') {
