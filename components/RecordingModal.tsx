@@ -79,13 +79,13 @@ export const RecordingModal = () => {
                 <Input placeholder='Key' ref={songKey}></Input>
               </FormControl>
               {url && <audio src={url} controls></audio>}
+              <FormControl>
+                <Input type='file' accept='application/pdf' ref={file}></Input>
+              </FormControl>
             </Stack>
           </ModalBody>
 
           <ModalFooter>
-            <FormControl>
-              <Input type='file' accept='application/pdf'></Input>
-            </FormControl>
             <ButtonGroup>
               <IconButton aria-label='start recording' icon={<AiOutlinePlayCircle/>} onClick={record}/>
               <Button onClick={submit}>Upload</Button>
