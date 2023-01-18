@@ -9,8 +9,8 @@ datasource db {
 
 model bands {
   id          Int     @id @default(autoincrement())
-  logo        String  @db.VarChar(100)
-  description String  @db.VarChar(255)
+  image       String   @db.VarChar(1000)
+  description String  @db.VarChar(1000)
   name        String  @db.VarChar(50)
   posts       posts[]
   roles       roles[]
@@ -20,7 +20,8 @@ model comments {
   id      Int    @id @default(autoincrement())
   postId Int
   userId Int
-  content String @db.VarChar(255)
+  text String @db.VarChar(1000)
+  date    BigInt
   posts   posts  @relation(fields: [postId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   users   users  @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
@@ -29,8 +30,11 @@ model posts {
   id       Int        @id @default(autoincrement())
   bandId  Int
   userId  Int
-  audio    String     @db.VarChar(200)
-  pdf      String     @db.VarChar(200)
+  image   String      @db.VarChar(1000)
+  audio    Bytes      @db.ByteA
+  pdf      Bytes      @db.ByteA
+  text    String      @db.VarChar(1000)
+  date    BigInt
   comments comments[]
   bands    bands      @relation(fields: [bandId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   users    users      @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -40,6 +44,7 @@ model roles {
   id      Int      @id @default(autoincrement())
   bandId Int
   userId Int
+  name  String      @db.VarChar(200)
   admin   Boolean? @default(false)
   bands   bands    @relation(fields: [bandId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   users   users    @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -47,10 +52,10 @@ model roles {
 
 model users {
   id       Int        @id @default(autoincrement())
-  picture  String     @db.VarChar(255)
+  picture  String     @db.VarChar(1000)
   email    String     @db.VarChar(50)
   name     String     @db.VarChar(50)
-  bio      String     @db.VarChar(255)
+  bio      String     @db.VarChar(1000)
   comments comments[]
   posts    posts[]
   roles    roles[]
