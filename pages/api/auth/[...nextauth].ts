@@ -15,30 +15,35 @@ export const authOptions: NextAuthOptions = {
       // user is equivalent to session object, with an id
       console.log('user', user)
 
-      if (account?.provider === 'google') {
-        // check if user exists
-        let dbUser = await prisma.users.findFirst({
-          where: {
-            email: user.email as string
-          }
-        })
-
-        // create user in DB if a new user logs in
-        if (!dbUser) {
-          dbUser = await prisma.users.create({
-            data: {
-              picture: user.image as string,
-              email: user.email as string,
-              name: user.name as string,
-              bio: 'Aspiring musician'
+      try {
+        if (account?.provider === 'google') {
+          // check if user exists
+          let dbUser = await prisma.users.findFirst({
+            where: {
+              email: user.email as string
             }
           })
-        }
 
-        console.log('db user', dbUser)
+          // create user in DB if a new user logs in
+          if (!dbUser) {
+            dbUser = await prisma.users.create({
+              data: {
+                picture: user.image as string,
+                email: user.email as string,
+                name: user.name as string,
+                bio: 'Aspiring musician'
+              }
+            })
+          }
+
+          console.log('db user', dbUser)
+          return true
+        }
         return true
+      } catch (error) {
+        console.error(error)
+        return false
       }
-      return false
     }
   },
   providers: [

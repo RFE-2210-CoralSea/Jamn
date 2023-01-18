@@ -5,6 +5,7 @@ import { ProfileImage } from '../components/ProfileImage'
 import { PersonalDescription } from '../components/PersonalDescription'
 import { Box, Heading, SimpleGrid, VStack, useColorModeValue } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
+import { BandModal } from '../components/BandModal'
 
 const LazyVisualizer = dynamic(() => import('../components/AudioVisualizer'), {
   ssr: false
