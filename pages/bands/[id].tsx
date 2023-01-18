@@ -24,7 +24,7 @@ export default function BandFeed(props: any) {
       })
   }, [])
 
-  if (!data.members) return <></>
+  if (!data.roles) return <></>
 
   return (
     <>
@@ -53,7 +53,7 @@ export default function BandFeed(props: any) {
                   <CardBody mt='-1rem'>
                     <Stack spacing='3rem'>
                       <List fontSize="xl" textAlign="center">
-                        {data.members.map((member: any) => <ListItem>{member.name}</ListItem>)}
+                        {data.roles.map((member: any) => <ListItem>{member.name}</ListItem>)}
                       </List>
                     </Stack>
                   </CardBody>

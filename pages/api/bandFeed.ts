@@ -36,22 +36,31 @@ const sampleData = {
   description: 'we make music and stuff',
   posts: [
     {
-      name: 'Ivan',
-      text: 'Hello band feed',
-      audio: 'sampleaudio.wav',
-      pdf: 'samplepdf.pdf',
+      postId: 'a',
+      name: 'Slide',
+      band: 'Frank Ocean',
+      image: '/slide.jpg',
+      audio: '/slide frank ocean.mp4',
+      pdf: 'testpdf.pdf',
       date: '01/17/2023 @ 8:09pm',
+      text: 'Hello user feed',
       comments: [
         {
-          name: 'Gerritt',
-          profile_picture: 'sampleprofpicture.jpg',
-          text: 'Hello band post comments',
+          name: 'Darrien',
+          profile_picture: 'sampleprofpic.jpg',
+          text: 'hello comments',
           date: '01/17/2023 @ 8:10pm'
+        },
+        {
+          name: 'Joe',
+          profile_picture: 'testpfp.jpg',
+          text: 'test',
+          date: '01/17/2023 @ 8:11pm'
         }
       ]
     }
   ],
-  members: [
+  roles: [
     {
       name: 'Ivan',
       role: 'Administrator'
