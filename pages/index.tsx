@@ -66,12 +66,14 @@ export default function Home() {
           flexWrap="wrap"
         >
           <Container pos="relative" width="445" height="300" onClick={() => {
-            if (playing) {
-              audio.pause()
-            } else {
-              audio.play()
+            if (audio) {
+              if (playing) {
+                audio.pause()
+              } else {
+                audio.play()
+              }
+              setPlaying(s => !s)
             }
-            setPlaying(s => !s)
           }}>
             <motion.img
               src="/table.svg"
