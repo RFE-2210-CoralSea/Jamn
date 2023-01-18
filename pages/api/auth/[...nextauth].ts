@@ -8,6 +8,9 @@ export const authOptions: NextAuthOptions = {
     strategy: 'jwt'
   },
   callbacks: {
+    async redirect() {
+      return '/personal'
+    },
     async signIn({ user, account, credentials }) {
       // user is equivalent to session object, with an id
       console.log('user', user)
