@@ -9,7 +9,7 @@ datasource db {
 
 model bands {
   id          Int     @id @default(autoincrement())
-  logo        Bytes   @db.ByteA
+  image       String   @db.VarChar(1000)
   description String  @db.VarChar(1000)
   name        String  @db.VarChar(50)
   posts       posts[]
@@ -30,8 +30,10 @@ model posts {
   id       Int        @id @default(autoincrement())
   bandId  Int
   userId  Int
+  image   String      @db.VarChar(1000)
   audio    Bytes      @db.ByteA
   pdf      Bytes      @db.ByteA
+  text    String      @db.VarChar(1000)
   date    BigInt
   comments comments[]
   bands    bands      @relation(fields: [bandId], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -50,7 +52,7 @@ model roles {
 
 model users {
   id       Int        @id @default(autoincrement())
-  picture  Bytes      @db.ByteA
+  picture  String     @db.VarChar(1000)
   email    String     @db.VarChar(50)
   name     String     @db.VarChar(50)
   bio      String     @db.VarChar(1000)
