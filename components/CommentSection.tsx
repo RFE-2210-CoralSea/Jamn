@@ -1,6 +1,6 @@
-import { FormControl, Button, Input, Container, Stack, Heading, StackDivider } from '@chakra-ui/react'
+import { FormControl, Button, Input, Stack, Heading, StackDivider } from '@chakra-ui/react'
 import { Card, CardHeader, CardBody, CardFooter } from '@chakra-ui/react'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { UserComment } from './UserComment'
 
 declare interface CommentData {
@@ -12,9 +12,6 @@ declare interface CommentData {
 
 export const CommentSection = ({ comments }:any) => {
 
-  useEffect(() => {
-    console.log(comments)
-  })
   const [comment, setComment] = useState('')
   const [submitting, setSubmitting] = useState(false)
 
@@ -33,8 +30,8 @@ export const CommentSection = ({ comments }:any) => {
         </CardHeader>
         <CardBody mt='-1.5rem'>
           <Stack divider={<StackDivider/>} spacing='3'>
-            {comments.map((comment:CommentData) => {
-              return <UserComment name={comment.name} profile_picture={comment.profile_picture} text={comment.text} date={comment.date}/>
+            {comments.map((comment:CommentData, index:number) => {
+              return <UserComment name={comment.name} profile_picture={comment.profile_picture} text={comment.text} date={comment.date} key={index}/>
             })}
             <StackDivider/>
           </Stack>

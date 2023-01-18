@@ -28,9 +28,11 @@ const personal = () => {
   image: '/pfp.jpeg',
   posts: [
     {
-      name: 'Joe',
-      band: 'Super Sick Band',
-      audio: 'testaudio.wav',
+      postId: 'a',
+      name: 'Slide',
+      band: 'Frank Ocean',
+      image: '/slide.jpg',
+      audio: '/slide frank ocean.mp4',
       pdf: 'testpdf.pdf',
       date: '01/17/2023 @ 8:09pm',
       text: 'Hello user feed',
@@ -48,9 +50,11 @@ const personal = () => {
       }]
     },
     {
-      name: 'test',
-      band: 'test',
-      audio: 'test.wav',
+      postId: 'b',
+      name: 'DieYoung',
+      band: 'Sleepy Hallow',
+      image: '/dieyoung.jpg',
+      audio: '/die young.mp3',
       pdf: 'testpdf2.pdf',
       date: '01/17/2023 @ 10:23pm',
       text: 'test Text',
@@ -86,9 +90,9 @@ const personal = () => {
                   bands={data.bands}/>
               </VStack>
 
-              <VStack>
+              <VStack mb='5rem'>
                 {data.posts.map((post) => {
-                  return <LazyVisualizer posts={post} key={post.name}/>
+                  return <LazyVisualizer posts={post}/>
                 })}
               </VStack>
 
