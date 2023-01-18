@@ -1,4 +1,7 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
+import type { NextApiRequest, NextApiResponse } from 'next';
+import prisma from '../../lib/Prisma';
+import { unstable_getServerSession } from "next-auth/next"
+
 
 type Comment = {
   name: string,
@@ -25,59 +28,49 @@ type User = {
   posts: Post[],
 };
 
-const SampleData = {
-  name: 'Joe Lin',
-  description: 'hello world',
-  instruments: ['Cello', 'Piano', 'Drums'],
-  bands: ['Super Sick Band', 'Awesome Band'],
-  image: '/pfp.jpg',
-  posts: [
-    {
-      postId: '1',
-      name: 'Slide',
-      band: 'Frank Ocean',
-      image: '/slide.jpg',
-      audio: '/slide frank ocean.mp4',
-      pdf: 'testpdf.pdf',
-      date: '01/17/2023 @ 8:09pm',
-      text: 'Hello user feed',
-      comments: [{
-        name: 'Darrien',
-        profile_picture: 'sampleprofpic.jpg',
-        text: 'hello comments',
-        date: '01/17/2023 @ 8:10pm'
-      },
-      {
-        name: 'Joe',
-        profile_picture: 'testpfp.jpg',
-        text: "test",
-        date: '01/17/2023 @ 8:11pm'
-      }]
-    },
-    {
-      postId: '2',
-      name: 'DieYoung',
-      band: 'Sleepy Hallow',
-      image: '/dieyoung.jpg',
-      audio: '/die young.mp3',
-      pdf: 'testpdf2.pdf',
-      date: '01/17/2023 @ 10:23pm',
-      text: 'test Text',
-      comments: [{
-        name: 'bro',
-        profile_picture: 'broooo.jpg',
-        text: 'BROOOOOOO',
-        date: '01/17/2023 @ 10:30pm'
-      }]
-    }
-  ]
-}
 
-export default function handler (
+
+
+export default async function handler (
   req: NextApiRequest,
   res: NextApiResponse<User>
 ) {
   if (req.method === 'GET') {
-    res.send(SampleData);
+    const session = await unstable_getServerSession(req, res)
+    if (session) {
+      const user = await prisma.users.findMany({
+        where: {
+          email: session.user?.email
+        },
+          include: {
+            posts: {
+              include: {
+                comments: true
+              }
+            },
+            instruments: true,
+            roles: true
+          },
+      })
+      if (user.length > 0) {
+        if (user[0].roles.length > 0) {
+          for (let i = 0; i < user[0].roles.length; i++) {
+            const bandNames = await prisma.bands.findUnique({
+              where: {
+                id: user[0].roles[i].bandId
+              }
+            })
+            if (bandNames) {
+              user[0].roles[i] = {
+                name: bandNames.name,
+                id: bandNames.id
+              }
+            }
+          }
+        }
+        console.log(user[0])
+        return res.status(200).json(user[0])
+      }
+    }
   }
-};
+}

@@ -4,6 +4,7 @@ import { NavBar } from '../components/NavBar'
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 import { useColorModeValue } from '@chakra-ui/react'
+import { unstable_getServerSession } from 'next-auth'
 
 // animation variants
 const vinylVariants = {
@@ -100,4 +101,21 @@ export default function Home() {
         </Box>
     </>
   )
+}
+
+
+export async function getServerSideProps(context:any) {
+  const session = await unstable_getServerSession(context.req, context.res);
+
+  if (session) {
+    return {
+      redirect: { destination: "/personal" },
+    };
+  }
+
+  return {
+    props: {
+      session
+    },
+  };
 }
