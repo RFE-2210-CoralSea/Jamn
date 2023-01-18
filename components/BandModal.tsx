@@ -12,6 +12,12 @@ type Inputs = {
   description: string,
 };
 
+type Data = {
+  name: string,
+  image: string,
+  description: string
+}
+
 
 export const BandModal = () => {
   const [imageSrc, setImageSrc] = useState()
@@ -46,9 +52,17 @@ export const BandModal = () => {
     setImageSrc(imageData.secure_url)
     console.log("data", imageData)
   }
-  const logData = async (data) => {
-    data.image = imageSrc
+
+  const logData = async (data: Data) => {
+    data.image = imageSrc;
     console.log(data)
+    fetch('/api/createBand', {
+      method: 'POST',
+      headers: {
+        'Content-Type' : 'application/json',
+      },
+      body: JSON.stringify(data)
+    })
   }
 
   return (
