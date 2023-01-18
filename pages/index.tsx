@@ -43,7 +43,7 @@ const armVariants = {
 export default function Home() {
   // vinyl playing state
   const [ playing, setPlaying ] = useState(false)
-  const [ audio, setAudio ] = useState(new Audio('/slide frank ocean.mp4'))
+  const [ audio ] = useState(typeof Audio !== 'undefined' && new Audio('/slide frank ocean.mp4'))
 
   return (
     <>
