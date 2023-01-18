@@ -5,6 +5,8 @@ import { PersonalDescription } from '../components/PersonalDescription'
 import { Container, Center } from '@chakra-ui/react'
 import { useState } from 'react'
 import { CommentSection } from '../components/CommentSection'
+import { BandModal } from '../components/BandModal'
+
 
 const LazyVisualizer = dynamic(() => import('../components/AudioVisualizer'), {
   ssr: false
@@ -29,6 +31,7 @@ const personal = () => {
       <NavBar />
       <Container>
         <ProfileImage imgURL={data.imgURL} name={data.name}/>
+        <BandModal/>
         <PersonalDescription instruments={data.instruments} sectionName='personal'/>
         <LazyVisualizer/>
         <CommentSection/>
