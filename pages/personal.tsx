@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import { NavBar } from '../components/NavBar'
-import ProfileImage from '../components/ProfileImage'
+import { ProfileImage } from '../components/ProfileImage'
 import { PersonalDescription } from '../components/PersonalDescription'
 import { Box, SimpleGrid, VStack } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
@@ -21,38 +21,47 @@ const personal = () => {
   },[])
 
   const [data, setData] = useState({
-    "name": "Ivan",
-    "description": "hello world",
-    "instruments": [
-        "Cello",
-        "Piano",
-        "Drums"
-    ],
-    "image": "testprofilepicture.jpg",
-    "posts": [
-        {
-            "name": "Joe",
-            "band": "Super Sick Band",
-            "audio": "testaudio.wav",
-            "pdf": "testpdf.pdf",
-            "date": "01/17/2023 @ 8:09pm",
-            "text": "Hello user feed",
-            "comments": [
-                {
-                    "name": "Darrien",
-                    "profile_picture": "sampleprofpic.jpg",
-                    "text": "hello comments",
-                    "date": "01/17/2023 @ 8:10pm"
-                },
-                {
-                    "name": 'Joe',
-                    "profile_picture": 'pfp.jpeg',
-                    "text": "test",
-                    "date": '01/17/2023 @ 8:11pm'
-                }
-            ]
-        }
-    ]
+  name: 'Jackson',
+  description: 'hello world and welcome to my page',
+  instruments: ['Cello', 'Piano', 'Drums'],
+  bands: ['Super Sick Band', 'Awesome Band'],
+  image: '/pfp.jpeg',
+  posts: [
+    {
+      name: 'Joe',
+      band: 'Super Sick Band',
+      audio: 'testaudio.wav',
+      pdf: 'testpdf.pdf',
+      date: '01/17/2023 @ 8:09pm',
+      text: 'Hello user feed',
+      comments: [{
+        name: 'Darrien',
+        profile_picture: 'sampleprofpic.jpg',
+        text: 'hello comments',
+        date: '01/17/2023 @ 8:10pm'
+      },
+      {
+        name: 'Joe',
+        profile_picture: 'testpfp.jpg',
+        text: "test",
+        date: '01/17/2023 @ 8:11pm'
+      }]
+    },
+    {
+      name: 'test',
+      band: 'test',
+      audio: 'test.wav',
+      pdf: 'testpdf2.pdf',
+      date: '01/17/2023 @ 10:23pm',
+      text: 'test Text',
+      comments: [{
+        name: 'bro',
+        profile_picture: 'broooo.jpg',
+        text: 'BROOOOOOO',
+        date: '01/17/2023 @ 10:30pm'
+      }]
+    }
+  ]
 })
 
 
@@ -66,13 +75,23 @@ const personal = () => {
         <NavBar/>
         <Box display='flex'>
             <SimpleGrid columns={2} spacing={5} alignContent='center'>
+
               <VStack>
-                <ProfileImage image={data.image} name={data.name}/>
-                <PersonalDescription description={data.description} instruments={data.instruments}/>
+                <ProfileImage
+                  image={data.image}
+                  name={data.name}/>
+                <PersonalDescription
+                  description={data.description}
+                  instruments={data.instruments}
+                  bands={data.bands}/>
               </VStack>
+
               <VStack>
-                <LazyVisualizer posts={data.posts}/>
+                {data.posts.map((post) => {
+                  return <LazyVisualizer posts={post} key={post.name}/>
+                })}
               </VStack>
+
           </SimpleGrid>
         </Box>
       </Box>

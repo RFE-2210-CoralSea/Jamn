@@ -26,10 +26,11 @@ type User = {
 };
 
 const SampleData = {
-  name: 'Ivan',
-  description: 'hello world',
+  name: 'Jackson',
+  description: 'hello world and welcome to my page',
   instruments: ['Cello', 'Piano', 'Drums'],
-  image: 'testprofilepicture.jpg',
+  bands: ['Super Sick Band', 'Awesome Band'],
+  image: '/pfp.jpeg',
   posts: [
     {
       name: 'Joe',
@@ -45,10 +46,10 @@ const SampleData = {
         date: '01/17/2023 @ 8:10pm'
       },
       {
-          name: 'Joe',
-          profile_picture: 'pfp.jpeg',
-          text: "test",
-          date: '01/17/2023 @ 8:11pm'
+        name: 'Joe',
+        profile_picture: 'testpfp.jpg',
+        text: "test",
+        date: '01/17/2023 @ 8:11pm'
       }]
     }
   ]
