@@ -27,8 +27,7 @@ export const CommentSection = ({ comments }:any) => {
   }
 
   return (
-    <Container>
-      <Card w='38rem'>
+      <Card w='40rem'>
         <CardHeader>
           <Heading size='md'>Comments</Heading>
         </CardHeader>
@@ -48,6 +47,5 @@ export const CommentSection = ({ comments }:any) => {
           <Button type='submit' onClick={postCommentHandler} isLoading={submitting} alignSelf='flex-end'> Submit </Button>
         </CardFooter>
       </Card>
-    </Container>
   )
 }
