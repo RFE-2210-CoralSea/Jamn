@@ -14,7 +14,7 @@ export const NavBar = () => {
   // user is not logged in
   if (status === 'unauthenticated' || !session) {
     return (
-      <Flex w='100vw' justifyContent='space-between' p={2}>
+      <Flex w='100vw' justifyContent='space-between' p={5}>
         <Heading><Link href="/">Musi 🎸</Link></Heading>
         <Stack direction='row'>
             <Login/>
@@ -25,7 +25,7 @@ export const NavBar = () => {
   }
 
   return (
-    <Flex justifyContent='space-between' p={2}>
+    <Flex justifyContent='space-between' p={5}>
       <Heading><Link href="/">Musi 🎸</Link></Heading>
       <Stack direction='row'>
           <BandModal/>

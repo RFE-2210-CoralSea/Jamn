@@ -54,7 +54,7 @@ export default function Home() {
       <Box
         height="100vh"
         background="center/cover"
-        backgroundImage={useColorModeValue("white", "/animatedBackground.svg")}
+        backgroundImage={useColorModeValue("/Honolulu-Day.gif", "/Honolulu-Night.gif")}
         backgroundRepeat="no-repeat"
         >
         <NavBar/>

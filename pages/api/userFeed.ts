@@ -26,8 +26,8 @@ type User = {
 };
 
 const SampleData = {
-  name: 'Joe',
-  description: 'hello world and welcome to my page',
+  name: 'Joe Lin',
+  description: 'hello world',
   instruments: ['Cello', 'Piano', 'Drums'],
   bands: ['Super Sick Band', 'Awesome Band'],
   image: '/pfp.jpg',

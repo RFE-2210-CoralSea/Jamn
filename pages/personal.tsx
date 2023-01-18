@@ -3,7 +3,7 @@ import Head from 'next/head'
 import { NavBar } from '../components/NavBar'
 import { ProfileImage } from '../components/ProfileImage'
 import { PersonalDescription } from '../components/PersonalDescription'
-import { Box, SimpleGrid, VStack } from '@chakra-ui/react'
+import { Box, Heading, SimpleGrid, VStack, useColorModeValue } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
 
 const LazyVisualizer = dynamic(() => import('../components/AudioVisualizer'), {
@@ -21,8 +21,8 @@ const personal = () => {
   },[])
 
   const [data, setData] = useState({
-  name: 'Jackson',
-  description: 'hello world and welcome to my page',
+  name: 'Joe',
+  description: 'hello world',
   instruments: ['Cello', 'Piano', 'Drums'],
   bands: ['Super Sick Band', 'Awesome Band'],
   image: '/pfp.jpeg',
@@ -75,7 +75,7 @@ const personal = () => {
       <title>Your Homepage</title>
     </Head>
 
-      <Box h='100vh' w='100vw' maxW='100%'>
+      <Box h='100vh' maxH='100%' w='100vw' maxW='100%'>
         <NavBar/>
         <Box display='flex'>
             <SimpleGrid columns={2} spacing={5} alignContent='center'>
@@ -91,6 +91,7 @@ const personal = () => {
               </VStack>
 
               <VStack mb='5rem'>
+                <Heading mt='9rem'></Heading>
                 {data.posts.map((post) => {
                   return <LazyVisualizer posts={post}/>
                 })}

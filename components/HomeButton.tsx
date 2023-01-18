@@ -11,7 +11,7 @@ export const HomeButton = () => {
 
   return (
     <Tooltip hasArrow label='Your Homepage'>
-      <IconButton aria-label='create band' bg='blue' icon={<AiTwotoneHome/>} onClick={clickHandler}/>
+      <IconButton aria-label='create band' bg='blue.400' icon={<AiTwotoneHome/>} onClick={clickHandler}/>
     </Tooltip>
   )
 }
