@@ -4,7 +4,6 @@ import { AiOutlineUsergroupAdd } from 'react-icons/ai'
 import { useDisclosure, useColorModeValue, Text } from '@chakra-ui/react'
 import {useForm, SubmitHandler} from 'react-hook-form'
 import {useState} from 'react'
-import PostBand from '../styles/BandModal.module.css'
 
 
 type Inputs = {
@@ -67,9 +66,9 @@ export const BandModal = () => {
             <Stack direction='column' spacing='5'>
               <Box height="5em" display="flex" flexDirection="column" alignItems="center">
                 <Text mb={4}>CHOOSE A BAND PHOTO</Text>
-                <form onChange={handleOnChange} onSubmit={handleOnSubmit} method="post" className={PostBand.band}>
-                  <input type="file" name="file" className={PostBand.input} />
-                  <button className={PostBand.button}>Save Image</button>
+                <form onChange={handleOnChange} onSubmit={handleOnSubmit} method="post" style={{display: 'flex', justifyContent:"center"}}>
+                  <input type="file" name="file"  style={{width: "70%"}}/>
+                  <button style={{border: "1px solid white", borderRadius: "5px", padding:"0.3em"}} >Save Image</button>
                 </form>
               </Box>
               <img src={imageSrc}/>
