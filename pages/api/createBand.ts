@@ -6,10 +6,11 @@ export default function handler(
   res: NextApiResponse
 ) {
   console.log(req);
-  prisma.users.create({
+  prisma.bands.create({
     data: req.body
   })
   .then((response) => {
+    console.log(response);
     res.status(200).end();
   })
   .catch((err) => {
