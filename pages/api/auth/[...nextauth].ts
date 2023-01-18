@@ -16,9 +16,6 @@ export const authOptions: NextAuthOptions = {
       console.log('user', user)
 
       if (account?.provider === 'google') {
-<<<<<<< HEAD
-        console.log('checking account')
-=======
         // check if user exists
         let dbUser = await prisma.users.findFirst({
           where: {
@@ -40,7 +37,6 @@ export const authOptions: NextAuthOptions = {
 
         console.log('db user', dbUser)
         return true
->>>>>>> c6967fd93adcb299412bb1796ed624c3cc100c4c
       }
       return false
     }
