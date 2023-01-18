@@ -4,6 +4,9 @@ import { Inter } from '@next/font/google'
 import { Container, Box, Text} from '@chakra-ui/react'
 import { NavBar } from '../components/NavBar'
 import { useColorMode, useColorModeValue, IconButton } from '@chakra-ui/react'
+import { GetServerSideProps } from 'next'
+import {  unstable_getServerSession} from "next-auth/next";
+
 
 const LazyVisualizer = dynamic(() => import('../components/AudioVisualizer'), {
   ssr: false
@@ -77,4 +80,21 @@ export default function Home() {
       </Box>
     </>
   )
+}
+
+
+export async function getServerSideProps(context:any) {
+  const session = await unstable_getServerSession(context.req, context.res);
+
+  if (session) {
+    return {
+      redirect: { destination: "/personal" },
+    };
+  }
+
+  return {
+    props: {
+      session
+    },
+  };
 }

@@ -18,11 +18,6 @@ export const authOptions: NextAuthOptions = {
       // an account needs to be created on the DB
       if (account?.provider === 'google') {
         console.log('checking account')
-        /**
-         * check DB for google account
-         * if account doesn't exist
-         *  create account
-         */
       }
       return true
     }
