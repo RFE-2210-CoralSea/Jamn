@@ -52,8 +52,23 @@ export default async function handler (
             roles: true
           },
       })
-      if (user) {
-        user[0].picture = user[0].picture.toString();
+      if (user.length > 0) {
+        if (user[0].roles.length > 0) {
+          for (let i = 0; i < user[0].roles.length; i++) {
+            const bandNames = await prisma.bands.findUnique({
+              where: {
+                id: user[0].roles[i].bandId
+              }
+            })
+            if (bandNames) {
+              user[0].roles[i] = {
+                name: bandNames.name,
+                id: bandNames.id
+              }
+            }
+          }
+        }
+        console.log(user[0])
         return res.status(200).json(user[0])
       }
     }

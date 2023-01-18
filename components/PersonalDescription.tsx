@@ -26,7 +26,7 @@ export const PersonalDescription = ({ description, instruments, bands }:Personal
                 <Stack spacing='3rem'>
                   <List fontSize="xl" textAlign="center">
                     {bands.map((band) => {
-                      return <ListItem key={band}>{band}</ListItem>
+                      return <ListItem key={band}>{band.name}</ListItem>
                     })}
                   </List>
                 </Stack>
@@ -38,11 +38,7 @@ export const PersonalDescription = ({ description, instruments, bands }:Personal
                 <Stack spacing='3rem'>
                   <List fontSize="xl" textAlign="center">
                     {instruments.map((instrument) => {
-<<<<<<< HEAD
                       return <ListItem>{instrument.instrument}</ListItem>
-=======
-                      return <ListItem key={instrument}>{instrument}</ListItem>
->>>>>>> c6967fd93adcb299412bb1796ed624c3cc100c4c
                     })}
                   </List>
                 </Stack>

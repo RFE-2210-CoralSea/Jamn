@@ -54,6 +54,9 @@ const personal = () => {
                 }
             ]
         }
+    ],
+    "roles": [
+      "test"
     ]
 })
 
@@ -71,12 +74,12 @@ const personal = () => {
 
               <VStack>
                 <ProfileImage
-                  image={data.image}
+                  image={data.picture}
                   name={data.name}/>
                 <PersonalDescription
-                  description={data.description}
+                  description={data.bio}
                   instruments={data.instruments}
-                  bands={data.bands}/>
+                  bands={data.roles}/>
               </VStack>
 
               <VStack mb='5rem'>
