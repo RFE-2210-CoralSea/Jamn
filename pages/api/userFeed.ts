@@ -73,4 +73,41 @@ export default async function handler (
       }
     }
   }
+
+  if (req.method === 'PUT') {
+    const session = await unstable_getServerSession(req, res);
+    if (session) {
+      const update = async (key:string) => {
+        let updateData;
+        switch(key) {
+          case 'picture':
+            updateData = {
+              picture: req.body.picture
+            }
+            break;
+          case 'bio':
+            updateData = {
+              bio: req.body.bio
+            }
+            break;
+          case 'name':
+            updateData = {
+              name: req.body.name
+            }
+            break;
+        }
+        let insert = await prisma.users.updateMany({
+          where: {
+            email: session.user?.email
+          },
+          data: updateData
+        });
+        return insert.count === 1 ? res.status(200).json({message: true}) : res.status(500).json({message: false})
+      }
+      let keys = Object.keys(req.body);
+      return await update(keys[0])
+    } else {
+      return res.status(401).json({ message: 'Unauthorized' })
+    }
+  }
 }
