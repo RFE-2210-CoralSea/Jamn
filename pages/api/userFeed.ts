@@ -1,4 +1,7 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
+import type { NextApiRequest, NextApiResponse } from 'next';
+import prisma from '../../lib/Prisma';
+import { unstable_getServerSession } from "next-auth/next"
+
 
 type Comment = {
   name: string,
@@ -25,40 +28,34 @@ type User = {
   posts: Post[],
 };
 
-const SampleData = {
-  name: 'Ivan',
-  description: 'hello world',
-  instruments: ['Cello', 'Piano', 'Drums'],
-  image: 'testprofilepicture.jpg',
-  posts: [
-    {
-      name: 'Joe',
-      band: 'Super Sick Band',
-      audio: 'testaudio.wav',
-      pdf: 'testpdf.pdf',
-      date: '01/17/2023 @ 8:09pm',
-      text: 'Hello user feed',
-      comments: [{
-        name: 'Darrien',
-        profile_picture: 'sampleprofpic.jpg',
-        text: 'hello comments',
-        date: '01/17/2023 @ 8:10pm'
-      },
-      {
-          name: 'Joe',
-          profile_picture: 'pfp.jpeg',
-          text: "test",
-          date: '01/17/2023 @ 8:11pm'
-      }]
-    }
-  ]
-}
 
-export default function handler (
+
+
+export default async function handler (
   req: NextApiRequest,
   res: NextApiResponse<User>
 ) {
   if (req.method === 'GET') {
-    res.send(SampleData);
+    const session = await unstable_getServerSession(req, res)
+    if (session) {
+      const user = await prisma.users.findMany({
+        where: {
+          email: session.user?.email
+        },
+          include: {
+            posts: {
+              include: {
+                comments: true
+              }
+            },
+            instruments: true,
+            roles: true
+          },
+      })
+      if (user) {
+        user[0].picture = user[0].picture.toString();
+        return res.status(200).json(user[0])
+      }
+    }
   }
-};
+}

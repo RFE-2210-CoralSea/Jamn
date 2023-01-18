@@ -23,13 +23,13 @@ const personal = () => {
 
   const [data, setData] = useState({
     "name": "Ivan",
-    "description": "hello world",
+    "bio": "hello world",
     "instruments": [
         "Cello",
         "Piano",
         "Drums"
     ],
-    "image": "testprofilepicture.jpg",
+    "picture": "testprofilepicture.jpg",
     "posts": [
         {
             "name": "Joe",
@@ -68,8 +68,8 @@ const personal = () => {
         <Box display='flex'>
             <SimpleGrid columns={2} spacing={5} alignContent='center'>
               <VStack>
-                <ProfileImage image={data.image} name={data.name}/>
-                <PersonalDescription description={data.description} instruments={data.instruments}/>
+                <ProfileImage image={data.picture} name={data.name}/>
+                <PersonalDescription description={data.bio} instruments={data.instruments}/>
               </VStack>
               <VStack>
                 <LazyVisualizer posts={data.posts}/>
@@ -93,10 +93,6 @@ export async function getServerSideProps(context:any) {
     };
   }
   console.log(session)
-
-  // const feed = await fetch('/api/test');
-
-
   return {
     props: {
       session

@@ -25,7 +25,7 @@ export const PersonalDescription = ({ description, instruments }:PersonalDescrip
                 <Stack spacing='3rem'>
                   <List fontSize="2xl" textAlign="center">
                     {instruments.map((instrument) => {
-                      return <ListItem>{instrument}</ListItem>
+                      return <ListItem>{instrument.instrument}</ListItem>
                     })}
                   </List>
                 </Stack>

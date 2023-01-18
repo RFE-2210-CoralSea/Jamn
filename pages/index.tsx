@@ -1,21 +1,10 @@
 import Head from 'next/head'
 import { Container, Box, Text} from '@chakra-ui/react'
 import { NavBar } from '../components/NavBar'
-<<<<<<< HEAD
-import { useColorMode, useColorModeValue, IconButton } from '@chakra-ui/react'
-import { GetServerSideProps } from 'next'
-import {  unstable_getServerSession} from "next-auth/next";
-
-
-const LazyVisualizer = dynamic(() => import('../components/AudioVisualizer'), {
-  ssr: false
-})
-const inter = Inter({ subsets: ['latin'] })
-=======
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 import { useColorModeValue } from '@chakra-ui/react'
->>>>>>> ed053125ffefb34eca28131e7d8135de06a3bfe3
+import { unstable_getServerSession } from 'next-auth'
 
 const innerBoxStyles = {
     display: 'flex',
