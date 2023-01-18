@@ -8,8 +8,10 @@ export const RecordingModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [ recording, setRecording ] = useState(false)
   const [ recorder, setRecorder ] = useState<MediaRecorder | null>(null)
+  // may also need to store the blob itself?
   const [ url, setUrl ] = useState('')
 
+  // setup audio recorder
   useEffect(() => {
     navigator.mediaDevices.getUserMedia({ audio: true })
       .then((stream) => {
@@ -18,23 +20,19 @@ export const RecordingModal = () => {
       .catch(console.error)
   }, [])
 
-  useEffect(() => {
-    if (recorder) {
-      recorder.ondataavailable = (event) => {
-        console.log('test')
-        setUrl(URL.createObjectURL(event.data))
-      }
-    }
-  }, [recorder])
-
   // begin recording
   const record = async () => {
     if (!recorder) return
+
+    // add event listener to recorder
+    if (!recorder.ondataavailable) {
+      recorder.ondataavailable = (event) => {
+        setUrl(URL.createObjectURL(event.data))
+      }
+    }
+
     if (recording) {
-      console.log('stop', url)
       recorder.stop()
-      const audio = new Audio(url)
-      audio.play()
       setRecording(false)
     } else {
       setRecording(true)
@@ -59,7 +57,8 @@ export const RecordingModal = () => {
           <ModalHeader> Record A Song! </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-              <IconButton aria-label='start recording' icon={<AiOutlinePlayCircle width='20vw'/>} onClick={record}/>
+              <IconButton aria-label='start recording' icon={<AiOutlinePlayCircle/>} onClick={record}/>
+              {url && <audio src={url} controls></audio>}
           </ModalBody>
 
           <ModalFooter>
