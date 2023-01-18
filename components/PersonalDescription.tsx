@@ -21,12 +21,20 @@ declare interface RoleData {
   id: number
 }
 
-const UpdateDescriptionHandler = () => {
-
-}
-
 export const PersonalDescription = ({ description, instruments, roles }:PersonalDescriptionProps) => {
 
+  const UpdateDescriptionHandler = (section:string) => {
+    // use id to find and update whichever element in the arrays
+    // need to be changed
+    // send back the whole array to update that field
+    if (section === 'description') {
+
+    } else if (section === 'roles') {
+
+    } else {
+
+    }
+  }
   const [editDescrip, setDescrip] = useState(description)
   const [editInstrument, setInstrument] = useState(instruments)
   const [editRoles, setRoles] = useState(roles)
@@ -76,7 +84,7 @@ export const PersonalDescription = ({ description, instruments, roles }:Personal
           <TabPanel>
               <List fontSize="lg" textAlign="center" fontWeight='bold'>
               {instruments.map((instrument) => {
-                return <ListItem key={instrument.instrument}>
+                return <ListItem key={instrument.id}>
                   <Editable defaultValue={instrument.instrument}>
                     <EditablePreview/>
                     <Input as={EditableInput}/>

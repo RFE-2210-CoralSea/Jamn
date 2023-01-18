@@ -8,7 +8,8 @@ type ProfileImageProps = {
 }
 
 const UploadHandler = () => {
-
+  // implement uploading image
+  // replace image link in database
 }
 
 export const ProfileImage = ({ image, name }: ProfileImageProps) => {

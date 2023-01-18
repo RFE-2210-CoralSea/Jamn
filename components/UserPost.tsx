@@ -7,6 +7,7 @@ const submitPostHandler = (title:string, artist:string, file:any) => {
     "band": artist,
     "audio": file
   }
+  // send post req with postObj as body
 }
 
 export const UserPost = () => {

@@ -34,7 +34,7 @@ const personal = () => {
 })
 
 
-  return(
+  return (
     <>
     <Head>
       <title>Your Homepage</title>
