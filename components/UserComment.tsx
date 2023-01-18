@@ -1,20 +1,28 @@
-import { Box, Heading, Tag, Avatar, TagLabel, Text } from '@chakra-ui/react'
+import { Box, Heading, Tag, Avatar, TagLabel, Text, Wrap } from '@chakra-ui/react'
 
-export const UserComment = ({}) => {
+declare interface CommentProps {
+  name: string,
+  profile_picture: string,
+  text: string,
+  date: string
+}
+
+export const UserComment = ({ name, profile_picture, text, date }:CommentProps) => {
   return (
     <Box>
       <Heading size='xs'>
         <Tag size='lg' colorScheme='orange' borderRadius='full'>
           <Avatar
-            src='/pfp.jpeg'
+            src={profile_picture}
             size='xs'
-            name='Jackson Zhu'
+            name={name}
             ml={-1}
             mr={2}/>
-          <TagLabel fontWeight='bold'>Jackson Zhu</TagLabel>
+          <TagLabel fontWeight='bold'>{name}</TagLabel>
         </Tag>
       </Heading>
-      <Text pt='3' fontSize='md'>Test Comment</Text>
+      <Text pt='3' fontSize='md' mb='1rem'>{text}</Text>
+      <Wrap fontSize='xs'><span>{date}</span></Wrap>
     </Box>
   )
 }

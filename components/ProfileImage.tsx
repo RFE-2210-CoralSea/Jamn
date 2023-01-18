@@ -1,17 +1,17 @@
-import { Image, Text, Box } from '@chakra-ui/react'
+import { Image, Text } from '@chakra-ui/react'
 
 type ProfileImageProps = {
-  imgURL: string,
+  image: string,
   name: string,
 }
 
-const ProfileImage = (props: ProfileImageProps) => {
+const ProfileImage = ({ image, name }: ProfileImageProps) => {
   return(
     <>
-      <Text textAlign='center' mt='5rem' fontSize='3xl' fontWeight='bold'>{props.name}</Text>
+      <Text textAlign='center' mt='5rem' fontSize='3xl' fontWeight='bold'>{name}</Text>
         <Image
-        src={props.imgURL}
-        alt='pfp'
+        src={image}
+        alt='/pfp.jpeg'
         boxShadow='dark-lg'
         border='1px solid black'
         objectFit='cover'

@@ -1,28 +1,59 @@
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
-import ProfileImage from '../components/ProfileImage'
 import { NavBar } from '../components/NavBar'
+import ProfileImage from '../components/ProfileImage'
 import { PersonalDescription } from '../components/PersonalDescription'
 import { Box, SimpleGrid, VStack } from '@chakra-ui/react'
-import { useState } from 'react'
-import { CommentSection } from '../components/CommentSection'
+import { useState, useEffect } from 'react'
 
 const LazyVisualizer = dynamic(() => import('../components/AudioVisualizer'), {
   ssr: false
 })
 
 const personal = () => {
-  interface Data {
-    imgURL: string,
-    name: string,
-    instruments: string[],
-  }
+
+  useEffect(() => {
+    fetch('api/userFeed')
+      .then(async (response) => {
+        const newData = await response.json()
+        setData(newData)
+      })
+  },[])
 
   const [data, setData] = useState({
-    imgURL: 'https://newprofilepic2.photo-cdn.net//assets/images/article/profile.jpg',
-    name: 'Tracy Hillberg',
-    instruments: ['cello', 'flute', 'drums'],
-  })
+    "name": "Ivan",
+    "description": "hello world",
+    "instruments": [
+        "Cello",
+        "Piano",
+        "Drums"
+    ],
+    "image": "testprofilepicture.jpg",
+    "posts": [
+        {
+            "name": "Joe",
+            "band": "Super Sick Band",
+            "audio": "testaudio.wav",
+            "pdf": "testpdf.pdf",
+            "date": "01/17/2023 @ 8:09pm",
+            "text": "Hello user feed",
+            "comments": [
+                {
+                    "name": "Darrien",
+                    "profile_picture": "sampleprofpic.jpg",
+                    "text": "hello comments",
+                    "date": "01/17/2023 @ 8:10pm"
+                },
+                {
+                    "name": 'Joe',
+                    "profile_picture": 'pfp.jpeg',
+                    "text": "test",
+                    "date": '01/17/2023 @ 8:11pm'
+                }
+            ]
+        }
+    ]
+})
 
 
   return(
@@ -36,12 +67,11 @@ const personal = () => {
         <Box display='flex'>
             <SimpleGrid columns={2} spacing={5} alignContent='center'>
               <VStack>
-                <ProfileImage imgURL={data.imgURL} name={data.name}/>
-                <PersonalDescription instruments={data.instruments} sectionName='personal'/>
+                <ProfileImage image={data.image} name={data.name}/>
+                <PersonalDescription description={data.description} instruments={data.instruments}/>
               </VStack>
               <VStack>
-                <LazyVisualizer/>
-                <CommentSection/>
+                <LazyVisualizer posts={data.posts}/>
               </VStack>
           </SimpleGrid>
         </Box>

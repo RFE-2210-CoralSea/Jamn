@@ -1,22 +1,30 @@
 import { Card, CardHeader, CardBody, Stack, Box } from '@chakra-ui/react'
-import { List, Heading } from "@chakra-ui/react"
-import { ItemList } from "./ItemList"
+import { List, Heading, ListItem } from "@chakra-ui/react"
+
 type PersonalDescriptionProps = {
   instruments: string[],
-  sectionName: string,
+  description: string
 }
 
-export const PersonalDescription = (props:PersonalDescriptionProps ) => {
+export const PersonalDescription = ({ description, instruments }:PersonalDescriptionProps) => {
     return(
       <Box display='center'>
           <Card boxShadow='dark-lg' bg='teal.600' rounded={10}>
+            <CardHeader>
+              <Heading borderBottom='1px solid black'>Description</Heading>
+            </CardHeader>
+              <CardBody>
+                {description}
+              </CardBody>
             <CardHeader>
               <Heading borderBottom="1px solid black" >Instruments</Heading>
             </CardHeader>
               <CardBody mt='-2rem'>
                 <Stack spacing='3rem'>
                   <List fontSize="2xl" textAlign="center">
-                  <ItemList items={props.instruments}/>
+                    {instruments.map((instrument) => {
+                      return <ListItem>{instrument}</ListItem>
+                    })}
                   </List>
                 </Stack>
               </CardBody>
