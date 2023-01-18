@@ -1,6 +1,7 @@
 import NextAuth, { NextAuthOptions } from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 import CredentialsProvider from 'next-auth/providers/credentials'
+import prisma from '../../../lib/Prisma'
 
 export const authOptions: NextAuthOptions = {
   session: {
@@ -14,7 +15,6 @@ export const authOptions: NextAuthOptions = {
       console.log('account', account)
       // may be useful for custom credentials
       console.log('credentials', credentials)
-
       // an account needs to be created on the DB
       if (account?.provider === 'google') {
         console.log('checking account')

@@ -2,7 +2,7 @@ import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody,
 import { IconButton, Button, ButtonGroup, Tooltip, FormControl, Input, FormLabel } from '@chakra-ui/react'
 import { AiOutlineCustomerService, AiOutlinePlayCircle } from 'react-icons/ai'
 import { useDisclosure } from '@chakra-ui/react'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 
 export const RecordingModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -10,6 +10,12 @@ export const RecordingModal = () => {
   const [ recorder, setRecorder ] = useState<MediaRecorder | null>(null)
   // may also need to store the blob itself?
   const [ url, setUrl ] = useState('')
+
+  // input refs
+  const songName = useRef(null)
+  const band = useRef(null)
+  const songKey = useRef(null)
+  const file = useRef(null) // may have to be state
 
   // setup audio recorder
   useEffect(() => {
@@ -62,15 +68,15 @@ export const RecordingModal = () => {
           <ModalBody>
             <Stack direction='column' spacing='5'>
               <FormControl>
-                <Input placeholder='Song Name'></Input>
+                <Input placeholder='Song Name' ref={songName}></Input>
               </FormControl>
-              <Select placeholder='Select Band'>
+              <Select placeholder='Select Band' ref={band}>
                 {/* This will be dynamically loaded */}
                 <option value='band1_id'>Example Band</option>
                 <option value='band2_id'>Another Example Band</option>
               </Select>
               <FormControl>
-                <Input placeholder='Key'></Input>
+                <Input placeholder='Key' ref={songKey}></Input>
               </FormControl>
               {url && <audio src={url} controls></audio>}
             </Stack>
