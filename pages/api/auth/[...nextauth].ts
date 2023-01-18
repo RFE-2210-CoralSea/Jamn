@@ -11,23 +11,34 @@ export const authOptions: NextAuthOptions = {
     async redirect() {
       return '/personal'
     },
-    async signIn({ user, account, credentials }) {
+    async signIn({ user, account }) {
       // user is equivalent to session object, with an id
       console.log('user', user)
-      // account stores provider info
-      console.log('account', account)
-      // may be useful for custom credentials
-      console.log('credentials', credentials)
-      // an account needs to be created on the DB
+
       if (account?.provider === 'google') {
-        console.log('checking account')
-        /**
-         * check DB for google account
-         * if account doesn't exist
-         *  create account
-         */
+        // check if user exists
+        let dbUser = await prisma.users.findFirst({
+          where: {
+            email: user.email as string
+          }
+        })
+
+        // create user in DB if a new user logs in
+        if (!dbUser) {
+          dbUser = await prisma.users.create({
+            data: {
+              picture: user.image as string,
+              email: user.email as string,
+              name: user.name as string,
+              bio: 'Aspiring musician'
+            }
+          })
+        }
+
+        console.log('db user', dbUser)
+        return true
       }
-      return true
+      return false
     }
   },
   providers: [
