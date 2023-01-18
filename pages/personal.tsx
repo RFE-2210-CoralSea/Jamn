@@ -96,7 +96,6 @@ const personal = () => {
                   return <LazyVisualizer posts={post}/>
                 })}
               </VStack>
-
           </SimpleGrid>
         </Box>
       </Box>
