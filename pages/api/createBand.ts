@@ -3,7 +3,7 @@ import prisma from '../../lib/Prisma';
 import { unstable_getServerSession } from 'next-auth';
 import { authOptions } from './auth/[...nextauth]';
 
-export default function handler(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
@@ -13,26 +13,27 @@ export default function handler(
     res.end();
   }
   else {
-    console.log(req.body);
     //get server session
-    unstable_getServerSession(req, res, authOptions)
-    .then((response) => {
-      console.log(response);
-      //check that session is not null
-      if (response !== null) {
-        prisma.bands.create({
-          data: req.body
-        })
-        .then((response) => {
-          console.log(response);
-
-          res.status(200).end();
-        })
-        .catch((err) => {
-          res.send(err);
-          res.status(400).end();
-        })
+    const sessionData = await unstable_getServerSession(req, res, authOptions)
+    const userData = await prisma.users.findMany({where: {email: sessionData.user.email}});
+    const bandData = await prisma.bands.create({
+      data: {
+        name: req.body.name,
+        description: req.body.description,
+        image: req.body.image,
+        roles: {
+          create: {
+            userId: userData[0].id,
+            admin: true,
+            name: userData[0].name
+          }
+        }
+      },
+      include: {
+        roles: true
       }
     })
+    res.send(bandData)
+    res.status(200).end();
   }
 }
