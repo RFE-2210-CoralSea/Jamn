@@ -76,7 +76,7 @@ const personal = () => {
       <title>Your Homepage</title>
     </Head>
 
-      <Box h='100vh' maxH='100%' w='100vw' maxW='100%'>
+      <Box h='100vh' maxH='100%' w='100vw' maxW='100%' bg={useColorModeValue('gray.200', 'dark')}>
         <NavBar/>
         <Box display='flex'>
             <SimpleGrid columns={2} spacing={5} alignContent='center'>
