@@ -1,4 +1,4 @@
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Stack } from '@chakra-ui/react'
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Stack, Select } from '@chakra-ui/react'
 import { IconButton, Button, ButtonGroup, Tooltip, FormControl, Input, FormLabel } from '@chakra-ui/react'
 import { AiOutlineCustomerService, AiOutlinePlayCircle } from 'react-icons/ai'
 import { useDisclosure } from '@chakra-ui/react'
@@ -45,6 +45,7 @@ export const RecordingModal = () => {
   // submit audio to db
   const submit = () => {
     console.log('store audio in db')
+    // TODO: upload audio (cloudinary?), save url in DB
   }
 
   return (
@@ -62,6 +63,14 @@ export const RecordingModal = () => {
             <Stack direction='column' spacing='5'>
               <FormControl>
                 <Input placeholder='Song Name'></Input>
+              </FormControl>
+              <Select placeholder='Select Band'>
+                {/* This will be dynamically loaded */}
+                <option value='band1_id'>Example Band</option>
+                <option value='band2_id'>Another Example Band</option>
+              </Select>
+              <FormControl>
+                <Input placeholder='Key'></Input>
               </FormControl>
               {url && <audio src={url} controls></audio>}
             </Stack>
