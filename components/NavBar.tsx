@@ -41,7 +41,7 @@ export const NavBar = () => {
   }
 
   return (
-    <Flex w='100vw' justifyContent='space-between' p={2}>
+    <Flex justifyContent='space-between'>
       <Heading><Link href="/">Musi 🎸</Link></Heading>
       <Stack direction='row'>
           <BandModal/>

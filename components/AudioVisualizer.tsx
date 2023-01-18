@@ -2,8 +2,19 @@ import { Grid, Text, Image, IconButton, Container, Flex } from '@chakra-ui/react
 import { useEffect } from 'react'
 import { AiOutlineRight } from 'react-icons/ai'
 import { useColorModeValue } from '@chakra-ui/react'
+import { CommentSection } from './CommentSection'
 
-export default function AudioVisualizer () {
+declare interface PostData {
+  name: string,
+  band: string,
+  audio: string,
+  pdf: string,
+  date: string,
+  text: string,
+  comments: []
+}
+
+export default function AudioVisualizer ({ posts }:any) {
 
   useEffect(() => {
     require('./Wavesurfer')
@@ -24,6 +35,9 @@ export default function AudioVisualizer () {
           <IconButton aria-label='playButton' id='playPause' className='fi-rr-play' icon={<AiOutlineRight/>} w='3.5rem' h='3.5rem' borderRadius='50%'/>
           <div id='waveform'/>
         </Grid>
+        {posts.map((post:PostData) => {
+          return <CommentSection comments={post.comments}/>
+        })}
       </Grid>
     </Container>
   )

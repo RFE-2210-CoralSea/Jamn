@@ -1,35 +1,24 @@
-import { Image, Flex, Text } from '@chakra-ui/react'
+import { Image, Text } from '@chakra-ui/react'
 
 type ProfileImageProps = {
-  imgURL: string,
+  image: string,
   name: string,
 }
 
-const ProfileImage = (props: ProfileImageProps) => {
+const ProfileImage = ({ image, name }: ProfileImageProps) => {
   return(
-    <Flex width='378px'
-      height='263px'
-      top='195px'
-      left='42px'
-      bg='#F7F1E3'
-      align='center'
-      position='absolute'
-      direction='column'
-      justify='center'
-      boxShadow='dark-lg'
-      rounded={10}>
-      <Image
-      src={props.imgURL}
-      borderRadius='full'
-      boxSize='150px'
-      alt='pfp'
-      border='1px solid black'
-      mb={15}
-      />
-      <Text fontSize='4xl' fontWeight='bold' color='black'>
-      {props.name}
-      </Text>
-    </Flex>
+    <>
+      <Text textAlign='center' mt='5rem' fontSize='3xl' fontWeight='bold'>{name}</Text>
+        <Image
+        src={image}
+        alt='/pfp.jpeg'
+        boxShadow='dark-lg'
+        border='1px solid black'
+        objectFit='cover'
+        boxSize='15rem'
+        rounded={10}
+        />
+    </>
   );
 }
 
