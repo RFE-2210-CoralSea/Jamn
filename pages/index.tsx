@@ -78,7 +78,7 @@ export default function Home() {
               style={{
                 position: 'absolute',
                 left: '130px',
-                top: '140px',
+                top: '130px',
               }}
               variants={vinylVariants}
               animate={playing ? "spinning" : "stopped" }
