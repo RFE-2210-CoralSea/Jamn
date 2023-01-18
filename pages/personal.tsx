@@ -28,7 +28,7 @@ const personal = () => {
   image: '/pfp.jpeg',
   posts: [
     {
-      postId: 'a',
+      postId: '1',
       name: 'Slide',
       band: 'Frank Ocean',
       image: '/slide.jpg',
@@ -50,7 +50,7 @@ const personal = () => {
       }]
     },
     {
-      postId: 'b',
+      postId: '2',
       name: 'DieYoung',
       band: 'Sleepy Hallow',
       image: '/dieyoung.jpg',

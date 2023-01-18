@@ -1,11 +1,12 @@
 import { Flex, Stack, Heading } from '@chakra-ui/react'
 import { DarkMode } from './DarkMode'
 import { Login } from './Login'
-import SignOut from './SignOut'
 import { BandModal } from './BandModal'
 import { RecordingModal } from './RecordingModal'
 import { useSession } from 'next-auth/react'
+import { HomeButton } from './HomeButton'
 import Link from 'next/link'
+import SignOut from './SignOut'
 
 export const NavBar = () => {
   const { data: session, status } = useSession()
@@ -24,11 +25,12 @@ export const NavBar = () => {
   }
 
   return (
-    <Flex justifyContent='space-between'>
+    <Flex justifyContent='space-between' p={2}>
       <Heading><Link href="/">Musi 🎸</Link></Heading>
       <Stack direction='row'>
           <BandModal/>
           <RecordingModal/>
+          <HomeButton/>
           <SignOut/>
           <DarkMode/>
       </Stack>

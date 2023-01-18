@@ -26,14 +26,14 @@ type User = {
 };
 
 const SampleData = {
-  name: 'Jackson',
+  name: 'Joe',
   description: 'hello world and welcome to my page',
   instruments: ['Cello', 'Piano', 'Drums'],
   bands: ['Super Sick Band', 'Awesome Band'],
-  image: '/pfp.jpeg',
+  image: '/pfp.jpg',
   posts: [
     {
-      postId: 'a',
+      postId: '1',
       name: 'Slide',
       band: 'Frank Ocean',
       image: '/slide.jpg',
@@ -55,7 +55,7 @@ const SampleData = {
       }]
     },
     {
-      postId: 'b',
+      postId: '2',
       name: 'DieYoung',
       band: 'Sleepy Hallow',
       image: '/dieyoung.jpg',
