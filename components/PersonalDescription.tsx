@@ -1,4 +1,4 @@
-import { Card, CardHeader, CardBody, Stack, Box } from '@chakra-ui/react'
+import { Card, CardHeader, CardBody, Stack, Box, Text } from '@chakra-ui/react'
 import { List, Heading, ListItem } from "@chakra-ui/react"
 
 type PersonalDescriptionProps = {
@@ -14,7 +14,9 @@ export const PersonalDescription = ({ description, instruments }:PersonalDescrip
               <Heading borderBottom='1px solid black'>Description</Heading>
             </CardHeader>
               <CardBody>
-                {description}
+                <Text align='center'>
+                  {description}
+                </Text>
               </CardBody>
             <CardHeader>
               <Heading borderBottom="1px solid black" >Instruments</Heading>
