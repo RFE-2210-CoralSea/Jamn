@@ -26,15 +26,18 @@ type User = {
 };
 
 const SampleData = {
-  name: 'Ivan',
-  description: 'hello world',
+  name: 'Jackson',
+  description: 'hello world and welcome to my page',
   instruments: ['Cello', 'Piano', 'Drums'],
-  image: 'testprofilepicture.jpg',
+  bands: ['Super Sick Band', 'Awesome Band'],
+  image: '/pfp.jpeg',
   posts: [
     {
-      name: 'Joe',
-      band: 'Super Sick Band',
-      audio: 'testaudio.wav',
+      postId: 'a',
+      name: 'Slide',
+      band: 'Frank Ocean',
+      image: '/slide.jpg',
+      audio: '/slide frank ocean.mp4',
       pdf: 'testpdf.pdf',
       date: '01/17/2023 @ 8:09pm',
       text: 'Hello user feed',
@@ -45,10 +48,26 @@ const SampleData = {
         date: '01/17/2023 @ 8:10pm'
       },
       {
-          name: 'Joe',
-          profile_picture: 'pfp.jpeg',
-          text: "test",
-          date: '01/17/2023 @ 8:11pm'
+        name: 'Joe',
+        profile_picture: 'testpfp.jpg',
+        text: "test",
+        date: '01/17/2023 @ 8:11pm'
+      }]
+    },
+    {
+      postId: 'b',
+      name: 'DieYoung',
+      band: 'Sleepy Hallow',
+      image: '/dieyoung.jpg',
+      audio: '/die young.mp3',
+      pdf: 'testpdf2.pdf',
+      date: '01/17/2023 @ 10:23pm',
+      text: 'test Text',
+      comments: [{
+        name: 'bro',
+        profile_picture: 'broooo.jpg',
+        text: 'BROOOOOOO',
+        date: '01/17/2023 @ 10:30pm'
       }]
     }
   ]

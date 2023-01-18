@@ -5,7 +5,7 @@ type ProfileImageProps = {
   name: string,
 }
 
-const ProfileImage = ({ image, name }: ProfileImageProps) => {
+export const ProfileImage = ({ image, name }: ProfileImageProps) => {
   return(
     <>
       <Text textAlign='center' mt='5rem' fontSize='3xl' fontWeight='bold'>{name}</Text>
@@ -22,5 +22,4 @@ const ProfileImage = ({ image, name }: ProfileImageProps) => {
   );
 }
 
-export default ProfileImage;
 
