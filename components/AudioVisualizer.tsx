@@ -26,7 +26,7 @@ export default function AudioVisualizer ({ posts }:any) {
   return (
     <Container
       display='center'
-      mt='9rem'>
+      >
 
       <Grid
         gridTemplateColumns='10rem 1fr'

@@ -3,7 +3,7 @@ import Head from 'next/head'
 import { NavBar } from '../components/NavBar'
 import { ProfileImage } from '../components/ProfileImage'
 import { PersonalDescription } from '../components/PersonalDescription'
-import { Box, SimpleGrid, VStack } from '@chakra-ui/react'
+import { Box, Heading, SimpleGrid, VStack, useColorModeValue } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
 import { BandModal } from '../components/BandModal'
 
@@ -67,7 +67,7 @@ const personal = () => {
       <title>Your Homepage</title>
     </Head>
 
-      <Box h='100vh' w='100vw' maxW='100%'>
+      <Box h='100vh' maxH='100%' w='100vw' maxW='100%' bg={useColorModeValue('gray.200', 'dark')}>
         <NavBar/>
         <Box display='flex'>
             <SimpleGrid columns={2} spacing={5} alignContent='center'>
@@ -83,6 +83,7 @@ const personal = () => {
               </VStack>
 
               <VStack mb='5rem'>
+                <Heading mt='9rem'></Heading>
                 {data.posts.map((post) => {
                   return <LazyVisualizer posts={post}/>
                 })}

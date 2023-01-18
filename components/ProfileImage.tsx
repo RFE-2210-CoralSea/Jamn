@@ -1,4 +1,4 @@
-import { Image, Text } from '@chakra-ui/react'
+import { Image, Text, Flex, Avatar, Badge, Box } from '@chakra-ui/react'
 
 type ProfileImageProps = {
   image: string,
@@ -8,18 +8,29 @@ type ProfileImageProps = {
 export const ProfileImage = ({ image, name }: ProfileImageProps) => {
   return(
     <>
-      <Text textAlign='center' mt='5rem' fontSize='3xl' fontWeight='bold'>{name}</Text>
-        <Image
+        <Avatar
         src={image}
-        alt='/pfp.jpeg'
         boxShadow='dark-lg'
         border='1px solid black'
         objectFit='cover'
         boxSize='15rem'
-        rounded={10}
+        mt='10rem'
         />
+        <Text textAlign='center' fontSize='3xl' fontWeight='bold'>{name}</Text>
     </>
   );
 }
 
 
+    // <>
+    //   <Text textAlign='center' mt='5rem' fontSize='3xl' fontWeight='bold'>{name}</Text>
+    //     <Image
+    //     src={image}
+    //     alt='/pfp.jpeg'
+    //     boxShadow='dark-lg'
+    //     border='1px solid black'
+    //     objectFit='cover'
+    //     boxSize='15rem'
+    //     rounded={10}
+    //     />
+    // </>
