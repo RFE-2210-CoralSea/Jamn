@@ -43,6 +43,12 @@ const SampleData = {
         profile_picture: 'sampleprofpic.jpg',
         text: 'hello comments',
         date: '01/17/2023 @ 8:10pm'
+      },
+      {
+          name: 'Joe',
+          profile_picture: 'pfp.jpeg',
+          text: "test",
+          date: '01/17/2023 @ 8:11pm'
       }]
     }
   ]
@@ -54,6 +60,5 @@ export default function handler (
 ) {
   if (req.method === 'GET') {
     res.send(SampleData);
-    res.status(200).end();
   }
 };
