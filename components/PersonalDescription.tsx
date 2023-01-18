@@ -32,7 +32,7 @@ export const PersonalDescription = ({ description, instruments, roles }:Personal
   const [editRoles, setRoles] = useState(roles)
 
   return (
-    <Box display='center' w='15rem'>
+    <Box w='15rem'>
       <Tabs variant='soft-rounded' colorScheme={useColorModeValue('blue', 'green')}>
         <TabList>
           <Tab>Bio</Tab>

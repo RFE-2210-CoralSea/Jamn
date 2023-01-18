@@ -42,9 +42,7 @@ const personal = () => {
 
       <Box h='100vh' maxH='100%' w='100vw' maxW='100%' bg={useColorModeValue('gray.200', 'dark')}>
         <NavBar/>
-        <Box display='flex'>
-            <SimpleGrid columns={2} spacing={5} mr='5rem' alignContent='center'>
-
+            <SimpleGrid columns={2} alignContent='center'>
               <VStack>
                 <ProfileImage
                   image={data.picture}
@@ -55,7 +53,7 @@ const personal = () => {
                   roles={data.roles}/>
               </VStack>
 
-              <VStack mb='5rem'>
+              <VStack mb='5rem' mr='40rem'>
                 <UserPost/>
                 {data.posts.map((post) => {
                   return <LazyVisualizer posts={post}/>
@@ -63,7 +61,6 @@ const personal = () => {
               </VStack>
 
           </SimpleGrid>
-        </Box>
       </Box>
     </>
   )
