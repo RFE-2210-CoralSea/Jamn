@@ -21,7 +21,7 @@ export const UserComment = ({ name, profile_picture, text, date }:CommentProps) 
           <TagLabel fontWeight='bold'>{name}</TagLabel>
         </Tag>
       </Heading>
-      <Text pt='3' fontSize='md' mb='1rem'>{text}</Text>
+      <Text pt='3' fontSize='lg' mb='1rem'>{text}</Text>
       <Wrap fontSize='xs'><span>{date}</span></Wrap>
     </Box>
   )

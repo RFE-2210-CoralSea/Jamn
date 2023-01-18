@@ -44,6 +44,7 @@ const armVariants = {
 export default function Home() {
   // vinyl playing state
   const [ playing, setPlaying ] = useState(false)
+  const [ audio ] = useState(typeof Audio !== 'undefined' && new Audio('/slide frank ocean.mp4'))
 
   return (
     <>
@@ -65,7 +66,16 @@ export default function Home() {
           justifyContent="center"
           flexWrap="wrap"
         >
-          <Container pos="relative" width="445" height="300" onClick={() => setPlaying(s => !s)}>
+          <Container pos="relative" width="445" height="300" onClick={() => {
+            if (audio) {
+              if (playing) {
+                audio.pause()
+              } else {
+                audio.play()
+              }
+              setPlaying(s => !s)
+            }
+          }}>
             <motion.img
               src="/table.svg"
               width="445" height="300" alt="vinyl player"

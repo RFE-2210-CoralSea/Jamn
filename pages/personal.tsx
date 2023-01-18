@@ -1,10 +1,11 @@
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import { NavBar } from '../components/NavBar'
-import ProfileImage from '../components/ProfileImage'
+import { ProfileImage } from '../components/ProfileImage'
 import { PersonalDescription } from '../components/PersonalDescription'
 import { Box, SimpleGrid, VStack } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
+import { BandModal } from '../components/BandModal'
 
 const LazyVisualizer = dynamic(() => import('../components/AudioVisualizer'), {
   ssr: false
@@ -63,17 +64,27 @@ const personal = () => {
       <title>Your Homepage</title>
     </Head>
 
-      <Box h='100vh' w='100vw'>
+      <Box h='100vh' w='100vw' maxW='100%'>
         <NavBar/>
         <Box display='flex'>
             <SimpleGrid columns={2} spacing={5} alignContent='center'>
+
               <VStack>
-                <ProfileImage image={data.picture} name={data.name}/>
-                <PersonalDescription description={data.bio} instruments={data.instruments}/>
+                <ProfileImage
+                  image={data.image}
+                  name={data.name}/>
+                <PersonalDescription
+                  description={data.description}
+                  instruments={data.instruments}
+                  bands={data.bands}/>
               </VStack>
-              <VStack>
-                <LazyVisualizer posts={data.posts}/>
+
+              <VStack mb='5rem'>
+                {data.posts.map((post) => {
+                  return <LazyVisualizer posts={post}/>
+                })}
               </VStack>
+
           </SimpleGrid>
         </Box>
       </Box>
