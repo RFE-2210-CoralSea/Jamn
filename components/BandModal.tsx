@@ -2,7 +2,7 @@ import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody,
 import { IconButton, Button, ButtonGroup, Stack, Editable, EditableInput,EditableTextarea, EditablePreview, Tooltip, Box } from '@chakra-ui/react'
 import { AiOutlineUsergroupAdd } from 'react-icons/ai'
 import { useDisclosure, useColorModeValue, Text } from '@chakra-ui/react'
-import {useForm, SubmitHandler} from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import {useState} from 'react'
 
 
@@ -65,7 +65,7 @@ export const BandModal = () => {
 
   return (
     <>
-      <Tooltip hasArrow label='Create a band'>
+      <Tooltip hasArrow label='Create a band!'>
         <IconButton aria-label='create band' bg='pink.300' icon={<AiOutlineUsergroupAdd/>} onClick={onOpen}/>
       </Tooltip>
 

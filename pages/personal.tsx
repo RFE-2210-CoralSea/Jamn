@@ -1,101 +1,82 @@
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import { NavBar } from '../components/NavBar'
+import { UserPost } from '../components/UserPost'
 import { ProfileImage } from '../components/ProfileImage'
 import { PersonalDescription } from '../components/PersonalDescription'
-import { Box, Heading, SimpleGrid, VStack, useColorModeValue} from '@chakra-ui/react'
+import { Box, SimpleGrid, VStack, useColorModeValue, Center, Spinner } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
-
+import { unstable_getServerSession } from 'next-auth'
+import { UserStats } from '../components/UserStats'
 const LazyVisualizer = dynamic(() => import('../components/AudioVisualizer'), {
   ssr: false
 })
 
-import { unstable_getServerSession } from "next-auth";
 const personal = () => {
+
+  const [loading, setLoading] = useState(true)
+  const [data, setData] = useState({
+    picture: '',
+    name: '',
+    bio: '',
+    instruments: [],
+    roles: [],
+    posts: []
+  })
 
   useEffect(() => {
     fetch('api/userFeed')
       .then(async (response) => {
         const newData = await response.json()
         setData(newData)
+        setLoading(false)
       })
   },[])
 
-  const [data, setData] = useState({
-    "name": "Ivan",
-    "bio": "hello world",
-    "instruments": [
-        "Cello",
-        "Piano",
-        "Drums"
-    ],
-    "picture": "testprofilepicture.jpg",
-    "posts": [
-        {
-            "name": "Joe",
-            "band": "Super Sick Band",
-            "audio": "testaudio.wav",
-            "pdf": "testpdf.pdf",
-            "date": "01/17/2023 @ 8:09pm",
-            "text": "Hello user feed",
-            "comments": [
-                {
-                    "name": "Darrien",
-                    "profile_picture": "sampleprofpic.jpg",
-                    "text": "hello comments",
-                    "date": "01/17/2023 @ 8:10pm"
-                },
-                {
-                    "name": 'Joe',
-                    "profile_picture": 'pfp.jpeg',
-                    "text": "test",
-                    "date": '01/17/2023 @ 8:11pm'
-                }
-            ]
-        }
-    ],
-    "roles": [
-      "test"
-    ]
-})
+  if (loading) {
+    return (
+      <Center h='100vh'>
+        <Spinner size='xl'/>
+      </Center>
+    )
+  }
 
-  return(
+  return (
     <>
     <Head>
       <title>Your Homepage</title>
     </Head>
 
-      <Box h='100vh' maxH='100%' w='100vw' maxW='100%' bg={useColorModeValue('gray.200', 'dark')}>
+      <Box h='100vh' maxH='100%' w='100vw' maxW='100%' bg={useColorModeValue('gray.300', 'dark')}>
         <NavBar/>
-        <Box display='flex'>
-            <SimpleGrid columns={2} spacing={5} alignContent='center'>
-              <VStack>
+            <SimpleGrid columns={2} alignContent='center'>
+              <VStack pos='relative'>
                 <ProfileImage
                   image={data.picture}
                   name={data.name}/>
+                <UserStats stat={data.posts.length}/>
                 <PersonalDescription
                   description={data.bio}
                   instruments={data.instruments}
-                  bands={data.roles}/>
+                  roles={data.roles}/>
               </VStack>
 
-              <VStack mb='5rem'>
-                <Heading mt='9rem'></Heading>
-                {data.posts.map((post, i ) => {
-                  return <LazyVisualizer key={i} posts={post}/>
+              <VStack mb='5rem' mr='40rem'>
+                <UserPost/>
+                {data.posts.map((post) => {
+                  return <LazyVisualizer posts={post}/>
                 })}
               </VStack>
           </SimpleGrid>
-        </Box>
       </Box>
     </>
   )
 }
 
-export default personal;
 
+export default personal
 
-export async function getServerSideProps(context:any) {
+export async function getServerSideProps (context:any){
   const session = await unstable_getServerSession(context.req, context.res);
 
   if (!session) {
