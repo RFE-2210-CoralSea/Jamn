@@ -34,6 +34,6 @@ export default async function handler(
       }
     })
     res.send(bandData)
-    res.status(200).end();
+    res.end();
   }
 }
