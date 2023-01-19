@@ -105,24 +105,17 @@ export const UserPost = ({bands}:PostProps) => {
             <FormControl>
               <Input placeholder='Song Key' ref={songKey}/>
             </FormControl>
-            <FormControl>
+            <FormControl p='1rem'>
               {url && <audio src={url} controls></audio>}
             </FormControl>
-
-            <Stack direction='row' justifyContent='center'>
-              <FormControl>
-                <Button onClick={() => document.getElementById('uploadSongPic')?.click()}> Add cover art
-                  <VisuallyHiddenInput id='uploadSongPic' type='file'/>
-                </Button>
-              </FormControl>
-            </Stack>
 
           </Stack>
           <ButtonGroup>
             <Tooltip hasArrow label='Start Recording!'>
-              <IconButton aria-label='startRecording' icon={<AiOutlinePlayCircle/>} onClick={record}/>
+              <IconButton aria-label='startRecording' icon={<AiOutlinePlayCircle/>} onClick={record} bg='red.500'/>
             </Tooltip>
-            <Button mt='1rem' onClick={submit}> Submit </Button>
+            <Button> Upload PDF </Button>
+            <Button onClick={submit}> Submit </Button>
           </ButtonGroup>
       </CardBody>
     </Card>
