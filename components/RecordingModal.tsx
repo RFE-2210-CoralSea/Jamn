@@ -1,8 +1,9 @@
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Stack, Select } from '@chakra-ui/react'
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Stack, Select, VisuallyHidden } from '@chakra-ui/react'
 import { IconButton, Button, ButtonGroup, Tooltip, FormControl, Input } from '@chakra-ui/react'
-import { AiOutlineCustomerService, AiOutlinePlayCircle } from 'react-icons/ai'
+import { AiOutlineCustomerService, AiOutlinePlayCircle, AiOutlinePauseCircle } from 'react-icons/ai'
 import { useDisclosure } from '@chakra-ui/react'
 import { useEffect, useState, useRef } from 'react'
+import useSWR from 'swr'
 
 // helper function to convert a file to an array buffer
 function readFile(f: File): Promise<ArrayBuffer> {
@@ -19,7 +20,12 @@ function readFile(f: File): Promise<ArrayBuffer> {
   })
 }
 
+// fetch bands a user is in
+const fetcher = (...args: string[]) => fetch(...args).then((res) => res.json())
+
 export const RecordingModal = () => {
+  const { data, error, isLoading } = useSWR('/api/userFeed', fetcher)
+
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [ recording, setRecording ] = useState(false)
   const [ recorder, setRecorder ] = useState<MediaRecorder | null>(null)
@@ -43,6 +49,8 @@ export const RecordingModal = () => {
         .catch(console.error)
     }
   }, [isOpen])
+
+  // useEffect(() => console.log('modal',data), [data])
 
   // begin recording
   const record = async () => {
@@ -85,8 +93,8 @@ export const RecordingModal = () => {
           songName: songName?.current?.value as string
         })
       })
-    } else {
-      console.log('test')
+      // close modal
+      document.getElementById('close-recording')?.click()
     }
   }
 
@@ -100,33 +108,36 @@ export const RecordingModal = () => {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader> Record A Song! </ModalHeader>
-          <ModalCloseButton />
+          <ModalCloseButton id='close-recording'/>
           <ModalBody>
             <Stack direction='column' spacing='5'>
               <FormControl>
                 <Input placeholder='Song Name' ref={songName}></Input>
               </FormControl>
               <Select placeholder='Select Band' ref={band}>
-                {/* This will be dynamically loaded */}
-                <option value='band1_id'>Example Band</option>
-                <option value='band2_id'>Another Example Band</option>
+                {!isLoading && data.roles?.map((band: any) => <option value={band.name}>{band.name}</option>)}
               </Select>
               <FormControl>
                 <Input placeholder='Key' ref={songKey}></Input>
               </FormControl>
               {url && <audio src={url} controls></audio>}
-              <FormControl>
-                <Input type='file' accept='application/pdf' ref={file}></Input>
-              </FormControl>
             </Stack>
           </ModalBody>
 
           <ModalFooter>
             <ButtonGroup>
-              <Tooltip hasArrow label='Start Recording!'>
-                <IconButton aria-label='start recording' icon={<AiOutlinePlayCircle/>} onClick={record}/>
+              <Tooltip hasArrow label={recording ? 'Stop Recording!' : 'Start Recording!'}>
+                <IconButton aria-label='start recording' icon={recording ? <AiOutlinePauseCircle/> : <AiOutlinePlayCircle/>} onClick={record}/>
               </Tooltip>
-              <Button onClick={submit}>Upload</Button>
+              <VisuallyHidden>
+                <FormControl>
+                  <Input id='upload-pdf' type='file' accept='application/pdf' ref={file}></Input>
+                </FormControl>
+              </VisuallyHidden>
+              <Button onClick={() => document.getElementById('upload-pdf')?.click()}>
+                Upload PDF
+              </Button>
+              <Button onClick={submit}>Post Song</Button>
             </ButtonGroup>
           </ModalFooter>
         </ModalContent>
