@@ -37,15 +37,6 @@ export default function BandFeed(props: any) {
     )
   }
 
-  // useEffect(() => {
-  //   fetch(`/api/bandFeed/${router.query.id}`)
-  //     .then(async (res) => {
-  //       const newData = await res.json()
-  //       console.log(newData)
-  //       setData(newData)
-  //     })
-  // }, [])
-
   if (!data.roles) return <></>
 
   return (
