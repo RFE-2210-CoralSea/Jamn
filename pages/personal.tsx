@@ -8,32 +8,19 @@ import { Box, SimpleGrid, VStack, useColorModeValue, Center, Spinner } from '@ch
 import { useState, useEffect } from 'react'
 import { unstable_getServerSession } from 'next-auth'
 import { UserStats } from '../components/UserStats'
+import useSWR from 'swr'
+
+
 const LazyVisualizer = dynamic(() => import('../components/AudioVisualizer'), {
   ssr: false
 })
 
+const fetcher = (...args:any) => fetch(...args).then(res => res.json())
+
 const personal = () => {
+  const { data, error, isLoading } = useSWR('/api/userFeed', fetcher, { refreshInterval: 1000 })
 
-  const [loading, setLoading] = useState(true)
-  const [data, setData] = useState({
-    picture: '',
-    name: '',
-    bio: '',
-    instruments: [],
-    roles: [],
-    posts: []
-  })
-
-  useEffect(() => {
-    fetch('api/userFeed')
-      .then(async (response) => {
-        const newData = await response.json()
-        setData(newData)
-        setLoading(false)
-      })
-  },[])
-
-  if (loading) {
+  if (isLoading) {
     return (
       <Center h='100vh'>
         <Spinner size='xl'/>
