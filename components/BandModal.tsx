@@ -1,5 +1,5 @@
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton } from '@chakra-ui/react'
-import { IconButton, Button, ButtonGroup, Stack, Editable, EditableInput,EditableTextarea, EditablePreview, Tooltip, Box } from '@chakra-ui/react'
+import { IconButton, Button, ButtonGroup, Stack, Editable, EditableInput,EditableTextarea, EditablePreview, Tooltip, Box, Image } from '@chakra-ui/react'
 import { AiOutlineUsergroupAdd } from 'react-icons/ai'
 import { useDisclosure, useColorModeValue, Text } from '@chakra-ui/react'
 import { useForm } from 'react-hook-form'
@@ -38,6 +38,7 @@ export const BandModal = () => {
 
   async function handleOnSubmit(event) {
     event.preventDefault();
+    console.log(event.target)
     const form = event.currentTarget;
     const fileInput = Array.from(form.elements).find(({ name }) => name === 'file');
     const formData = new FormData();
@@ -49,6 +50,7 @@ export const BandModal = () => {
       method: "POST",
       body: formData
     }).then(r => r.json());
+    console.log(imageData)
     setImageSrc(imageData.secure_url)
   }
 
@@ -72,18 +74,32 @@ export const BandModal = () => {
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Create Your Band!</ModalHeader>
+          <ModalHeader textAlign="center">Create Your Band!</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Stack direction='column' spacing='5'>
-              <Box height="5em" display="flex" flexDirection="column" alignItems="center">
-                <Text mb={4}>CHOOSE A BAND PHOTO</Text>
-                <form onChange={handleOnChange} onSubmit={handleOnSubmit} method="post" style={{display: 'flex', justifyContent:"center"}}>
-                  <input type="file" name="file"  style={{width: "70%"}}/>
-                  <button style={{border: "1px solid white", borderRadius: "5px", padding:"0.3em"}} >Save Image</button>
+              <Box display="flex" flexDirection="column" >
+                <Text mb={4} fontWeight="600">CHOOSE A BAND PHOTO</Text>
+                <form onChange={handleOnChange} onSubmit={handleOnSubmit} method="post" style={{display: 'flex', justifyContent:"space-between", gap: "1rem"}}>
+                  <input type="file" name="file"  style={{width: "100%"}}/>
+                  <button style={{border: `2px solid ${useColorModeValue('#F9A824', '#87D8C8')}`, borderRadius: "5px", padding: "0.2rem", fontWeight: "700", width: "40%"}}>
+                    <Text onClick={(e) => {
+                    if(e.target.innerHTML === "Save Image"){
+                      e.target.innerHTML = 'Saved!'
+                    } else {
+                     e.target.innerHTML = 'Save Image'
+                    }
+                  }}>Save Image</Text></button>
                 </form>
               </Box>
-              <img src={imageSrc}/>
+              <Box width="100%" display="grid" placeItems="center" marginTop={10}>
+
+                <Image src={imageSrc}
+                  boxSize="200px"
+                  align="center"
+                  objectFit="cover"
+                />
+              </Box>
               <Editable placeholder='Enter Band Name' bg={useColorModeValue('gray.200', 'black')} borderRadius='5' p={2}>
                 <EditablePreview/>
                 <EditableInput {...register("name", { required: true })}/>
@@ -96,7 +112,7 @@ export const BandModal = () => {
           </ModalBody>
           <ModalFooter>
             <ButtonGroup>
-              <Button onClick={handleSubmit(logData)}>Create Band Page</Button>
+              <Button onClick={handleSubmit(handleOnSubmit)}>Create Band Page</Button>
             </ButtonGroup>
           </ModalFooter>
         </ModalContent>

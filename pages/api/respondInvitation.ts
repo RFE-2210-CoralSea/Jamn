@@ -17,7 +17,7 @@ export default async function handler(
     prisma.roles.create({data: {userId: user?.id, bandId: req.body.bandId, admin: false, name: user?.name}})
     .then((response) => {
       return prisma.invitations.delete({where:
-        {bandId_userId:
+        {userId_bandId:
           {
             bandId: req.body.bandId,
             userId: user?.id
@@ -30,7 +30,7 @@ export default async function handler(
     })
   } else {
     prisma.invitations.delete({where:
-      {bandId_userId:
+      {userId_bandId:
         {
           bandId: req.body.bandId,
           userId: user?.id

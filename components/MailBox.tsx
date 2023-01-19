@@ -3,24 +3,58 @@ import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody,
 import { AiOutlineMail } from 'react-icons/ai'
 import {Accordion, AccordionItem, AccordionButton, AccordionPanel,AccordionIcon, useColorModeValue } from '@chakra-ui/react'
 import { signIn } from 'next-auth/react'
+import {useState, useEffect} from 'react'
+import { getSession } from 'next-auth/client'
+
+
 
 type IdProp = {
   id: number
+
 }
 
 
-export const MailBox = ({id}:IdProp) => {
+export const MailBox = ({id, session}:IdProp) => {
+
+  const [data, setData] = useState([])
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const testData = [
-    {
-      bandName: "beetles",
-      message: "Come join our band"
-    },
-    {
-      bandName: "queen",
-      message: "Check out our band page"
-    },
-  ]
+
+  useEffect(() => {
+     fetch('api/getInvitations')
+      .then(async (response) => {
+        const newData = await response.json()
+        console.log("This is the data" + JSON.stringify(newData))
+        setData(newData)
+      })
+  }, [data])
+
+
+  const acceptInvite = (bandId) => {
+    let response = {
+      bandId: bandId,
+      accept: true
+    }
+    fetch('/api/respondInvitation', {
+      method: 'PUT',
+      headers: {
+        'Content-Type' : 'application/json',
+      },
+      body: JSON.stringify(response)
+    })
+  }
+  const declineInvite = (bandId) => {
+    let response = {
+      bandId: bandId,
+      accept: false
+    }
+    fetch('/api/respondInvitation', {
+      method: 'PUT',
+      headers: {
+        'Content-Type' : 'application/json',
+      },
+      body: JSON.stringify(response)
+    })
+  }
 
   return (
     <>
@@ -30,7 +64,7 @@ export const MailBox = ({id}:IdProp) => {
             <IconButton aria-label='login' onClick={onOpen} bg='teal.500' icon={<AiOutlineMail/>}/>
           </Box>
         </Tooltip>
-        {testData.length === 2 &&
+        {data.length > 0 &&
           <Text as="span"
           width="1.5rem"
           height="1.5rem"
@@ -40,7 +74,7 @@ export const MailBox = ({id}:IdProp) => {
           borderRadius="100%"
           background="red"
           textAlign="center"
-          >{testData.length}</Text>
+          >{data.length}</Text>
         }
       </Box>
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -61,7 +95,7 @@ export const MailBox = ({id}:IdProp) => {
           <ModalBody>
             <Accordion allowMultiple>
               {
-                testData.map((invite, i) => {
+                data.map((invite, i) => {
                   return (
                     <AccordionItem key={i}>
                       <h2>
@@ -72,16 +106,16 @@ export const MailBox = ({id}:IdProp) => {
                             >You have an invite from
                             <Text as="span"
                               color={useColorModeValue('#F9A824','#87D8C8' )}
-                            > {invite.bandName.toUpperCase()}</Text></Text>
+                            > {invite.bands.name.toUpperCase()}</Text></Text>
                           </Box>
                           <AccordionIcon />
                         </AccordionButton>
                       </h2>
                       <AccordionPanel pb={4} display="flex" flexDirection="column" justifyContent="space-between">
-                        {invite.message}
+                        {invite.bands.description}
                         <Box mt={5}>
-                          <Button mr={2} size="sm"><Text _hover={{color: "green"}}>Accept</Text></Button>
-                          <Button size="sm"><Text _hover={{color: "red"}}>Decline</Text></Button>
+                          <Button mr={2} size="sm"><Text _hover={{color: "green"}} onClick={() => acceptInvite(invite.bandId)}>Accept</Text></Button>
+                          <Button size="sm"><Text _hover={{color: "red"}} onClick={() => declineInvite(invite.bandId)}>Decline</Text></Button>
                         </Box>
                       </AccordionPanel>
                     </AccordionItem>
@@ -100,4 +134,20 @@ export const MailBox = ({id}:IdProp) => {
       </Modal>
     </>
   )
+}
+
+export async function getServerSideProps (context:any) {
+  const session = await unstable_getServerSession(context.req, context.res);
+
+  if (!session) {
+    return {
+      redirect: { destination: "/" },
+    };
+  }
+  console.log(session)
+  return {
+    props: {
+      session
+    },
+  }
 }
