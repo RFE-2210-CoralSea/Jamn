@@ -3,26 +3,48 @@ import Head from 'next/head'
 import { NavBar } from '../../components/NavBar'
 import { ProfileImage } from '../../components/ProfileImage'
 import { PersonalDescription } from '../../components/PersonalDescription'
-import { Box, Card, SimpleGrid, VStack, useColorModeValue, CardHeader, CardBody, Heading, Text, Stack, List, ListItem } from '@chakra-ui/react'
+import { Box, Card, SimpleGrid, VStack, useColorModeValue, CardHeader, CardBody, Heading, Text, Stack, List, ListItem, Spinner, Center } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
 import { getSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
+import prisma from '../../lib/Prisma';
+import useSWR from 'swr'
 
 const LazyVisualizer = dynamic(() => import('../../components/AudioVisualizer'), {
   ssr: false
 })
 
-export default function BandFeed(props: any) {
-  const [ data, setData ] = useState<any>({})
+const check = async (pid:string) => {
+  let search = await prisma.bands.findFirst({
+    where: {
+      id: Number(pid)
+    }
+  })
+  return search
+}
 
-  useEffect(() => {
-    fetch('/api/bandFeed')
-      .then(async (res) => {
-        const newData = await res.json()
-        console.log(newData)
-        setData(newData)
-      })
-  }, [])
+const fetcher = (...args:any) => fetch(...args).then(res => res.json())
+
+export default function BandFeed(props: any) {
+  const router = useRouter()
+  const { data, error, isLoading } = useSWR(`/api/bandFeed/${router.query.id}`, fetcher, { refreshInterval: 1000 })
+
+  if (isLoading) {
+    return (
+      <Center h='100vh'>
+        <Spinner size='xl'/>
+      </Center>
+    )
+  }
+
+  // useEffect(() => {
+  //   fetch(`/api/bandFeed/${router.query.id}`)
+  //     .then(async (res) => {
+  //       const newData = await res.json()
+  //       console.log(newData)
+  //       setData(newData)
+  //     })
+  // }, [])
 
   if (!data.roles) return <></>
 
@@ -84,6 +106,13 @@ export async function getServerSideProps(context: any) {
       }
     }
   }
+
+  const checkExists = await check(context.params.id);
+    if (!checkExists) {
+      return {
+        notFound: true
+      }
+    }
 
   return {
     props: {
