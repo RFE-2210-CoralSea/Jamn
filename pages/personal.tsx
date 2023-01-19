@@ -7,7 +7,7 @@ import { PersonalDescription } from '../components/PersonalDescription'
 import { Box, SimpleGrid, VStack, useColorModeValue, Center, Spinner } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
 import { unstable_getServerSession } from 'next-auth'
-import { UserStats } from '../components/Stats'
+import { UserStats } from '../components/UserStats'
 const LazyVisualizer = dynamic(() => import('../components/AudioVisualizer'), {
   ssr: false
 })
