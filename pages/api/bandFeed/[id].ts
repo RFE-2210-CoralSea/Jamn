@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import prisma from '../../lib/Prisma'
+import prisma from '../../../lib/Prisma'
 
 type Comment = {
   name: string,
@@ -49,7 +49,13 @@ export default async function handler(
   } else {
     //this request will take in a band name, query db for the band id, then query for posts and users related to that band id
     const bandData = await prisma.bands.findUnique({ where: { id: parseInt(req.query.id) }, include: { roles: true, posts: true } });
+    (BigInt.prototype as any).toJSON = function () {
+          return Number(this)
+    }
+    if (bandData) {
     res.send(bandData);
     res.end();
+    }
+    return res.status(404).end()
   }
 }
