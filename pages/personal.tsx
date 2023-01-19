@@ -22,7 +22,7 @@ const personal = () => {
   },[])
 
   const [data, setData] = useState({
-    "name": "Ivan",
+    "name": "Kong",
     "bio": "hello world",
     "instruments": [
         "Cello",
