@@ -41,7 +41,7 @@ export default async function handler(
     )?.id
     const band = await prisma.bands.findFirst({
       where: {
-        name: 'The Killers'
+        name: bandName
       }
     })
     if (!userId || !band) {
