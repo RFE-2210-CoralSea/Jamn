@@ -49,6 +49,7 @@ export default async function handler(
       return
     }
 
+    // string from req body has to be converted back into buffers
     const post = await prisma.posts.create({
       data: {
         bandId: band.id,

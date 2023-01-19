@@ -3,6 +3,8 @@ import { IconButton, Button, ButtonGroup, Tooltip, FormControl, Input } from '@c
 import { AiOutlineCustomerService, AiOutlinePlayCircle } from 'react-icons/ai'
 import { useDisclosure } from '@chakra-ui/react'
 import { useEffect, useState, useRef } from 'react'
+
+// helper function to convert a file to an array buffer
 function readFile(f: File): Promise<ArrayBuffer> {
   return new Promise((resolve, reject) => {
     // Create file reader
@@ -16,6 +18,7 @@ function readFile(f: File): Promise<ArrayBuffer> {
     reader.readAsArrayBuffer(f)
   })
 }
+
 export const RecordingModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [ recording, setRecording ] = useState(false)
@@ -72,6 +75,7 @@ export const RecordingModal = () => {
       audio
     ) {
 
+      // array buffer has to be converted to a regular buffer for some reason
       await fetch('/api/newPost', {
         method: 'POST',
         body: JSON.stringify({
