@@ -5,38 +5,21 @@ import { UserPost } from '../components/UserPost'
 import { ProfileImage } from '../components/ProfileImage'
 import { PersonalDescription } from '../components/PersonalDescription'
 import { Box, SimpleGrid, VStack, useColorModeValue, Center, Spinner } from '@chakra-ui/react'
-import { useState, useEffect } from 'react'
 import { unstable_getServerSession } from 'next-auth'
 import { UserStats } from '../components/UserStats'
+import useSWR from 'swr'
+
 
 const LazyVisualizer = dynamic(() => import('../components/AudioVisualizer'), {
   ssr: false
 })
 
+const fetcher = (...args:any) => fetch(...args).then(res => res.json())
+
 const personal = () => {
+  const { data, error, isLoading } = useSWR('/api/userFeed', fetcher, { refreshInterval: 1000 })
 
-  const [loading, setLoading] = useState(true)
-  const [data, setData] = useState({
-    picture: '',
-    name: '',
-    bio: '',
-    instruments: [],
-    roles: [],
-    posts: []
-  })
-
-  useEffect(() => {
-    fetch('api/userFeed')
-      .then(async (response) => {
-        console.log(response)
-        const newData = await response.json()
-        setData(newData)
-        setLoading(false)
-      })
-      .catch(console.error)
-  },[])
-
-  if (loading) {
+  if (isLoading) {
     return (
       <Center h='100vh'>
         <Spinner size='xl'/>
@@ -65,7 +48,7 @@ const personal = () => {
               </VStack>
 
               <VStack mb='5rem' mr='40rem'>
-                {/* <UserPost bands={data.roles}/> */}
+                <UserPost bands={data.roles}/>
                 {data.posts.map((post) => {
                   return <LazyVisualizer posts={post}/>
                 })}
@@ -79,7 +62,7 @@ const personal = () => {
 
 export default personal
 
-export async function getServerSideProps (context:any){
+export async function getServerSideProps (context:any) {
   const session = await unstable_getServerSession(context.req, context.res);
 
   if (!session) {
@@ -91,5 +74,6 @@ export async function getServerSideProps (context:any){
     props: {
       session
     },
-  };
+  }
+
 }

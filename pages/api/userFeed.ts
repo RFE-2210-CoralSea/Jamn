@@ -89,6 +89,8 @@ export default async function handler(
         // user.posts[0].date = Number(user.posts[0].date)
         return res.status(200).json(user)
       }
+    } else {
+      return res.status(401).json({ message: 'Unauthorized' })
     }
   }
 

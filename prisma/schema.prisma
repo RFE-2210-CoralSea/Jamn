@@ -31,9 +31,9 @@ model posts {
   id       Int        @id @default(autoincrement())
   bandId  Int
   userId  Int
-  image   String      @db.VarChar(1000)
+  image   String?      @db.VarChar(1000)
   audio    Bytes      @db.ByteA
-  pdf      Bytes      @db.ByteA
+  pdf      Bytes?      @db.ByteA
   text    String      @db.VarChar(1000)
   date    BigInt
   comments comments[]
