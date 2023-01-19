@@ -27,10 +27,12 @@ const personal = () => {
   useEffect(() => {
     fetch('api/userFeed')
       .then(async (response) => {
+        console.log(response)
         const newData = await response.json()
         setData(newData)
         setLoading(false)
       })
+      .catch(console.error)
   },[])
 
   if (loading) {
