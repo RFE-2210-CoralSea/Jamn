@@ -15,24 +15,28 @@ export default async function handler(
   else {
     //get server session
     const sessionData = await unstable_getServerSession(req, res, authOptions)
-    const userData = await prisma.users.findMany({where: {email: sessionData?.user?.email}});
-    const bandData = await prisma.bands.create({
-      data: {
-        name: req.body.name,
-        description: req.body.description,
-        image: req.body.image,
-        roles: {
-          create: {
-            userId: userData[0].id,
-            admin: true,
-            name: userData[0].name
+    if (sessionData) {
+      const userData = await prisma.users.findMany({where: {email: sessionData?.user?.email}});
+      const bandData = await prisma.bands.create({
+        data: {
+          name: req.body.name,
+          description: req.body.description,
+          image: req.body.image,
+          roles: {
+            create: {
+              userId: userData[0].id,
+              admin: true,
+              name: userData[0].name
+            }
           }
+        },
+        include: {
+          roles: true
         }
-      },
-      include: {
-        roles: true
-      }
-    })
-    res.send(bandData)
+      })
+      return res.status(201).json(bandData)
+    } else {
+      return res.status(404).json({message: 'Unauthorized'})
+    }
   }
 }
