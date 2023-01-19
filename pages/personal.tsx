@@ -50,7 +50,7 @@ const personal = () => {
               <VStack mb='5rem' mr='40rem'>
                 <UserPost bands={data.roles}/>
                 {data.posts.map((post) => {
-                  return <LazyVisualizer posts={post}/>
+                  return <LazyVisualizer key={post.id} posts={post} bands={data.roles}/>
                 })}
               </VStack>
           </SimpleGrid>
@@ -75,5 +75,4 @@ export async function getServerSideProps (context:any) {
       session
     },
   }
-
 }
