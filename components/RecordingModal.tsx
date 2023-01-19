@@ -4,18 +4,34 @@ import { AiOutlineCustomerService, AiOutlinePlayCircle } from 'react-icons/ai'
 import { useDisclosure } from '@chakra-ui/react'
 import { useEffect, useState, useRef } from 'react'
 
+// helper function to convert a file to an array buffer
+function readFile(f: File): Promise<ArrayBuffer> {
+  return new Promise((resolve, reject) => {
+    // Create file reader
+    let reader = new FileReader()
+
+    // Register event listeners
+    reader.addEventListener('loadend', (e) => resolve(e?.target?.result as ArrayBuffer))
+    reader.addEventListener('error', reject)
+
+    // Read file
+    reader.readAsArrayBuffer(f)
+  })
+}
+
 export const RecordingModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [ recording, setRecording ] = useState(false)
   const [ recorder, setRecorder ] = useState<MediaRecorder | null>(null)
   // may also need to store the blob itself?
   const [ url, setUrl ] = useState('')
+  const [ audio, setAudio ] = useState<Blob>()
 
   // input refs
-  const songName = useRef(null)
-  const band = useRef(null)
-  const songKey = useRef(null)
-  const file = useRef(null) // may have to be state
+  const songName = useRef<HTMLInputElement>(null)
+  const band = useRef<HTMLSelectElement>(null)
+  const songKey = useRef<HTMLInputElement>(null)
+  const file = useRef<HTMLInputElement>(null)
 
   // setup audio recorder
   useEffect(() => {
@@ -35,6 +51,7 @@ export const RecordingModal = () => {
     // add event listener to recorder
     if (!recorder.ondataavailable) {
       recorder.ondataavailable = (event) => {
+        setAudio(event.data)
         setUrl(URL.createObjectURL(event.data))
       }
     }
@@ -49,9 +66,28 @@ export const RecordingModal = () => {
   }
 
   // submit audio to db
-  const submit = () => {
-    console.log('store audio in db')
-    // TODO: upload audio (cloudinary?), save url in DB
+  const submit = async () => {
+    // ensure fields are filled out
+    if (
+      file.current?.files &&
+      band.current &&
+      songName.current &&
+      audio
+    ) {
+
+      // array buffer has to be converted to a regular buffer for some reason
+      await fetch('/api/newPost', {
+        method: 'POST',
+        body: JSON.stringify({
+          pdf: Buffer.from(await readFile(file?.current?.files[0] as File)),
+          audio: Buffer.from(await readFile(audio as File)),
+          bandName: band.current.value as string,
+          songName: songName?.current?.value as string
+        })
+      })
+    } else {
+      console.log('test')
+    }
   }
 
   return (

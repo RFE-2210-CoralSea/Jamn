@@ -1,7 +1,7 @@
-import { Flex, Box, Editable, EditableInput, Input, EditablePreview, Stack } from '@chakra-ui/react'
+import { Flex, Box, Editable, EditableInput, Input, EditablePreview } from '@chakra-ui/react'
 import { List, Tag, TagLabel, ListItem, useColorModeValue } from "@chakra-ui/react"
 import { Tabs, TabList, Tab, TabPanels, TabPanel, Avatar } from '@chakra-ui/react'
-import { FormControl, Button, Text } from '@chakra-ui/react'
+import { Link, Text, Center } from '@chakra-ui/react'
 import { EditableControls } from './EditableControls'
 import { useState } from 'react'
 
@@ -10,6 +10,7 @@ declare interface InstrumentData {
   userId: number,
   instrument: string,
 }
+
 declare interface PersonalDescriptionProps {
   instruments: InstrumentData[]
   description: string,
@@ -34,7 +35,6 @@ export const PersonalDescription = ({ description, instruments, roles }:Personal
         'instruments': changedVal
       }
     }
-    console.log(updateData)
     const response = await fetch('api/userFeed', {
       method: 'PUT',
       headers: { 'content-type': 'application/json' },
@@ -63,16 +63,18 @@ export const PersonalDescription = ({ description, instruments, roles }:Personal
             </Editable>
           </TabPanel>
           <TabPanel>
-              <List fontSize="lg" textAlign="center" fontWeight='bold'>
+            <Center>
+              <List fontSize="lg" fontWeight='bold'>
               {roles.map((role) => {
                 return <Flex key={role.id} justifyContent='space-between' mb='1rem'>
-                        <Tag size='xl' colorScheme={useColorModeValue('blue', 'green')} borderRadius='full' >
-                          <Avatar size='sm' mr={2} />
-                          <TagLabel fontWeight='bold' mr={3} key={role.name}>{role.name}</TagLabel>
+                        <Tag size='xl' colorScheme={useColorModeValue('blue', 'green')} borderRadius='full'>
+                            <Avatar size='sm' mr={2} />
+                            <TagLabel fontWeight='bold' mr={3} key={role.name}><Link href={`bands/${role.id}`}>{role.name}</Link></TagLabel>
                         </Tag>
                         </Flex>
               })}
               </List>
+            </Center>
               {roles.length ? (<></>) : (<Text textAlign='center' fontWeight='bold'>You aren't apart of any bands!</Text>)}
           </TabPanel>
           <TabPanel>
