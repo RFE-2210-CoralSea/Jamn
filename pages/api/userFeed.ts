@@ -85,8 +85,11 @@ export default async function handler (
             }
           }
         }
+        console.log(user)
         return res.status(200).json(user)
       }
+    } else {
+      return res.status(401).json({ message: 'Unauthorized' })
     }
   }
 
@@ -152,7 +155,7 @@ export default async function handler (
       //Call update function to begin update process
       return await update(keys[0])
     } else {
-      
+
       //if there is no session, return unauthorized
       return res.status(401).json({ message: 'Unauthorized' })
     }

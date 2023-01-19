@@ -20,6 +20,7 @@
     "@types/react-dom": "18.0.10",
     "@types/react-mic": "^12.4.3",
     "@types/wavesurfer.js": "^6.0.3",
+    "axios": "^1.2.3",
     "eslint-config-next": "13.1.1",
     "framer-motion": "^6.5.1",
     "next": "13.1.1",
@@ -31,6 +32,7 @@
     "react-dom": "18.2.0",
     "react-hook-form": "^7.42.1",
     "react-icons": "^4.7.1",
+    "swr": "^2.0.1",
     "wavesurfer.js": "^6.4.0"
   },
   "devDependencies": {

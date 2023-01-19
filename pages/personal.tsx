@@ -6,60 +6,44 @@ import { PersonalDescription } from '../components/PersonalDescription'
 import { Box, Heading, SimpleGrid, VStack, useColorModeValue } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
 import { BandModal } from '../components/BandModal'
+import useSWR from 'swr'
+import { unstable_getServerSession } from "next-auth";
+import { Spinner } from '@chakra-ui/react'
+
+
+const fetcher = (...args) => fetch(...args).then((res) => res.json())
 
 const LazyVisualizer = dynamic(() => import('../components/AudioVisualizer'), {
   ssr: false
 })
 
-import { unstable_getServerSession } from "next-auth";
-const personal = () => {
+interface infoData {
+  id: number,
+  picture: string,
+  email: string,
+  name: string,
+  bio: string,
+  posts: [],
+  instruments: [],
+  roles: []
 
-  useEffect(() => {
-    fetch('api/userFeed')
-      .then(async (response) => {
-        const newData = await response.json()
-        setData(newData)
-      })
-  },[])
+}
+const personal = ({ info }) => {
+  const { data, isLoading } = useSWR('http://localhost:3000/api/userFeed', fetcher, { refreshInterval: 1000, fallbackData: info })
 
-  const [data, setData] = useState({
-    "name": "Ivan",
-    "bio": "hello world",
-    "instruments": [
-        "Cello",
-        "Piano",
-        "Drums"
-    ],
-    "picture": "testprofilepicture.jpg",
-    "posts": [
-        {
-            "name": "Joe",
-            "band": "Super Sick Band",
-            "audio": "testaudio.wav",
-            "pdf": "testpdf.pdf",
-            "date": "01/17/2023 @ 8:09pm",
-            "text": "Hello user feed",
-            "comments": [
-                {
-                    "name": "Darrien",
-                    "profile_picture": "sampleprofpic.jpg",
-                    "text": "hello comments",
-                    "date": "01/17/2023 @ 8:10pm"
-                },
-                {
-                    "name": 'Joe',
-                    "profile_picture": 'pfp.jpeg',
-                    "text": "test",
-                    "date": '01/17/2023 @ 8:11pm'
-                }
-            ]
-        }
-    ],
-    "roles": [
-      "test"
-    ]
-})
-
+  if (isLoading) {
+    return (
+    <div style={{display: 'flex', width: '100%', height: '100vh', justifyContent: 'center', alignItems: 'center'}}>
+      <Spinner
+        thickness='4px'
+        speed='0.65s'
+        emptyColor='gray.200'
+        color='blue.500'
+        size='xl'
+      />
+    </div>
+    )
+  }
 
   return(
     <>
@@ -84,7 +68,7 @@ const personal = () => {
 
               <VStack mb='5rem'>
                 <Heading mt='9rem'></Heading>
-                {data.posts.map((post) => {
+                {data.posts?.map((post) => {
                   return <LazyVisualizer posts={post}/>
                 })}
               </VStack>
@@ -100,6 +84,7 @@ export default personal;
 
 
 export async function getServerSideProps(context:any) {
+
   const session = await unstable_getServerSession(context.req, context.res);
 
   if (!session) {
@@ -107,10 +92,15 @@ export async function getServerSideProps(context:any) {
       redirect: { destination: "/" },
     };
   }
-  console.log(session)
-  return {
+
+
+ return fetcher('http://localhost:3000/api/userFeed').then((info) => {
+      return {
     props: {
-      session
+      session,
+      info
     },
   };
+  })
+
 }
