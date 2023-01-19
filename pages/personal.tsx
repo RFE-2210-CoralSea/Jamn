@@ -70,6 +70,7 @@ export async function getServerSideProps (context:any) {
       redirect: { destination: "/" },
     };
   }
+  console.log('This is a session'+ session)
   return {
     props: {
       session
