@@ -6,19 +6,8 @@ import { ProfileImage } from '../components/ProfileImage'
 import { PersonalDescription } from '../components/PersonalDescription'
 import { Box, SimpleGrid, VStack, useColorModeValue, Center, Spinner } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
-<<<<<<< HEAD
-import { BandModal } from '../components/BandModal'
-import useSWR from 'swr'
-import { unstable_getServerSession } from "next-auth";
-import { Spinner } from '@chakra-ui/react'
-
-
-const fetcher = (...args) => fetch(...args).then((res) => res.json())
-
-=======
 import { unstable_getServerSession } from 'next-auth'
 import { UserStats } from '../components/UserStats'
->>>>>>> a5e784a2c62dcb7e719bacb1a9290479a3e62fff
 const LazyVisualizer = dynamic(() => import('../components/AudioVisualizer'), {
   ssr: false
 })
@@ -72,15 +61,9 @@ const personal = () => {
                   roles={data.roles}/>
               </VStack>
 
-<<<<<<< HEAD
-              <VStack mb='5rem'>
-                <Heading mt='9rem'></Heading>
-                {data.posts?.map((post) => {
-=======
               <VStack mb='5rem' mr='40rem'>
                 <UserPost/>
                 {data.posts.map((post) => {
->>>>>>> a5e784a2c62dcb7e719bacb1a9290479a3e62fff
                   return <LazyVisualizer posts={post}/>
                 })}
               </VStack>
@@ -94,12 +77,7 @@ const personal = () => {
 
 export default personal
 
-<<<<<<< HEAD
-export async function getServerSideProps(context:any) {
-
-=======
-export async function getServerSideProps (context:any){
->>>>>>> a5e784a2c62dcb7e719bacb1a9290479a3e62fff
+export async function getServerSideProps (context:any) {
   const session = await unstable_getServerSession(context.req, context.res);
 
   if (!session) {
@@ -109,13 +87,10 @@ export async function getServerSideProps (context:any){
   }
 
 
- return fetcher('http://localhost:3000/api/userFeed').then((info) => {
-      return {
+  return {
     props: {
-      session,
-      info
+      session
     },
-  };
-  })
+  }
 
 }
