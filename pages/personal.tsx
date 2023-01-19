@@ -47,7 +47,7 @@ const personal = () => {
       <title>Your Homepage</title>
     </Head>
 
-      <Box h='100vh' maxH='100%' w='100vw' maxW='100%' bg={useColorModeValue('gray.200', 'dark')}>
+      <Box h='100vh' maxH='100%' w='100vw' maxW='100%' bg={useColorModeValue('gray.300', 'dark')}>
         <NavBar/>
             <SimpleGrid columns={2} alignContent='center'>
               <VStack pos='relative'>
@@ -77,7 +77,7 @@ const personal = () => {
 
 export default personal
 
-export async function getServerSideProps(context:any) {
+export async function getServerSideProps (context:any){
   const session = await unstable_getServerSession(context.req, context.res);
 
   if (!session) {
