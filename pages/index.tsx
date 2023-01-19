@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { Container, Box, Text, Flex } from '@chakra-ui/react'
+import { Container, Box, Text, Flex, Image } from '@chakra-ui/react'
 import { NavBar } from '../components/NavBar'
 import { motion } from 'framer-motion'
 import { useState } from 'react'
@@ -42,12 +42,14 @@ export default function Home() {
 
       <Box
         height="100vh"
-        background="center/cover"
+        backgroundSize="cover"
         backgroundImage={useColorModeValue("/Honolulu-Day.gif", "/Honolulu-Night.gif")}
         backgroundRepeat="no-repeat"
+        bgPosition="center"
+        position="relative"
         >
         <NavBar/>
-        <Box textAlign='center'>
+        <Box textAlign='center' mt={8}>
           <Text color='white' fontSize='3xl' fontWeight='bold'>
             A Social Media Platform for The
           </Text>
@@ -59,7 +61,7 @@ export default function Home() {
                 Sonically Inclined
             </Text>
         </Box>
-          <Container pos="relative" left='600px' top='600px' onClick={() => {
+          <Container maxW='300px' border="1px" pos="relative" left='200px' top='0px' onClick={() => {
             if (audio) {
               if (playing) {
                 audio.pause()
@@ -71,7 +73,7 @@ export default function Home() {
           }}>
             <motion.img
               src="/table.svg"
-              width="0" height="0" alt="vinyl player"
+              width="150px" height="150px" alt="vinyl player"
             />
             <motion.img
               src="/vinyl.svg"

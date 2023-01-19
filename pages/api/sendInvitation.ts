@@ -9,6 +9,15 @@ export default async function handler(
     res.status(405).send({message: 'Only POST requests allowed!'});
     res.end();
   } else {
-    const invitation = await prisma.invitations.create({})
+    const userId = await prisma.users.findUnique({where: {email: req.body.email}, select: {id: true}});
+    prisma.invitations.create({data: {userId: userId.id, bandId: req.body.bandId}})
+    .then((response) => {
+      res.send('Invitation sent')
+      res.end();
+    })
+    .catch((err) => {
+      res.send('Invalid invitation | Please check that the user\' email is valid, that this is not a duplicate invitation, or the band id');
+      res.status(400).end();
+    })
   }
 }
