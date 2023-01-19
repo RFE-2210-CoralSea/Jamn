@@ -1,12 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { unstable_getServerSession } from 'next-auth'
 import { authOptions } from './auth/[...nextauth]'
-import formidable from 'formidable'
 import prisma from '../../lib/Prisma'
 
 export const config = {
   api: {
-    bodyParser: false
+    bodyParser: {
+      sizeLimit: '4mb' // Set desired value here
+    }
   }
 }
 
@@ -24,25 +25,11 @@ export default async function handler(
     res.status(422).end()
     return
   }
+  console.log('test')
 
   // parse request body
   try {
-    const data: any = await new Promise((resolve, reject) => {
-      const form = formidable()
-      form.parse(req, (err: any, fields: any, files: any) => {
-        if (err) reject({ err })
-        resolve({ err, fields, files })
-      })
-    })
-    const { bandName, songName } = data.fields
-    const { pdf, audio } = data.files
-    const date = Math.round(Date.now() / 1000)
-
-    // ensure form data contains all required fields
-    if (!bandName || !songName || !pdf || !audio) {
-      res.status(422).end()
-      return
-    }
+    const { bandName, songName, pdf, audio } = JSON.parse(req.body)
 
     // get userId and bandId
     const userId = (
@@ -52,19 +39,29 @@ export default async function handler(
         }
       })
     )?.id
-    const bandId = (
-      await prisma.bands.findFirst({
-        where: {
-          name: bandName
-        }
-      })
-    )?.id
-    if (!userId || !bandId) {
+    const band = await prisma.bands.findFirst({
+      where: {
+        name: 'The Killers'
+      }
+    })
+    if (!userId || !band) {
       res.status(422).end()
       return
     }
 
-    console.log(data)
+    const post = await prisma.posts.create({
+      data: {
+        bandId: band.id,
+        userId,
+        audio: audio,
+        pdf: pdf,
+        image: band.image,
+        text: songName,
+        date: Math.round(Date.now() / 1000)
+      }
+    })
+    console.log(post)
+
     res.status(200).end()
   } catch (error) {
     console.error(error)

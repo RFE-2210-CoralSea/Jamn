@@ -3,7 +3,19 @@ import { IconButton, Button, ButtonGroup, Tooltip, FormControl, Input } from '@c
 import { AiOutlineCustomerService, AiOutlinePlayCircle } from 'react-icons/ai'
 import { useDisclosure } from '@chakra-ui/react'
 import { useEffect, useState, useRef } from 'react'
+function readFile(f: File): Promise<ArrayBuffer> {
+  return new Promise((resolve, reject) => {
+    // Create file reader
+    let reader = new FileReader()
 
+    // Register event listeners
+    reader.addEventListener('loadend', (e) => resolve(e?.target?.result as ArrayBuffer))
+    reader.addEventListener('error', reject)
+
+    // Read file
+    reader.readAsArrayBuffer(f)
+  })
+}
 export const RecordingModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [ recording, setRecording ] = useState(false)
@@ -59,17 +71,18 @@ export const RecordingModal = () => {
       songName.current &&
       audio
     ) {
-      const data = new FormData()
-
-      data.append('pdf', file?.current?.files[0] as Blob)
-      data.append('bandName', band.current.value as string)
-      data.append('songName', songName?.current?.value as string)
-      data.append('audio', audio)
 
       await fetch('/api/newPost', {
         method: 'POST',
-        body: data
+        body: JSON.stringify({
+          pdf: file?.current?.files[0] as File,
+          audio: audio as File,
+          bandName: band.current.value as string,
+          songName: songName?.current?.value as string
+        })
       })
+    } else {
+      console.log('test')
     }
   }
 
