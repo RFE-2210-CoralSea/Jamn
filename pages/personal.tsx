@@ -7,6 +7,7 @@ import { PersonalDescription } from '../components/PersonalDescription'
 import { Box, SimpleGrid, VStack, useColorModeValue, Center, Spinner } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
 import { unstable_getServerSession } from 'next-auth'
+import { UserStats } from '../components/Stats'
 const LazyVisualizer = dynamic(() => import('../components/AudioVisualizer'), {
   ssr: false
 })
@@ -38,39 +39,41 @@ const personal = () => {
         <Spinner size='xl'/>
       </Center>
     )
-  } else {
-    return (
-      <>
-      <Head>
-        <title>Your Homepage</title>
-      </Head>
-
-        <Box h='100vh' maxH='100%' w='100vw' maxW='100%' bg={useColorModeValue('gray.200', 'dark')}>
-          <NavBar/>
-              <SimpleGrid columns={2} alignContent='center'>
-                <VStack>
-                  <ProfileImage
-                    image={data.picture}
-                    name={data.name}/>
-                  <PersonalDescription
-                    description={data.bio}
-                    instruments={data.instruments}
-                    roles={data.roles}/>
-                </VStack>
-
-                <VStack mb='5rem' mr='40rem'>
-                  <UserPost/>
-                  {data.posts.map((post) => {
-                    return <LazyVisualizer posts={post}/>
-                  })}
-                </VStack>
-
-            </SimpleGrid>
-        </Box>
-      </>
-    )
   }
+
+  return (
+    <>
+    <Head>
+      <title>Your Homepage</title>
+    </Head>
+
+      <Box h='100vh' maxH='100%' w='100vw' maxW='100%' bg={useColorModeValue('gray.200', 'dark')}>
+        <NavBar/>
+            <SimpleGrid columns={2} alignContent='center'>
+              <VStack pos='relative'>
+                <ProfileImage
+                  image={data.picture}
+                  name={data.name}/>
+                <UserStats stat={data.posts.length}/>
+                <PersonalDescription
+                  description={data.bio}
+                  instruments={data.instruments}
+                  roles={data.roles}/>
+              </VStack>
+
+              <VStack mb='5rem' mr='40rem'>
+                <UserPost/>
+                {data.posts.map((post) => {
+                  return <LazyVisualizer posts={post}/>
+                })}
+              </VStack>
+
+          </SimpleGrid>
+      </Box>
+    </>
+  )
 }
+
 
 export default personal
 
