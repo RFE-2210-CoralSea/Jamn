@@ -29,6 +29,7 @@ const personal = () => {
       .then(async (response) => {
         console.log(response)
         const newData = await response.json()
+        console.log(newData)
         setData(newData)
         setLoading(false)
       })

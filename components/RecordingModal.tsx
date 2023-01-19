@@ -3,6 +3,7 @@ import { IconButton, Button, ButtonGroup, Tooltip, FormControl, Input } from '@c
 import { AiOutlineCustomerService, AiOutlinePlayCircle } from 'react-icons/ai'
 import { useDisclosure } from '@chakra-ui/react'
 import { useEffect, useState, useRef } from 'react'
+import useSWR from 'swr'
 
 // helper function to convert a file to an array buffer
 function readFile(f: File): Promise<ArrayBuffer> {
@@ -19,7 +20,15 @@ function readFile(f: File): Promise<ArrayBuffer> {
   })
 }
 
+// fetch bands a user is in
+const fetcher = (...args: string[]) => fetch(...args).then(async (res) => {
+  const data = await res.json()
+  return data.roles
+})
+
 export const RecordingModal = () => {
+  const { data, isLoading } = useSWR('/api/userFeed', fetcher)
+
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [ recording, setRecording ] = useState(false)
   const [ recorder, setRecorder ] = useState<MediaRecorder | null>(null)
@@ -107,9 +116,7 @@ export const RecordingModal = () => {
                 <Input placeholder='Song Name' ref={songName}></Input>
               </FormControl>
               <Select placeholder='Select Band' ref={band}>
-                {/* This will be dynamically loaded */}
-                <option value='band1_id'>Example Band</option>
-                <option value='band2_id'>Another Example Band</option>
+                {!isLoading && data.map((band: any) => <option value={band.name}>{band.name}</option>)}
               </Select>
               <FormControl>
                 <Input placeholder='Key' ref={songKey}></Input>
