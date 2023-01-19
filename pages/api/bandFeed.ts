@@ -47,12 +47,9 @@ export default async function handler(
     res.status(405).send({message: 'Only GET requests allowed!'});
     res.end();
   } else {
-    let bandPage: Band
     //this request will take in a band name, query db for the band id, then query for posts and users related to that band id
     const bandData = await prisma.bands.findUnique({ where: { id: parseInt(req.query.id) }, include: { roles: true, posts: true } });
-
-    console.log(bandData);
     res.send(bandData);
-    res.status(200).end()
+    res.end();
   }
 }
