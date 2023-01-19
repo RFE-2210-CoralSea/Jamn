@@ -8,32 +8,19 @@ import { Box, SimpleGrid, VStack, useColorModeValue, Center, Spinner } from '@ch
 import { useState, useEffect } from 'react'
 import { unstable_getServerSession } from 'next-auth'
 import { UserStats } from '../components/UserStats'
+import useSWR from 'swr'
+
+
 const LazyVisualizer = dynamic(() => import('../components/AudioVisualizer'), {
   ssr: false
 })
 
+const fetcher = (...args:any) => fetch(...args).then(res => res.json())
+
 const personal = () => {
+  const { data, error, isLoading } = useSWR('/api/userFeed', fetcher, { refreshInterval: 1000 })
 
-  const [loading, setLoading] = useState(true)
-  const [data, setData] = useState({
-    picture: '',
-    name: '',
-    bio: '',
-    instruments: [],
-    roles: [],
-    posts: []
-  })
-
-  useEffect(() => {
-    fetch('api/userFeed')
-      .then(async (response) => {
-        const newData = await response.json()
-        setData(newData)
-        setLoading(false)
-      })
-  },[])
-
-  if (loading) {
+  if (isLoading) {
     return (
       <Center h='100vh'>
         <Spinner size='xl'/>
@@ -53,7 +40,7 @@ const personal = () => {
               <VStack pos='relative'>
                 <ProfileImage
                   image={data.picture}
-                  name={data.name}/>
+                  username={data.name}/>
                 <UserStats stat={data.posts.length}/>
                 <PersonalDescription
                   description={data.bio}
@@ -62,7 +49,7 @@ const personal = () => {
               </VStack>
 
               <VStack mb='5rem' mr='40rem'>
-                <UserPost/>
+                <UserPost bands={data.roles}/>
                 {data.posts.map((post) => {
                   return <LazyVisualizer posts={post}/>
                 })}
@@ -76,7 +63,7 @@ const personal = () => {
 
 export default personal
 
-export async function getServerSideProps (context:any){
+export async function getServerSideProps (context:any) {
   const session = await unstable_getServerSession(context.req, context.res);
 
   if (!session) {
@@ -84,10 +71,10 @@ export async function getServerSideProps (context:any){
       redirect: { destination: "/" },
     };
   }
-  console.log(session)
   return {
     props: {
       session
     },
-  };
+  }
+
 }
