@@ -11,6 +11,7 @@ const LazyVisualizer = dynamic(() => import('../components/AudioVisualizer'), {
   ssr: false
 })
 
+import { unstable_getServerSession } from "next-auth";
 const personal = () => {
 
   useEffect(() => {
@@ -22,51 +23,41 @@ const personal = () => {
   },[])
 
   const [data, setData] = useState({
-  name: 'Joe',
-  description: 'hello world',
-  instruments: ['Cello', 'Piano', 'Drums'],
-  bands: ['Super Sick Band', 'Awesome Band'],
-  image: '/pfp.jpeg',
-  posts: [
-    {
-      postId: '1',
-      name: 'Slide',
-      band: 'Frank Ocean',
-      image: '/slide.jpg',
-      audio: '/slide frank ocean.mp4',
-      pdf: 'testpdf.pdf',
-      date: '01/17/2023 @ 8:09pm',
-      text: 'Hello user feed',
-      comments: [{
-        name: 'Darrien',
-        profile_picture: 'sampleprofpic.jpg',
-        text: 'hello comments',
-        date: '01/17/2023 @ 8:10pm'
-      },
-      {
-        name: 'Joe',
-        profile_picture: 'testpfp.jpg',
-        text: "test",
-        date: '01/17/2023 @ 8:11pm'
-      }]
-    },
-    {
-      postId: '2',
-      name: 'DieYoung',
-      band: 'Sleepy Hallow',
-      image: '/dieyoung.jpg',
-      audio: '/die young.mp3',
-      pdf: 'testpdf2.pdf',
-      date: '01/17/2023 @ 10:23pm',
-      text: 'test Text',
-      comments: [{
-        name: 'bro',
-        profile_picture: 'broooo.jpg',
-        text: 'BROOOOOOO',
-        date: '01/17/2023 @ 10:30pm'
-      }]
-    }
-  ]
+    "name": "Ivan",
+    "bio": "hello world",
+    "instruments": [
+        "Cello",
+        "Piano",
+        "Drums"
+    ],
+    "picture": "testprofilepicture.jpg",
+    "posts": [
+        {
+            "name": "Joe",
+            "band": "Super Sick Band",
+            "audio": "testaudio.wav",
+            "pdf": "testpdf.pdf",
+            "date": "01/17/2023 @ 8:09pm",
+            "text": "Hello user feed",
+            "comments": [
+                {
+                    "name": "Darrien",
+                    "profile_picture": "sampleprofpic.jpg",
+                    "text": "hello comments",
+                    "date": "01/17/2023 @ 8:10pm"
+                },
+                {
+                    "name": 'Joe',
+                    "profile_picture": 'pfp.jpeg',
+                    "text": "test",
+                    "date": '01/17/2023 @ 8:11pm'
+                }
+            ]
+        }
+    ],
+    "roles": [
+      "test"
+    ]
 })
 
 
@@ -83,12 +74,12 @@ const personal = () => {
 
               <VStack>
                 <ProfileImage
-                  image={data.image}
+                  image={data.picture}
                   name={data.name}/>
                 <PersonalDescription
-                  description={data.description}
+                  description={data.bio}
                   instruments={data.instruments}
-                  bands={data.bands}/>
+                  bands={data.roles}/>
               </VStack>
 
               <VStack mb='5rem'>
@@ -106,3 +97,20 @@ const personal = () => {
 }
 
 export default personal;
+
+
+export async function getServerSideProps(context:any) {
+  const session = await unstable_getServerSession(context.req, context.res);
+
+  if (!session) {
+    return {
+      redirect: { destination: "/" },
+    };
+  }
+  console.log(session)
+  return {
+    props: {
+      session
+    },
+  };
+}

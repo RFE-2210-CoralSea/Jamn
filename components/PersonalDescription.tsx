@@ -29,7 +29,7 @@ export const PersonalDescription = ({ description, instruments, bands }:Personal
                   return <Flex justifyContent='space-between' mb='1rem'>
                           <Tag size='xl' colorScheme={useColorModeValue('blue', 'green')} borderRadius='full' >
                             <Avatar size='sm' mr={2} />
-                            <TagLabel fontWeight='bold' mr={3} key={band}>{band}</TagLabel>
+                            <TagLabel fontWeight='bold' mr={3} key={band}>{band.name}</TagLabel>
                           </Tag>
                           </Flex>
                 })}
@@ -38,7 +38,7 @@ export const PersonalDescription = ({ description, instruments, bands }:Personal
             <TabPanel>
                <List fontSize="lg" textAlign="center" fontWeight='bold'>
                 {instruments.map((instrument) => {
-                  return <ListItem key={instrument}> {instrument}</ListItem>
+                  return <ListItem key={instrument}> {instrument.instrument}</ListItem>
                 })}
                 </List>
             </TabPanel>

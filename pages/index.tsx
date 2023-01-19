@@ -4,6 +4,7 @@ import { NavBar } from '../components/NavBar'
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 import { useColorModeValue } from '@chakra-ui/react'
+import { unstable_getServerSession } from 'next-auth'
 
 // animation variants
 const vinylVariants = {
