@@ -10,12 +10,13 @@ export const RecordingModal = () => {
   const [ recorder, setRecorder ] = useState<MediaRecorder | null>(null)
   // may also need to store the blob itself?
   const [ url, setUrl ] = useState('')
+  const [ audio, setAudio ] = useState<Blob>()
 
   // input refs
-  const songName = useRef(null)
-  const band = useRef(null)
-  const songKey = useRef(null)
-  const file = useRef(null) // may have to be state
+  const songName = useRef<HTMLInputElement>(null)
+  const band = useRef<HTMLSelectElement>(null)
+  const songKey = useRef<HTMLInputElement>(null)
+  const file = useRef<HTMLInputElement>(null)
 
   // setup audio recorder
   useEffect(() => {
@@ -35,6 +36,7 @@ export const RecordingModal = () => {
     // add event listener to recorder
     if (!recorder.ondataavailable) {
       recorder.ondataavailable = (event) => {
+        setAudio(event.data)
         setUrl(URL.createObjectURL(event.data))
       }
     }
@@ -49,9 +51,26 @@ export const RecordingModal = () => {
   }
 
   // submit audio to db
-  const submit = () => {
-    console.log('store audio in db')
-    // TODO: upload audio (cloudinary?), save url in DB
+  const submit = async () => {
+    // ensure fields are filled out
+    if (
+      file.current?.files &&
+      band.current &&
+      songName.current &&
+      audio
+    ) {
+      const data = new FormData()
+
+      data.append('pdf', file?.current?.files[0] as Blob)
+      data.append('bandName', band.current.value as string)
+      data.append('songName', songName?.current?.value as string)
+      data.append('audio', audio)
+
+      await fetch('/api/newPost', {
+        method: 'POST',
+        body: data
+      })
+    }
   }
 
   return (
