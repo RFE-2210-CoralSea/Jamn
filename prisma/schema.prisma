@@ -54,7 +54,7 @@ model roles {
 model users {
   id       Int        @id @default(autoincrement())
   picture  String     @db.VarChar(1000)
-  email    String     @db.VarChar(50)
+  email    String     @db.VarChar(50) @unique
   name     String     @db.VarChar(50)
   bio      String     @db.VarChar(1000)
   comments comments[]
