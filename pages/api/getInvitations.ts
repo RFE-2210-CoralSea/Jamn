@@ -20,7 +20,7 @@ export default async function handler(
         }
       }
     );
-    const bandInvites = await prisma.invitations.findMany({where: {userId: userData.id}, include: {bands: true}});
+    const bandInvites = await prisma.invitations.findMany({where: {userId: userData?.id}, include: {bands: true}});
     res.send(bandInvites);
     res.end();
   }
