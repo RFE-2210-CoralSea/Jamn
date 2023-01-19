@@ -10,7 +10,7 @@ const submitPostHandler = (title:string, artist:string, file:any) => {
   // send post req with postObj as body
 }
 
-export const UserPost = () => {
+export const UserPost = ({bands}) => {
 
   const [title, setTitle] = useState('')
   const [artist, setArtist] = useState('')
