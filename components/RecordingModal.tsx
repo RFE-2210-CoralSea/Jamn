@@ -75,8 +75,8 @@ export const RecordingModal = () => {
       await fetch('/api/newPost', {
         method: 'POST',
         body: JSON.stringify({
-          pdf: file?.current?.files[0] as File,
-          audio: audio as File,
+          pdf: Buffer.from(await readFile(file?.current?.files[0] as File)),
+          audio: Buffer.from(await readFile(audio as File)),
           bandName: band.current.value as string,
           songName: songName?.current?.value as string
         })

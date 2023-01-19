@@ -53,11 +53,11 @@ export default async function handler(
       data: {
         bandId: band.id,
         userId,
-        audio: audio,
-        pdf: pdf,
+        audio: Buffer.from(audio),
+        pdf: Buffer.from(pdf),
         image: band.image,
         text: songName,
-        date: Math.round(Date.now() / 1000)
+        date: Date.now()
       }
     })
     console.log(post)
