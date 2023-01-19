@@ -48,7 +48,6 @@ export const BandModal = () => {
   }
   const logData = async (data) => {
     data.image = imageSrc
-    console.log(data)
   }
 
   return (

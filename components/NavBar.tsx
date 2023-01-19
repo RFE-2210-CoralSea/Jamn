@@ -7,6 +7,7 @@ import { useSession } from 'next-auth/react'
 import { HomeButton } from './HomeButton'
 import Link from 'next/link'
 import SignOut from './SignOut'
+import { MailBox } from './MailBox'
 
 export const NavBar = () => {
   const { data: session, status } = useSession()
@@ -33,6 +34,7 @@ export const NavBar = () => {
           <HomeButton/>
           <SignOut/>
           <DarkMode/>
+          <MailBox/>
       </Stack>
     </Flex>
   )
