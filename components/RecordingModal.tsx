@@ -1,6 +1,6 @@
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Stack, Select } from '@chakra-ui/react'
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Stack, Select, VisuallyHidden } from '@chakra-ui/react'
 import { IconButton, Button, ButtonGroup, Tooltip, FormControl, Input } from '@chakra-ui/react'
-import { AiOutlineCustomerService, AiOutlinePlayCircle } from 'react-icons/ai'
+import { AiOutlineCustomerService, AiOutlinePlayCircle, AiOutlinePauseCircle } from 'react-icons/ai'
 import { useDisclosure } from '@chakra-ui/react'
 import { useEffect, useState, useRef } from 'react'
 import useSWR from 'swr'
@@ -94,8 +94,8 @@ export const RecordingModal = () => {
           songName: songName?.current?.value as string
         })
       })
-    } else {
-      console.log('test')
+      // close modal
+      document.getElementById('close-recording')?.click()
     }
   }
 
@@ -109,7 +109,7 @@ export const RecordingModal = () => {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader> Record A Song! </ModalHeader>
-          <ModalCloseButton />
+          <ModalCloseButton id='close-recording'/>
           <ModalBody>
             <Stack direction='column' spacing='5'>
               <FormControl>
@@ -122,18 +122,23 @@ export const RecordingModal = () => {
                 <Input placeholder='Key' ref={songKey}></Input>
               </FormControl>
               {url && <audio src={url} controls></audio>}
-              <FormControl>
-                <Input type='file' accept='application/pdf' ref={file}></Input>
-              </FormControl>
             </Stack>
           </ModalBody>
 
           <ModalFooter>
             <ButtonGroup>
-              <Tooltip hasArrow label='Start Recording!'>
-                <IconButton aria-label='start recording' icon={<AiOutlinePlayCircle/>} onClick={record}/>
+              <Tooltip hasArrow label={recording ? 'Stop Recording!' : 'Start Recording!'}>
+                <IconButton aria-label='start recording' icon={recording ? <AiOutlinePauseCircle/> : <AiOutlinePlayCircle/>} onClick={record}/>
               </Tooltip>
-              <Button onClick={submit}>Upload</Button>
+              <VisuallyHidden>
+                <FormControl>
+                  <Input id='upload-pdf' type='file' accept='application/pdf' ref={file}></Input>
+                </FormControl>
+              </VisuallyHidden>
+              <Button onClick={() => document.getElementById('upload-pdf')?.click()}>
+                Upload PDF
+              </Button>
+              <Button onClick={submit}>Post Song</Button>
             </ButtonGroup>
           </ModalFooter>
         </ModalContent>
