@@ -20,15 +20,25 @@ type Post = {
   comments: Comment[]
 }
 
-type User = {
+type Instrument = {
+  instrument: string
+  id: number,
+  userId: number
+}
+
+type Roles = {
   name: string,
-  description: string,
-  instruments: string[],
-  image: string,
-  posts: Post[],
+  id: number
+}
+
+type User = {
+  name?: string,
+  bio?: string,
+  instruments?: Instrument[],
+  picture?: string,
+  posts?: Post[],
+  roles?: Roles[]
 };
-
-
 
 
 export default async function handler (
@@ -36,9 +46,14 @@ export default async function handler (
   res: NextApiResponse<User>
 ) {
   if (req.method === 'GET') {
+    //Check to make sure user has a session
     const session = await unstable_getServerSession(req, res)
+
+    //If you have a session, proceed with check.
     if (session) {
-      const user = await prisma.users.findMany({
+
+      //Get user from database
+      const user = await prisma.users.findUnique({
         where: {
           email: session.user?.email
         },
@@ -52,33 +67,58 @@ export default async function handler (
             roles: true
           },
       })
-      if (user.length > 0) {
-        if (user[0].roles.length > 0) {
-          for (let i = 0; i < user[0].roles.length; i++) {
+
+      //If there is a user & is in any bands, reset roles array to band name and id objects
+      if (user) {
+        if (user.roles.length > 0) {
+          for (let i = 0; i < user.roles.length; i++) {
             const bandNames = await prisma.bands.findUnique({
               where: {
-                id: user[0].roles[i].bandId
+                id: user.roles[i].bandId
               }
             })
             if (bandNames) {
-              user[0].roles[i] = {
+              user.roles[i] = {
                 name: bandNames.name,
                 id: bandNames.id
               }
             }
           }
         }
-        console.log(user[0])
-        return res.status(200).json(user[0])
+        return res.status(200).json(user)
       }
     }
   }
 
+  //check to see if request method is put
   if (req.method === 'PUT') {
     const session = await unstable_getServerSession(req, res);
     if (session) {
+
+
+      //If request body has instruments, we will update the corresponding user and update their instruments
+      if (req.body.instruments) {
+        let updateInst: User;
+        updateInst = await prisma.users.update({
+          where: {
+            email: session.user?.email
+          },
+          data: {
+            instruments: {
+              create: {
+                  instrument: req.body.instruments
+                },
+              },
+            }
+        })
+        return res.status(200).json(updateInst)
+      }
+
+      //If request body has picture, bio, or name we will update the corresponding user and update their info
       const update = async (key:string) => {
-        let updateData;
+        let updateData = {};
+
+        //switch statement to set updateData based on what key is in request.body
         switch(key) {
           case 'picture':
             updateData = {
@@ -96,17 +136,24 @@ export default async function handler (
             }
             break;
         }
+        //update correspoinding record
         let insert = await prisma.users.updateMany({
           where: {
-            email: session.user?.email
+            email: session.user?.email as string
           },
           data: updateData
         });
         return insert.count === 1 ? res.status(200).json({message: true}) : res.status(500).json({message: false})
       }
+
+      //Grab keys from the request.body
       let keys = Object.keys(req.body);
+
+      //Call update function to begin update process
       return await update(keys[0])
     } else {
+      
+      //if there is no session, return unauthorized
       return res.status(401).json({ message: 'Unauthorized' })
     }
   }
