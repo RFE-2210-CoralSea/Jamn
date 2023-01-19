@@ -104,20 +104,3 @@ export default function Home() {
     </>
   )
 }
-
-
-export async function getServerSideProps(context:any) {
-  const session = await unstable_getServerSession(context.req, context.res);
-
-  if (session) {
-    return {
-      redirect: { destination: "/personal" },
-    };
-  }
-
-  return {
-    props: {
-      session
-    },
-  };
-}

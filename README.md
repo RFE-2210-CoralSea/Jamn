@@ -6,8 +6,13 @@
   <img src="https://contrib.rocks/image?repo=RFE-2210-CoralSea/Jamn" />
 </a>
 
+•[Gerrit Broadwater](https://github.com/Therason) - <br />
 •[Joe Lin](https://github.com/joelinnn) - <br />
-•[Darrien Willig](https://github.com/darrienwillig) - <br />
+•[Darien Willig](https://github.com/darrienwillig) - <br />
+•[Kong Yu Chen](https://github.com/Kchen1515) - <br />
+•[Ivan Day](https://github.com/ivanday) - <br />
+•[Jackson Zhu](https://github.com/Jacksonwrk3) - <br />
+
 
 ## Tech Stack
 
