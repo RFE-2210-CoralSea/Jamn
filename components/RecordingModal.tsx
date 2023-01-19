@@ -21,13 +21,10 @@ function readFile(f: File): Promise<ArrayBuffer> {
 }
 
 // fetch bands a user is in
-const fetcher = (...args: string[]) => fetch(...args).then(async (res) => {
-  const data = await res.json()
-  return data.roles
-})
+const fetcher = (...args: string[]) => fetch(...args).then((res) => res.json())
 
 export const RecordingModal = () => {
-  const { data, isLoading } = useSWR('/api/userFeed', fetcher)
+  const { data, error, isLoading } = useSWR('/api/userFeed', fetcher)
 
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [ recording, setRecording ] = useState(false)
@@ -52,6 +49,8 @@ export const RecordingModal = () => {
         .catch(console.error)
     }
   }, [isOpen])
+
+  // useEffect(() => console.log('modal',data), [data])
 
   // begin recording
   const record = async () => {
@@ -116,7 +115,7 @@ export const RecordingModal = () => {
                 <Input placeholder='Song Name' ref={songName}></Input>
               </FormControl>
               <Select placeholder='Select Band' ref={band}>
-                {!isLoading && data.map((band: any) => <option value={band.name}>{band.name}</option>)}
+                {!isLoading && data.roles?.map((band: any) => <option value={band.name}>{band.name}</option>)}
               </Select>
               <FormControl>
                 <Input placeholder='Key' ref={songKey}></Input>
