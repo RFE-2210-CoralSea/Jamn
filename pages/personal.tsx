@@ -53,7 +53,7 @@ const personal = () => {
               <VStack pos='relative'>
                 <ProfileImage
                   image={data.picture}
-                  name={data.name}/>
+                  username={data.name}/>
                 <UserStats stat={data.posts.length}/>
                 <PersonalDescription
                   description={data.bio}
@@ -62,7 +62,7 @@ const personal = () => {
               </VStack>
 
               <VStack mb='5rem' mr='40rem'>
-                <UserPost/>
+                <UserPost bands={data.roles}/>
                 {data.posts.map((post) => {
                   return <LazyVisualizer posts={post}/>
                 })}
@@ -85,7 +85,6 @@ export async function getServerSideProps (context:any){
       redirect: { destination: "/" },
     };
   }
-  console.log(session)
   return {
     props: {
       session
