@@ -9,6 +9,9 @@ export default async function handler(
     res.status(405).send({message: 'Only POST requests allowed!'});
     res.end();
   } else {
-    const invitation = await prisma.invitations.create({})
+    const userId = await prisma.users.findUnique({where: {email: req.body.email}, select: {id: true}});
+    const sendInvite = await prisma.invitations.create({data: {userId: userId.id, bandId: req.body.bandId}});
+    res.send('Invitation sent')
+    res.end();
   }
 }
