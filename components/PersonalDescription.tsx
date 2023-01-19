@@ -1,7 +1,7 @@
-import { Flex, Box, Editable, EditableInput, Input, EditablePreview } from '@chakra-ui/react'
+import { Flex, Box, Editable, EditableInput, Input, EditablePreview, Stack } from '@chakra-ui/react'
 import { List, Tag, TagLabel, ListItem, useColorModeValue } from "@chakra-ui/react"
 import { Tabs, TabList, Tab, TabPanels, TabPanel, Avatar } from '@chakra-ui/react'
-import { FormControl, Button } from '@chakra-ui/react'
+import { FormControl, Button, Text } from '@chakra-ui/react'
 import { EditableControls } from './EditableControls'
 import { useState } from 'react'
 
@@ -23,24 +23,31 @@ declare interface RoleData {
 
 export const PersonalDescription = ({ description, instruments, roles }:PersonalDescriptionProps) => {
 
-  const UpdateDescriptionHandler = (section:string) => {
-    // use id to find and update whichever element in the arrays
-    // need to be changed
-    // send back the whole array to update that field
-    if (section === 'description') {
-
-    } else if (section === 'roles') {
-
-    } else {
-
+  const UpdateDescriptionHandler = async (section:string, changedVal:string) => {
+    let updateData = {}
+    if (section === 'bio') {
+      updateData = {
+        'bio': changedVal
+      }
+    } else if (section === 'instruments') {
+      updateData = {
+        'instruments': changedVal
+      }
     }
+    console.log(updateData)
+    const response = await fetch('api/userFeed', {
+      method: 'PUT',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(updateData)
+    })
+    return response
   }
-  const [editDescrip, setDescrip] = useState(description)
-  const [editInstrument, setInstrument] = useState(instruments)
-  const [editRoles, setRoles] = useState(roles)
+
+  const [editDescrip, setDescrip] = useState('')
+  const [editInstrument, setInstrument] = useState('')
 
   return (
-    <Box w='15rem'>
+    <Box w='16rem'>
       <Tabs variant='soft-rounded' colorScheme={useColorModeValue('blue', 'green')}>
         <TabList>
           <Tab>Bio</Tab>
@@ -49,9 +56,9 @@ export const PersonalDescription = ({ description, instruments, roles }:Personal
         </TabList>
         <TabPanels>
           <TabPanel>
-            <Editable defaultValue={description} fontSize='lg' fontWeight='bold'>
+            <Editable onSubmit={() => UpdateDescriptionHandler('bio', editDescrip)} defaultValue={description} fontSize='lg' fontWeight='bold'>
               <EditablePreview/>
-              <Input as={EditableInput}/>
+              <Input onChange={(e) => setDescrip(e.target.value)} as={EditableInput}/>
               <EditableControls/>
             </Editable>
           </TabPanel>
@@ -61,44 +68,24 @@ export const PersonalDescription = ({ description, instruments, roles }:Personal
                 return <Flex key={role.id} justifyContent='space-between' mb='1rem'>
                         <Tag size='xl' colorScheme={useColorModeValue('blue', 'green')} borderRadius='full' >
                           <Avatar size='sm' mr={2} />
-                          <TagLabel fontWeight='bold' mr={3} key={role.name}>
-                            <Editable defaultValue={role.name}>
-                              <EditablePreview/>
-                              <Input as={EditableInput}/>
-                              <EditableControls/>
-                            </Editable>
-                          </TagLabel>
+                          <TagLabel fontWeight='bold' mr={3} key={role.name}>{role.name}</TagLabel>
                         </Tag>
                         </Flex>
               })}
               </List>
-              {roles.length ? (<></>) : (
-                <Flex display='flex-start' mt='1rem'>
-                  <FormControl>
-                    <Input placeholder='Add a new band'></Input>
-                  </FormControl>
-                  <Button type='submit' alignSelf='flex-end' mt='1rem'> Submit </Button>
-                </Flex>
-              )}
+              {roles.length ? (<></>) : (<Text textAlign='center' fontWeight='bold'>You aren't apart of any bands!</Text>)}
           </TabPanel>
           <TabPanel>
               <List fontSize="lg" textAlign="center" fontWeight='bold'>
               {instruments.map((instrument) => {
-                return <ListItem key={instrument.id}>
-                  <Editable defaultValue={instrument.instrument}>
-                    <EditablePreview/>
-                    <Input as={EditableInput}/>
-                    <EditableControls/>
-                  </Editable>
-                </ListItem>
+                return <ListItem key={instrument.id}>• {instrument.instrument}</ListItem>
               })}
               </List>
-              <Flex display='flex-start' mt='1rem'>
-                <FormControl>
-                  <Input placeholder='Add a new instrument'></Input>
-                </FormControl>
-                <Button type='submit'alignSelf='flex-end' mt='1rem'> Submit </Button>
-              </Flex>
+            <Editable textAlign='center' onSubmit={() => UpdateDescriptionHandler('instruments', editInstrument)} defaultValue='Add a new instrument' fontSize='lg'>
+              <EditablePreview/>
+              <Input onChange={(e) => setInstrument(e.target.value)} as={EditableInput}/>
+              <EditableControls/>
+            </Editable>
           </TabPanel>
         </TabPanels>
       </Tabs>

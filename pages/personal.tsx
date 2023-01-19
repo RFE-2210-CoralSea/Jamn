@@ -4,70 +4,75 @@ import { NavBar } from '../components/NavBar'
 import { UserPost } from '../components/UserPost'
 import { ProfileImage } from '../components/ProfileImage'
 import { PersonalDescription } from '../components/PersonalDescription'
-import { Box, Heading, SimpleGrid, VStack, useColorModeValue } from '@chakra-ui/react'
+import { Box, SimpleGrid, VStack, useColorModeValue, Center, Spinner } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
-
+import { unstable_getServerSession } from 'next-auth'
 const LazyVisualizer = dynamic(() => import('../components/AudioVisualizer'), {
   ssr: false
 })
 
-import { unstable_getServerSession } from "next-auth";
 const personal = () => {
+
+  const [loading, setLoading] = useState(true)
+  const [data, setData] = useState({
+    picture: '',
+    name: '',
+    bio: '',
+    instruments: [],
+    roles: [],
+    posts: []
+  })
 
   useEffect(() => {
     fetch('api/userFeed')
       .then(async (response) => {
         const newData = await response.json()
         setData(newData)
+        setLoading(false)
       })
   },[])
 
-  const [data, setData] = useState({
-  id: 1,
-  picture: 'https://lh3.googleusercontent.com/a/AEdFTp7zpHRw02VmRcAJtwEVojykk3ockYQRUts-CkvNrQ=s96-c',
-  email: 'joelin3478@gmail.com',
-  name: 'Joe Lin',
-  bio: 'Aspiring musician',
-  posts: [],
-  instruments: [ { id: 1, userId: 1, instrument: 'All Of them' } ],
-  roles: [ { name: 'DJ Degens', id: 1 } ]
-})
+  if (loading) {
+    return (
+      <Center h='100vh'>
+        <Spinner size='xl'/>
+      </Center>
+    )
+  } else {
+    return (
+      <>
+      <Head>
+        <title>Your Homepage</title>
+      </Head>
 
+        <Box h='100vh' maxH='100%' w='100vw' maxW='100%' bg={useColorModeValue('gray.200', 'dark')}>
+          <NavBar/>
+              <SimpleGrid columns={2} alignContent='center'>
+                <VStack>
+                  <ProfileImage
+                    image={data.picture}
+                    name={data.name}/>
+                  <PersonalDescription
+                    description={data.bio}
+                    instruments={data.instruments}
+                    roles={data.roles}/>
+                </VStack>
 
-  return (
-    <>
-    <Head>
-      <title>Your Homepage</title>
-    </Head>
+                <VStack mb='5rem' mr='40rem'>
+                  <UserPost/>
+                  {data.posts.map((post) => {
+                    return <LazyVisualizer posts={post}/>
+                  })}
+                </VStack>
 
-      <Box h='100vh' maxH='100%' w='100vw' maxW='100%' bg={useColorModeValue('gray.200', 'dark')}>
-        <NavBar/>
-            <SimpleGrid columns={2} alignContent='center'>
-              <VStack>
-                <ProfileImage
-                  image={data.picture}
-                  name={data.name}/>
-                <PersonalDescription
-                  description={data.bio}
-                  instruments={data.instruments}
-                  roles={data.roles}/>
-              </VStack>
-
-              <VStack mb='5rem' mr='40rem'>
-                <UserPost/>
-                {data.posts.map((post) => {
-                  return <LazyVisualizer posts={post}/>
-                })}
-              </VStack>
-
-          </SimpleGrid>
-      </Box>
-    </>
-  )
+            </SimpleGrid>
+        </Box>
+      </>
+    )
+  }
 }
 
-export default personal;
-
+export default personal
 
 export async function getServerSideProps(context:any) {
   const session = await unstable_getServerSession(context.req, context.res);
