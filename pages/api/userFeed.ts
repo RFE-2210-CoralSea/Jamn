@@ -85,6 +85,7 @@ export default async function handler (
             }
           }
         }
+        console.log("This is the user" + JSON.stringify(user))
         return res.status(200).json(user)
       }
     }
@@ -152,7 +153,7 @@ export default async function handler (
       //Call update function to begin update process
       return await update(keys[0])
     } else {
-      
+
       //if there is no session, return unauthorized
       return res.status(401).json({ message: 'Unauthorized' })
     }

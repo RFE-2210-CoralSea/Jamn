@@ -3,7 +3,7 @@ import Head from 'next/head'
 import { NavBar } from '../components/NavBar'
 import { ProfileImage } from '../components/ProfileImage'
 import { PersonalDescription } from '../components/PersonalDescription'
-import { Box, Heading, SimpleGrid, VStack, useColorModeValue } from '@chakra-ui/react'
+import { Box, Heading, SimpleGrid, VStack, useColorModeValue} from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
 
 const LazyVisualizer = dynamic(() => import('../components/AudioVisualizer'), {
@@ -59,7 +59,6 @@ const personal = () => {
     ]
 })
 
-
   return(
     <>
     <Head>
@@ -70,7 +69,6 @@ const personal = () => {
         <NavBar/>
         <Box display='flex'>
             <SimpleGrid columns={2} spacing={5} alignContent='center'>
-
               <VStack>
                 <ProfileImage
                   image={data.picture}

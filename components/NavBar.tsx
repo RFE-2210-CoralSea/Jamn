@@ -9,7 +9,7 @@ import Link from 'next/link'
 import SignOut from './SignOut'
 import { MailBox } from './MailBox'
 
-export const NavBar = () => {
+export const NavBar = ({data}) => {
   const { data: session, status } = useSession()
 
   // user is not logged in
@@ -34,7 +34,7 @@ export const NavBar = () => {
           <HomeButton/>
           <SignOut/>
           <DarkMode/>
-          <MailBox/>
+          <MailBox data={data}/>
       </Stack>
     </Flex>
   )
