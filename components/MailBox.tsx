@@ -1,7 +1,7 @@
 import { IconButton, Tooltip, Text, Box, Button } from '@chakra-ui/react'
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, useDisclosure } from '@chakra-ui/react'
 import { AiOutlineMail } from 'react-icons/ai'
-import {Accordion, AccordionItem, AccordionButton, AccordionPanel,AccordionIcon, } from '@chakra-ui/react'
+import {Accordion, AccordionItem, AccordionButton, AccordionPanel,AccordionIcon, useColorModeValue } from '@chakra-ui/react'
 import { signIn } from 'next-auth/react'
 
 type IdProp = {
@@ -46,27 +46,42 @@ export const MailBox = ({id}:IdProp) => {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Hello Name! Check Your Invites</ModalHeader>
+          <ModalHeader textAlign="center" display="flex" flexDirection="column" >
+            <Text>
+              Hello
+              <Text as="span"
+                bgGradient={useColorModeValue('linear(to-r, #F9A824, #87D8C8)','linear(to-r, #9B9B9B, #87D8C8)' )}
+                bgClip="text"
+                fontWeight="800"
+              > Name!
+              </Text>
+            </Text>
+            <Text as="span" >Check Your Invites</Text></ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Accordion allowMultiple>
               {
-                testData.map((invite) => {
+                testData.map((invite, i) => {
                   return (
-                    <AccordionItem>
+                    <AccordionItem key={i}>
                       <h2>
                         <AccordionButton>
                           <Box as="span" flex='1' textAlign='left'>
-                            You have an invite from {invite.bandName}
+                            <Text
+                              fontWeight="700"
+                            >You have an invite from
+                            <Text as="span"
+                              color={useColorModeValue('#F9A824','#87D8C8' )}
+                            > {invite.bandName.toUpperCase()}</Text></Text>
                           </Box>
                           <AccordionIcon />
                         </AccordionButton>
                       </h2>
-                      <AccordionPanel pb={4} display="flex" justifyContent="space-between">
+                      <AccordionPanel pb={4} display="flex" flexDirection="column" justifyContent="space-between">
                         {invite.message}
-                        <Box>
-                          <Button>Accept</Button>
-                          <Button>Decline</Button>
+                        <Box mt={5}>
+                          <Button mr={2} size="sm"><Text _hover={{color: "green"}}>Accept</Text></Button>
+                          <Button size="sm"><Text _hover={{color: "red"}}>Decline</Text></Button>
                         </Box>
                       </AccordionPanel>
                     </AccordionItem>
@@ -76,7 +91,8 @@ export const MailBox = ({id}:IdProp) => {
             </Accordion>
           </ModalBody>
           <ModalFooter>
-            <Button colorScheme='blue' mr={3} onClick={onClose}>
+            <Button
+              mr={3} onClick={onClose}>
               Close
             </Button>
           </ModalFooter>
