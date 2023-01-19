@@ -16,14 +16,25 @@ export default async function handler(
   if (req.body.accept) {
     prisma.roles.create({data: {userId: user?.id, bandId: req.body.bandId, admin: false, name: user?.name}})
     .then((response) => {
-      return prisma.invitations.delete({where: {bandId: req.body.bandId, userId: user?.id}})
+      return prisma.invitations.delete({where:
+        {userId_bandId:
+          {
+            bandId: req.body.bandId,
+            userId: user?.id
+          }
+        }})
     })
     .then((response) => {
       res.send('Invitation accepted');
       res.end();
     })
   } else {
-    prisma.invitations.delete({where: {bandId: req.body.bandId, userId: user?.id}})
+    prisma.invitations.delete({where:
+      {userId_bandId:
+        {
+          bandId: req.body.bandId,
+          userId: user?.id
+        }}})
     .then((response) => {
       res.send('Invitation deleted');
       res.end();

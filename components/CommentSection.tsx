@@ -30,7 +30,7 @@ export const CommentSection = ({ comments }:any) => {
         </CardHeader>
         <CardBody mt='-1.5rem'>
           <Stack divider={<StackDivider/>} spacing='3'>
-            {comments.map((comment:CommentData, index:number) => {
+            {comments?.map((comment:CommentData, index:number) => {
               return <UserComment name={comment.name} profile_picture={comment.profile_picture} text={comment.text} date={comment.date} key={index}/>
             })}
             <StackDivider/>
