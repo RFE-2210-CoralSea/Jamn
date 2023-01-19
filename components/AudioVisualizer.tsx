@@ -17,10 +17,13 @@ export default function AudioVisualizer ({ posts }:any) {
   current.current = posts.text
 
   useEffect(() => {
-    console.log(posterName.current, playButton.current, duration2.current, current.current)
-    setTimeout(() => {
-      WrapperFunc(posterName, playButton, duration2, current)
-    }, 500)
+    if (posts.length) {
+      setTimeout(() => {
+        WrapperFunc(posterName, playButton, duration2, current)
+      }, 500)
+    } else {
+      return
+    }
   },[])
 
   return (

@@ -1,84 +1,95 @@
-import { Card, CardHeader, CardBody, Flex, Box, Text } from '@chakra-ui/react'
+import { Flex, Box, Editable, EditableInput, Input, EditablePreview, Stack } from '@chakra-ui/react'
 import { List, Tag, TagLabel, ListItem, useColorModeValue } from "@chakra-ui/react"
 import { Tabs, TabList, Tab, TabPanels, TabPanel, Avatar } from '@chakra-ui/react'
+import { FormControl, Button, Text } from '@chakra-ui/react'
+import { EditableControls } from './EditableControls'
+import { useState } from 'react'
 
-type PersonalDescriptionProps = {
-  instruments: string[],
+declare interface InstrumentData {
+  id: number,
+  userId: number,
+  instrument: string,
+}
+declare interface PersonalDescriptionProps {
+  instruments: InstrumentData[]
   description: string,
-  bands: string[]
+  roles: RoleData[]
 }
 
-export const PersonalDescription = ({ description, instruments, bands }:PersonalDescriptionProps) => {
-    return(
-      <Box display='center' w='15rem'>
-        <Tabs variant='soft-rounded' colorScheme={useColorModeValue('blue', 'green')}>
-          <TabList>
-            <Tab>Bio</Tab>
-            <Tab>Bands</Tab>
-            <Tab>Instruments</Tab>
-          </TabList>
-          <TabPanels>
-            <TabPanel>
-              <Text fontSize='lg' fontWeight='bold'>
-                {description}
-              </Text>
-            </TabPanel>
-            <TabPanel>
-               <List fontSize="lg" textAlign="center" fontWeight='bold'>
-                {bands.map((band) => {
-                  return <Flex justifyContent='space-between' mb='1rem'>
-                          <Tag size='xl' colorScheme={useColorModeValue('blue', 'green')} borderRadius='full' >
-                            <Avatar size='sm' mr={2} />
-                            <TagLabel fontWeight='bold' mr={3} key={band}>{band.name}</TagLabel>
-                          </Tag>
-                          </Flex>
-                })}
-                </List>
-            </TabPanel>
-            <TabPanel>
-               <List fontSize="lg" textAlign="center" fontWeight='bold'>
-                {instruments.map((instrument) => {
-                  return <ListItem key={instrument}> {instrument.instrument}</ListItem>
-                })}
-                </List>
-            </TabPanel>
-          </TabPanels>
-        </Tabs>
-      </Box>
-    )
+declare interface RoleData {
+  name: string,
+  id: number
 }
 
-          // <Card boxShadow='dark-lg' bg={useColorModeValue('blue.200', 'royalblue')} rounded={10}>
-          //   <CardHeader textAlign='center'>
-          //     <Heading borderBottom='1px solid black'>Description</Heading>
-          //   </CardHeader>
-          //     <CardBody>
-          //       <Text mt='-1rem' fontSize='xl'>
-          //         {description}
-          //       </Text>
-          //     </CardBody>
-          //     <CardHeader textAlign='center'>
-          //     <Heading borderBottom='1px solid black'>Bands</Heading>
-          //   </CardHeader>
-          //     <CardBody mt='-1rem'>
-          //       <Stack spacing='3rem'>
-          //         <List fontSize="xl" textAlign="center">
-          //           {bands.map((band) => {
-          //             return <ListItem key={band}>{band}</ListItem>
-          //           })}
-          //         </List>
-          //       </Stack>
-          //     </CardBody>
-          //   <CardHeader textAlign='center'>
-          //     <Heading borderBottom="1px solid black" >Instruments</Heading>
-          //   </CardHeader>
-          //     <CardBody mt='-2rem'>
-          //       <Stack spacing='3rem'>
-          //         <List fontSize="xl" textAlign="center">
-          //           {instruments.map((instrument) => {
-          //             return <ListItem key={instrument}>{instrument}</ListItem>
-          //           })}
-          //         </List>
-          //       </Stack>
-          //     </CardBody>
-          // </Card>
+export const PersonalDescription = ({ description, instruments, roles }:PersonalDescriptionProps) => {
+
+  const UpdateDescriptionHandler = async (section:string, changedVal:string) => {
+    let updateData = {}
+    if (section === 'bio') {
+      updateData = {
+        'bio': changedVal
+      }
+    } else if (section === 'instruments') {
+      updateData = {
+        'instruments': changedVal
+      }
+    }
+    console.log(updateData)
+    const response = await fetch('api/userFeed', {
+      method: 'PUT',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(updateData)
+    })
+    return response
+  }
+
+  const [editDescrip, setDescrip] = useState('')
+  const [editInstrument, setInstrument] = useState('')
+
+  return (
+    <Box w='16rem'>
+      <Tabs variant='soft-rounded' colorScheme={useColorModeValue('blue', 'green')}>
+        <TabList>
+          <Tab>Bio</Tab>
+          <Tab>Bands</Tab>
+          <Tab>Instruments</Tab>
+        </TabList>
+        <TabPanels>
+          <TabPanel>
+            <Editable onSubmit={() => UpdateDescriptionHandler('bio', editDescrip)} defaultValue={description} fontSize='lg' fontWeight='bold'>
+              <EditablePreview/>
+              <Input onChange={(e) => setDescrip(e.target.value)} as={EditableInput}/>
+              <EditableControls/>
+            </Editable>
+          </TabPanel>
+          <TabPanel>
+              <List fontSize="lg" textAlign="center" fontWeight='bold'>
+              {roles.map((role) => {
+                return <Flex key={role.id} justifyContent='space-between' mb='1rem'>
+                        <Tag size='xl' colorScheme={useColorModeValue('blue', 'green')} borderRadius='full' >
+                          <Avatar size='sm' mr={2} />
+                          <TagLabel fontWeight='bold' mr={3} key={role.name}>{role.name}</TagLabel>
+                        </Tag>
+                        </Flex>
+              })}
+              </List>
+              {roles.length ? (<></>) : (<Text textAlign='center' fontWeight='bold'>You aren't apart of any bands!</Text>)}
+          </TabPanel>
+          <TabPanel>
+              <List fontSize="lg" textAlign="center" fontWeight='bold'>
+              {instruments.map((instrument) => {
+                return <ListItem key={instrument.id}>• {instrument.instrument}</ListItem>
+              })}
+              </List>
+            <Editable textAlign='center' onSubmit={() => UpdateDescriptionHandler('instruments', editInstrument)} defaultValue='Add a new instrument' fontSize='lg'>
+              <EditablePreview/>
+              <Input onChange={(e) => setInstrument(e.target.value)} as={EditableInput}/>
+              <EditableControls/>
+            </Editable>
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
+    </Box>
+  )
+}
+

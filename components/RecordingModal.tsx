@@ -1,5 +1,5 @@
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Stack, Select } from '@chakra-ui/react'
-import { IconButton, Button, ButtonGroup, Tooltip, FormControl, Input, FormLabel } from '@chakra-ui/react'
+import { IconButton, Button, ButtonGroup, Tooltip, FormControl, Input } from '@chakra-ui/react'
 import { AiOutlineCustomerService, AiOutlinePlayCircle } from 'react-icons/ai'
 import { useDisclosure } from '@chakra-ui/react'
 import { useEffect, useState, useRef } from 'react'
@@ -106,7 +106,9 @@ export const RecordingModal = () => {
 
           <ModalFooter>
             <ButtonGroup>
-              <IconButton aria-label='start recording' icon={<AiOutlinePlayCircle/>} onClick={record}/>
+              <Tooltip hasArrow label='Start Recording!'>
+                <IconButton aria-label='start recording' icon={<AiOutlinePlayCircle/>} onClick={record}/>
+              </Tooltip>
               <Button onClick={submit}>Upload</Button>
             </ButtonGroup>
           </ModalFooter>

@@ -14,6 +14,7 @@ model bands {
   name        String  @db.VarChar(50)
   posts       posts[]
   roles       roles[]
+  invitations invitations[]
 }
 
 model comments {
@@ -60,6 +61,7 @@ model users {
   posts    posts[]
   roles    roles[]
   instruments instruments[]
+  invitations invitations[]
 }
 
 model instruments {
@@ -67,4 +69,14 @@ model instruments {
   userId      Int
   instrument  String    @db.VarChar(255)
   users       users     @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model invitations {
+  id    Int     @id @default(autoincrement())
+  userId    Int
+  bandId    Int
+  users       users     @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  bands       bands     @relation(fields: [bandId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@unique([userId, bandId])
 }

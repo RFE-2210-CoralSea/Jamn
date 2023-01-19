@@ -15,7 +15,7 @@ export default async function handler(
   else {
     //get server session
     const sessionData = await unstable_getServerSession(req, res, authOptions)
-    const userData = await prisma.users.findMany({where: {email: sessionData.user.email}});
+    const userData = await prisma.users.findMany({where: {email: sessionData?.user?.email}});
     const bandData = await prisma.bands.create({
       data: {
         name: req.body.name,
@@ -34,6 +34,5 @@ export default async function handler(
       }
     })
     res.send(bandData)
-    res.end();
   }
 }
