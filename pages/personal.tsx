@@ -8,6 +8,7 @@ import { Box, SimpleGrid, VStack, useColorModeValue, Center, Spinner } from '@ch
 import { useState, useEffect } from 'react'
 import { unstable_getServerSession } from 'next-auth'
 import { UserStats } from '../components/UserStats'
+
 const LazyVisualizer = dynamic(() => import('../components/AudioVisualizer'), {
   ssr: false
 })
@@ -64,7 +65,7 @@ const personal = () => {
               </VStack>
 
               <VStack mb='5rem' mr='40rem'>
-                <UserPost bands={data.roles}/>
+                {/* <UserPost bands={data.roles}/> */}
                 {data.posts.map((post) => {
                   return <LazyVisualizer posts={post}/>
                 })}
