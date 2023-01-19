@@ -85,7 +85,6 @@ export default async function handler (
             }
           }
         }
-        console.log("This is the user" + JSON.stringify(user))
         return res.status(200).json(user)
       }
     }

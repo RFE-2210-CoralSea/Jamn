@@ -25,8 +25,8 @@ export const PersonalDescription = ({ description, instruments, bands }:Personal
             </TabPanel>
             <TabPanel>
                <List fontSize="lg" textAlign="center" fontWeight='bold'>
-                {bands.map((band) => {
-                  return <Flex justifyContent='space-between' mb='1rem'>
+                {bands.map((band, i) => {
+                  return <Flex key={i} justifyContent='space-between' mb='1rem'>
                           <Tag size='xl' colorScheme={useColorModeValue('blue', 'green')} borderRadius='full' >
                             <Avatar size='sm' mr={2} />
                             <TagLabel fontWeight='bold' mr={3} key={band}>{band.name}</TagLabel>

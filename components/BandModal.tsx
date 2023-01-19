@@ -65,7 +65,7 @@ export const BandModal = () => {
 
   return (
     <>
-      <Tooltip hasArrow label='Band Login'>
+      <Tooltip hasArrow label='Create a band'>
         <IconButton aria-label='create band' bg='pink.300' icon={<AiOutlineUsergroupAdd/>} onClick={onOpen}/>
       </Tooltip>
 

@@ -22,7 +22,7 @@ const personal = () => {
   },[])
 
   const [data, setData] = useState({
-    "name": "Kong",
+    "name": "Ivan",
     "bio": "hello world",
     "instruments": [
         "Cello",
@@ -81,8 +81,8 @@ const personal = () => {
 
               <VStack mb='5rem'>
                 <Heading mt='9rem'></Heading>
-                {data.posts.map((post) => {
-                  return <LazyVisualizer posts={post}/>
+                {data.posts.map((post, i ) => {
+                  return <LazyVisualizer key={i} posts={post}/>
                 })}
               </VStack>
           </SimpleGrid>
