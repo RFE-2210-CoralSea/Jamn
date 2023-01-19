@@ -50,12 +50,10 @@ export const BandModal = () => {
       body: formData
     }).then(r => r.json());
     setImageSrc(imageData.secure_url)
-    console.log("data", imageData)
   }
 
   const logData = async (data: Data) => {
     data.image = imageSrc;
-    console.log(data)
     fetch('/api/createBand', {
       method: 'POST',
       headers: {
