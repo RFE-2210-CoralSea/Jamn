@@ -3,15 +3,15 @@ import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody,
 import { AiOutlineMail } from 'react-icons/ai'
 import {Accordion, AccordionItem, AccordionButton, AccordionPanel,AccordionIcon, useColorModeValue } from '@chakra-ui/react'
 import { signIn } from 'next-auth/react'
+import {useState, useEffect} from 'react'
+import { getSession } from 'next-auth/react'
+
 
 type IdProp = {
   id: number
+
 }
-
-
-export const MailBox = ({id}:IdProp) => {
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const testData = [
+const testData = [
     {
       bandName: "beetles",
       message: "Come join our band"
@@ -21,6 +21,21 @@ export const MailBox = ({id}:IdProp) => {
       message: "Check out our band page"
     },
   ]
+
+export const MailBox = ({id, session}:IdProp) => {
+
+
+  const [data, setData] = useState(testData)
+  const { isOpen, onOpen, onClose } = useDisclosure()
+
+  useEffect(() => {
+     fetch('api/getInvitations')
+      .then(async (response) => {
+        const newData = await response.json()
+        setData(newData)
+      })
+  }, [])
+
 
   return (
     <>
@@ -61,7 +76,7 @@ export const MailBox = ({id}:IdProp) => {
           <ModalBody>
             <Accordion allowMultiple>
               {
-                testData.map((invite, i) => {
+                data.map((invite, i) => {
                   return (
                     <AccordionItem key={i}>
                       <h2>
@@ -100,4 +115,23 @@ export const MailBox = ({id}:IdProp) => {
       </Modal>
     </>
   )
+}
+export async function getServerSideProps(context: any) {
+  const session = await getSession(context)
+
+  // TODO: test if user is a part of the given band
+  // for now, just redirects if no session exists
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/'
+      }
+    }
+  }
+  console.log(session)
+  return {
+    props: {
+      session
+    }
+  }
 }
