@@ -49,7 +49,7 @@ export default function Home() {
         position="relative"
         >
         <NavBar/>
-        <Box textAlign='center' mt={8}>
+        <Box textAlign='center' mt={200}>
           <Text color='white' fontSize='3xl' fontWeight='bold'>
             A Social Media Platform for The
           </Text>
@@ -61,7 +61,7 @@ export default function Home() {
                 Sonically Inclined
             </Text>
         </Box>
-          <Container pos="relative" left='600px' top='600px' onClick={() => {
+          <Container pos="relative" left='600px' top='430px' onClick={() => {
             if (audio) {
               if (playing) {
                 audio.pause()
