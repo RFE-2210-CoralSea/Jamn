@@ -1,10 +1,9 @@
 import Head from 'next/head'
-import { Container, Box, Text, Flex, Image } from '@chakra-ui/react'
+import { Container, Box, Text } from '@chakra-ui/react'
 import { NavBar } from '../components/NavBar'
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 import { useColorModeValue } from '@chakra-ui/react'
-import { unstable_getServerSession } from 'next-auth'
 
 // animation variants
 const vinylVariants = {
@@ -61,7 +60,7 @@ export default function Home() {
                 Sonically Inclined
             </Text>
         </Box>
-          <Container maxW='300px' border="1px" pos="relative" left='200px' top='0px' onClick={() => {
+          <Container pos="relative" left='600px' top='600px' onClick={() => {
             if (audio) {
               if (playing) {
                 audio.pause()
@@ -72,16 +71,12 @@ export default function Home() {
             }
           }}>
             <motion.img
-              src="/table.svg"
-              width="150px" height="150px" alt="vinyl player"
-            />
-            <motion.img
               src="/vinyl.svg"
               width="150" height="150" alt="vinyl"
               style={{
                 position: 'absolute',
                 left: '130px',
-                top: '130px',
+                top: '100px',
               }}
               variants={vinylVariants}
               animate={playing ? "spinning" : "stopped" }
@@ -90,7 +85,7 @@ export default function Home() {
               style={{
                 position: 'absolute',
                 left: '280px',
-                top: '100px',
+                top: '80px',
                 transformOrigin: 'center 25px'
               }}
               transition={{

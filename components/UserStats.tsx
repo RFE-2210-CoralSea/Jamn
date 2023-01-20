@@ -13,9 +13,9 @@ export const UserStats = ({stat}: StatProps) => {
   return (
     <Box textAlign='center'>
       <Stat>
-        <StatLabel>Songs Posted Since Account Creation</StatLabel>
+        <StatLabel>Posts Since Account Creation</StatLabel>
         <StatNumber>{stat}</StatNumber>
-        <StatHelpText>Jan 17 - Jan 18</StatHelpText>
+        <StatHelpText>Joined January 17th</StatHelpText>
       </Stat>
     </Box>
   )
