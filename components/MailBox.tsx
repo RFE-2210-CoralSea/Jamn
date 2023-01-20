@@ -4,18 +4,17 @@ import { AiOutlineMail } from 'react-icons/ai'
 import {Accordion, AccordionItem, AccordionButton, AccordionPanel,AccordionIcon, useColorModeValue } from '@chakra-ui/react'
 import { signIn } from 'next-auth/react'
 import {useState, useEffect} from 'react'
-import { getSession } from 'next-auth/client'
-
+import { useSession } from 'next-auth/react'
 
 
 type IdProp = {
   id: number
-
 }
 
 
-export const MailBox = ({id, session}:IdProp) => {
-
+export const MailBox = () => {
+  const { data: session } = useSession()
+  console.log(session)
   const [data, setData] = useState([])
   const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -86,7 +85,7 @@ export const MailBox = ({id, session}:IdProp) => {
                 bgGradient={useColorModeValue('linear(to-r, #F9A824, #87D8C8)','linear(to-r, #9B9B9B, #87D8C8)' )}
                 bgClip="text"
                 fontWeight="800"
-              > Name!
+              > {session.user.name}!
               </Text>
             </Text>
             <Text as="span" >Check Your Invites</Text></ModalHeader>
@@ -135,18 +134,3 @@ export const MailBox = ({id, session}:IdProp) => {
   )
 }
 
-export async function getServerSideProps (context:any) {
-  const session = await unstable_getServerSession(context.req, context.res);
-
-  if (!session) {
-    return {
-      redirect: { destination: "/" },
-    };
-  }
-  console.log(session)
-  return {
-    props: {
-      session
-    },
-  }
-}
