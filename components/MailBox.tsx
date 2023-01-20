@@ -14,7 +14,6 @@ type IdProp = {
 
 export const MailBox = () => {
   const { data: session } = useSession()
-  console.log(session)
   const [data, setData] = useState([])
   const { isOpen, onOpen, onClose } = useDisclosure()
 
