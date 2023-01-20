@@ -4,7 +4,7 @@ import { NavBar } from '../../components/NavBar'
 import { ProfileImage } from '../../components/ProfileImage'
 import { PersonalDescription } from '../../components/PersonalDescription'
 import { Box, Card, SimpleGrid, VStack, useColorModeValue, CardHeader, CardBody, Heading, Text, Stack, List, ListItem, Spinner, Center } from '@chakra-ui/react'
-import { useState, useEffect } from 'react'
+import { BandPost } from '../../components/BandPost'
 import { getSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import prisma from '../../lib/Prisma';
@@ -74,6 +74,7 @@ export default function BandFeed(props: any) {
               </Box>
             </VStack>
             <VStack>
+              <BandPost bandName={data.name}/>
                 {data.posts.map((post: any) => {
                   return <LazyVisualizer posts={post} key={post.name}/>
                 })}

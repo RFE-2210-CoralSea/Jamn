@@ -10,17 +10,29 @@ declare interface CommentData {
   date: string,
 }
 
-export const CommentSection = ({ comments }:any) => {
+export const CommentSection = ({ comments, postId, bandId }:any) => {
 
   const [comment, setComment] = useState('')
   const [submitting, setSubmitting] = useState(false)
 
   const postCommentHandler = () => {
     setSubmitting(true)
-    // send post request
-    // need username
-    // date/time of post
-    // comment data
+    let data = {
+      'bandId': bandId,
+      'postId': postId,
+      'text': comment
+    }
+    fetch('bands/createComment', {
+      method: 'POST',
+      body: JSON.stringify(data)
+    })
+      .then((response) => {
+        console.log(response)
+        setSubmitting(false)
+      })
+      .catch((error) => {
+        console.error(error)
+      })
   }
 
   return (
@@ -41,7 +53,7 @@ export const CommentSection = ({ comments }:any) => {
           <FormControl>
             <Input onChange={(e) => setComment(e.target.value)} placeholder='Post a new comment!'></Input>
           </FormControl>
-          <Button type='submit' onClick={postCommentHandler} isLoading={submitting} alignSelf='flex-end'> Submit </Button>
+          <Button onClick={postCommentHandler} isLoading={submitting} alignSelf='flex-end'> Submit </Button>
         </CardFooter>
       </Card>
   )

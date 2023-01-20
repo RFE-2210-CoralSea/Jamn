@@ -80,7 +80,7 @@ export default function AudioVisualizer ({ posts, bands }:any) {
           <div id={'a'+ songName.current.replace(/[^0-9a-z]/gi, '')}/>
         </Grid>
 
-        <CommentSection comments={posts.comments}/>
+        <CommentSection comments={posts.comments} postId={posts.id} bandId={posts.bandId}/>
 
       </Grid>
   )
