@@ -56,15 +56,13 @@ export const BandModal = () => {
 
   const logData = async (data: Data) => {
     data.image = imageSrc;
-    console.log(data)
-    // console.log(data)
-    // fetch('/api/createBand', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type' : 'application/json',
-    //   },
-    //   body: JSON.stringify(data)
-    // })
+    fetch('/api/createBand', {
+      method: 'POST',
+      headers: {
+        'Content-Type' : 'application/json',
+      },
+      body: JSON.stringify(data)
+    })
     onClose()
   }
 
