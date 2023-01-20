@@ -27,10 +27,11 @@ export default async function handler (
       text: req.body.text
     }})
     .then((response) => {
-      res.send(response);
+      res.send('Comment made');
       res.end();
     })
     .catch((err) => {
+      console.log(err);
       res.send('Invalid comment, please check query parameters');
       res.end();
     })
