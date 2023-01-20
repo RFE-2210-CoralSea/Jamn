@@ -21,7 +21,6 @@
     "@types/react-mic": "^12.4.3",
     "@types/wavesurfer.js": "^6.0.3",
     "axios": "^1.2.3",
-    "epoch-timeago": "^1.1.9",
     "eslint-config-next": "13.1.1",
     "framer-motion": "^6.5.1",
     "next": "13.1.1",

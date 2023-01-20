@@ -1,7 +1,5 @@
 import { Box, Heading, Tag, Avatar, TagLabel, Text, Wrap } from '@chakra-ui/react'
 import { useColorModeValue } from '@chakra-ui/react';
-import timeago from 'epoch-timeago';
-
 
 declare interface CommentProps {
   user: number,
