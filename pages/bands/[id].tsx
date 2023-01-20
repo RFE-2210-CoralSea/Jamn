@@ -15,12 +15,27 @@ const LazyVisualizer = dynamic(() => import('../../components/AudioVisualizer'),
   ssr: false
 })
 
-const check = async (pid:string) => {
+const check = async (pid:string, email:string) => {
   let search = await prisma.bands.findFirst({
     where: {
       id: Number(pid)
     }
   })
+  if (search) {
+    let isInBand = await prisma.users.findUnique({
+      where: {
+        email: email
+      }, include: {
+        roles: {
+          select: {
+            bandId: true
+          }
+        }
+      }
+    })
+    
+    return isInBand.roles.find((x) => x.bandId === Number(pid))
+  }
   return search
 }
 
@@ -84,7 +99,7 @@ export async function getServerSideProps(context: any) {
     }
   }
 
-  const checkExists = await check(context.params.id);
+  const checkExists = await check(context.params.id, session.user.email);
     if (!checkExists) {
       return {
         notFound: true
