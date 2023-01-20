@@ -72,7 +72,7 @@ export const BandPost = ({bandName}) => {
 
 
   return (
-    <Card mt='9rem'  mb='2rem' w='40rem' boxShadow='dark-lg'>
+    <Card mt='9rem' w='40rem' boxShadow='dark-lg'>
       <CardHeader fontWeight='bold'>Make A New Post!</CardHeader>
       <CardBody mt='-1.5rem'>
           <Stack spacing='3'>

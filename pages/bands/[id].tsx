@@ -7,6 +7,7 @@ import { Box, Card, SimpleGrid, VStack, useColorModeValue, CardHeader, CardBody,
 import { BandPost } from '../../components/BandPost'
 import { getSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
+import { UserStats } from '../../components/UserStats'
 import prisma from '../../lib/Prisma';
 import useSWR from 'swr'
 
@@ -46,26 +47,25 @@ export default function BandFeed(props: any) {
       </Head>
       <Box h='100vh' w='100vw' maxW='100%'>
         <NavBar/>
-        <Box display='flex'>
           <SimpleGrid columns={2} spacing={5} alignContent='center'>
             <VStack>
               <ProfileImage
                 image={data.image}
                 username={data.name}/>
+              <UserStats stat={data.posts.length}/>
               <BandDescription
                 description={data.description}
                 members={data.roles}
                 bandId={data.id}
               />
             </VStack>
-            <VStack>
+            <VStack mb='5rem' mr='30rem' spacing='2rem'>
               <BandPost bandName={data.name}/>
                 {data.posts.map((post: any) => {
                   return <LazyVisualizer posts={post} key={post.name}/>
                 })}
             </VStack>
           </SimpleGrid>
-        </Box>
       </Box>
     </>
   )
