@@ -4,8 +4,7 @@ import { useState } from 'react'
 import { UserComment } from './UserComment'
 
 declare interface CommentData {
-  name: string,
-  profile_picture: string,
+  userId: number,
   text: string,
   date: string,
 }
@@ -16,14 +15,13 @@ export const CommentSection = ({ comments, postId }:any) => {
   const [submitting, setSubmitting] = useState(false)
 
   const postCommentHandler = () => {
-    console.log(comments)
     setSubmitting(true)
     let data = {
       'postId': postId,
       'text': comment
     }
     console.log(data)
-    fetch('api/createComment', {
+    fetch('/api/createComment', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(data)

@@ -6,7 +6,7 @@ import { CommentSection } from './CommentSection'
 import { WrapperFunc } from './Wavesurfer'
 
 export default function AudioVisualizer ({ posts, bands }:any) {
-  console.log(posts, bands)
+  console.log(posts)
   const songName = useRef()
   const playButton = useRef()
   const duration2 = useRef()
