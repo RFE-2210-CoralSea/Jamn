@@ -1,7 +1,7 @@
-import { Flex, Box, Editable, EditableInput, Input, EditablePreview } from '@chakra-ui/react'
+import { Flex, Box, Editable, EditableInput, Input, EditablePreview, EditableTextarea } from '@chakra-ui/react'
 import { List, Tag, TagLabel, ListItem, useColorModeValue } from "@chakra-ui/react"
 import { Tabs, TabList, Tab, TabPanels, TabPanel, Avatar } from '@chakra-ui/react'
-import { Link, Text, Center, Button } from '@chakra-ui/react'
+import { Link, Text, Center, Button} from '@chakra-ui/react'
 import { EditableControls } from './EditableControls'
 import { useState } from 'react'
 import { FormControl, FormLabel, FormErrorMessage, FormHelperText,} from '@chakra-ui/react'
@@ -13,34 +13,21 @@ type NewInputs = {
   bandId: number,
 }
 
+type Props = {
+  description: string,
+  members: [],
+  bandId:number
+}
 
-export const BandDescription = ({ description, members, bandId }) => {
 
-  const UpdateDescriptionHandler = async (section:string, changedVal:string) => {
-    let updateData = {}
-    if (section === 'description') {
-      updateData = {
-        'description': changedVal
-      }
-    } else if (section === 'instruments') {
-      updateData = {
-        'instruments': changedVal
-      }
-    }
-    // const response = await fetch('api/userFeed', {
-    //   method: 'PUT',
-    //   headers: { 'content-type': 'application/json' },
-    //   body: JSON.stringify(updateData)
-    // })
-    // return response
-  }
-  //ivanday9@gmail.com
+export const BandDescription = ({ description, members, bandId }: Props) => {
+
   const [editDescrip, setDescrip] = useState('')
   const [editInstrument, setInstrument] = useState('')
 
   const { register, handleSubmit, watch, formState: { errors } } = useForm<NewInputs>();
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: any) => {
     data.bandId = bandId
     fetch('/api/sendInvitation', {
       method: 'POST',
@@ -61,7 +48,7 @@ export const BandDescription = ({ description, members, bandId }) => {
         </TabList>
         <TabPanels>
           <TabPanel>
-            <Editable onSubmit={() => UpdateDescriptionHandler('description', editDescrip)} defaultValue={description} fontSize='lg' fontWeight='bold'>
+            <Editable display="flex" gap={2} defaultValue={description} fontSize='lg' fontWeight='bold'>
               <EditablePreview/>
               <Input onChange={(e) => setDescrip(e.target.value)} as={EditableInput}/>
               <EditableControls/>

@@ -48,7 +48,7 @@ const personal = () => {
                   roles={data.roles}/>
               </VStack>
 
-              <VStack mb='5rem' mr='40rem'>
+              <VStack mb='5rem' mr='15rem'>
                 <UserPost bands={data.roles}/>
                 {data.posts.map((post) => {
                   return <LazyVisualizer posts={post}/>

@@ -56,7 +56,7 @@ export const PersonalDescription = ({ description, instruments, roles }:Personal
         </TabList>
         <TabPanels>
           <TabPanel>
-            <Editable onSubmit={() => UpdateDescriptionHandler('bio', editDescrip)} defaultValue={description} fontSize='lg' fontWeight='bold'>
+            <Editable display="flex" gap={2} onSubmit={() => UpdateDescriptionHandler('bio', editDescrip)} defaultValue={description} fontSize='lg' fontWeight='bold'>
               <EditablePreview/>
               <Input onChange={(e) => setDescrip(e.target.value)} as={EditableInput}/>
               <EditableControls/>
