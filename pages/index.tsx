@@ -76,7 +76,7 @@ export default function Home() {
               style={{
                 position: 'absolute',
                 left: '130px',
-                top: '130px',
+                top: '100px',
               }}
               variants={vinylVariants}
               animate={playing ? "spinning" : "stopped" }
@@ -85,7 +85,7 @@ export default function Home() {
               style={{
                 position: 'absolute',
                 left: '280px',
-                top: '100px',
+                top: '80px',
                 transformOrigin: 'center 25px'
               }}
               transition={{

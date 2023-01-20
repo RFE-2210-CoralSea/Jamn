@@ -1,5 +1,5 @@
-import { FormControl, CardHeader, Card, Stack, CardBody, VisuallyHiddenInput, Input, Button, Select, Tooltip, IconButton, ButtonGroup } from "@chakra-ui/react";
-import { useState, useEffect, useRef } from 'react'
+import { FormControl, CardHeader, Card, Stack, CardBody, Input, Button, Select, Tooltip, IconButton, ButtonGroup } from "@chakra-ui/react";
+import { useState, useRef } from 'react'
 import { AiOutlinePlayCircle } from "react-icons/ai";
 
 declare interface PostProps {
@@ -14,7 +14,6 @@ function readFile(f: File): Promise<ArrayBuffer> {
     let reader = new FileReader()
 
     reader.addEventListener('loadend', (e) => {
-      console.log(e?.target?.result)
       resolve(e?.target?.result as ArrayBuffer)})
     reader.addEventListener('error', reject)
     reader.readAsArrayBuffer(f)
@@ -33,7 +32,7 @@ export const UserPost = ({bands}:PostProps) => {
   const file = useRef<HTMLInputElement>(null)
   const songKey = useRef<HTMLInputElement>(null)
 
-  useEffect(() => {
+  const record = async () => {
     navigator.mediaDevices.getUserMedia({ audio: true })
       .then((stream) => {
         setRecorder(new MediaRecorder(stream))
@@ -41,12 +40,9 @@ export const UserPost = ({bands}:PostProps) => {
       .catch((error) => {
         console.error(error)
       })
-  },[])
 
-  const record = async () => {
     if (!recorder) return
 
-    // add event listener to recorder
     if (!recorder.ondataavailable) {
       recorder.ondataavailable = (event) => {
         setAudio(event.data)
@@ -80,13 +76,13 @@ export const UserPost = ({bands}:PostProps) => {
         })
       })
     } else {
-      console.log('test')
+      return
     }
   }
 
 
   return (
-    <Card mt='9rem' w='40rem'>
+    <Card mt='9rem' w='40rem' boxShadow='dark-lg'>
       <CardHeader fontWeight='bold'>Make A New Post!</CardHeader>
       <CardBody mt='-1.5rem'>
           <Stack spacing='3'>
@@ -112,7 +108,7 @@ export const UserPost = ({bands}:PostProps) => {
           </Stack>
           <ButtonGroup>
             <Tooltip hasArrow label='Start Recording!'>
-              <IconButton aria-label='startRecording' icon={<AiOutlinePlayCircle/>} onClick={record} bg='red.500'/>
+              <IconButton aria-label='startRecording' icon={<AiOutlinePlayCircle/>} onClick={record} colorScheme={'red'}/>
             </Tooltip>
             <Button> Upload PDF </Button>
             <Button onClick={submit}> Submit </Button>

@@ -33,7 +33,7 @@ const personal = () => {
       <title>Your Homepage</title>
     </Head>
 
-      <Box h='100vh' maxH='100%' w='100vw' maxW='100%' bg={useColorModeValue('gray.300', 'dark')}>
+      <Box h='100vh' maxH='100%' w='100vw' maxW='100%' fontFamily='sans-serif'>
         <NavBar/>
             <SimpleGrid columns={2} alignContent='center'>
               <VStack pos='relative'>
@@ -47,7 +47,7 @@ const personal = () => {
                   roles={data.roles}/>
               </VStack>
 
-              <VStack mb='5rem' mr='40rem'>
+              <VStack mb='5rem' mr='40rem' spacing='2rem'>
                 <UserPost bands={data.roles}/>
                 {data.posts.map((post) => {
                   return <LazyVisualizer key={post.id} posts={post} bands={data.roles}/>
