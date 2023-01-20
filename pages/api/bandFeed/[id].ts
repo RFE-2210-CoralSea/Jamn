@@ -48,7 +48,20 @@ export default async function handler(
     res.end();
   } else {
     //this request will take in a band name, query db for the band id, then query for posts and users related to that band id
-    const bandData = await prisma.bands.findUnique({ where: { id: parseInt(req.query.id) }, include: { roles: true, posts: true } });
+    const bandData = await prisma.bands.findUnique({
+      where: {
+        id: parseInt(req.query.id)
+      },
+        include: {
+          roles: true,
+          posts: {
+            orderBy: { id: 'desc' },
+            include: {
+              comments: true
+            }
+          } }
+    });
+    
     (BigInt.prototype as any).toJSON = function () {
           return Number(this)
     }
