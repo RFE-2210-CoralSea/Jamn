@@ -4,23 +4,35 @@ import { useState } from 'react'
 import { UserComment } from './UserComment'
 
 declare interface CommentData {
-  name: string,
-  profile_picture: string,
+  userId: number,
   text: string,
   date: string,
 }
 
-export const CommentSection = ({ comments }:any) => {
+export const CommentSection = ({ comments, postId }:any) => {
 
   const [comment, setComment] = useState('')
   const [submitting, setSubmitting] = useState(false)
 
   const postCommentHandler = () => {
     setSubmitting(true)
-    // send post request
-    // need username
-    // date/time of post
-    // comment data
+    let data = {
+      'postId': postId,
+      'text': comment
+    }
+    console.log(data)
+    fetch('/api/createComment', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(data)
+    })
+      .then((response) => {
+        console.log(response)
+        setSubmitting(false)
+      })
+      .catch((error) => {
+        console.error(error)
+      })
   }
 
   return (
@@ -31,7 +43,7 @@ export const CommentSection = ({ comments }:any) => {
         <CardBody mt='-1.5rem'>
           <Stack divider={<StackDivider/>} spacing='3'>
             {comments?.map((comment:CommentData, index:number) => {
-              return <UserComment name={comment.name} profile_picture={comment.profile_picture} text={comment.text} date={comment.date} key={index}/>
+              return <UserComment user={comment.userId} text={comment.text} date={comment.date} key={index}/>
             })}
             <StackDivider/>
           </Stack>
@@ -41,7 +53,7 @@ export const CommentSection = ({ comments }:any) => {
           <FormControl>
             <Input onChange={(e) => setComment(e.target.value)} placeholder='Post a new comment!'></Input>
           </FormControl>
-          <Button type='submit' onClick={postCommentHandler} isLoading={submitting} alignSelf='flex-end'> Submit </Button>
+          <Button onClick={postCommentHandler} isLoading={submitting} alignSelf='flex-end'> Submit </Button>
         </CardFooter>
       </Card>
   )
