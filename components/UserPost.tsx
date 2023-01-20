@@ -1,5 +1,5 @@
 import { FormControl, CardHeader, Card, Stack, CardBody, Input, Button, Select, Tooltip, IconButton, ButtonGroup } from "@chakra-ui/react";
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { AiOutlinePlayCircle } from "react-icons/ai";
 
 declare interface PostProps {
@@ -32,7 +32,7 @@ export const UserPost = ({bands}:PostProps) => {
   const file = useRef<HTMLInputElement>(null)
   const songKey = useRef<HTMLInputElement>(null)
 
-  const record = async () => {
+  useEffect(() => {
     navigator.mediaDevices.getUserMedia({ audio: true })
       .then((stream) => {
         setRecorder(new MediaRecorder(stream))
@@ -40,7 +40,9 @@ export const UserPost = ({bands}:PostProps) => {
       .catch((error) => {
         console.error(error)
       })
+  },[])
 
+  const record = async () => {
     if (!recorder) return
 
     if (!recorder.ondataavailable) {
@@ -65,7 +67,6 @@ export const UserPost = ({bands}:PostProps) => {
       songName.current &&
       audio
     ) {
-      console.log(audio, typeof audio)
       await fetch('/api/newPost', {
         method: 'POST',
         body: JSON.stringify({

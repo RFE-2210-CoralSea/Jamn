@@ -10,20 +10,22 @@ declare interface CommentData {
   date: string,
 }
 
-export const CommentSection = ({ comments, postId, bandId }:any) => {
+export const CommentSection = ({ comments, postId }:any) => {
 
   const [comment, setComment] = useState('')
   const [submitting, setSubmitting] = useState(false)
 
   const postCommentHandler = () => {
+    console.log(comments)
     setSubmitting(true)
     let data = {
-      'bandId': bandId,
       'postId': postId,
       'text': comment
     }
-    fetch('bands/createComment', {
+    console.log(data)
+    fetch('api/createComment', {
       method: 'POST',
+      headers: { 'content-type': 'application/json' },
       body: JSON.stringify(data)
     })
       .then((response) => {
@@ -43,7 +45,7 @@ export const CommentSection = ({ comments, postId, bandId }:any) => {
         <CardBody mt='-1.5rem'>
           <Stack divider={<StackDivider/>} spacing='3'>
             {comments?.map((comment:CommentData, index:number) => {
-              return <UserComment name={comment.name} profile_picture={comment.profile_picture} text={comment.text} date={comment.date} key={index}/>
+              return <UserComment user={comment.userId} text={comment.text} date={comment.date} key={index}/>
             })}
             <StackDivider/>
           </Stack>

@@ -26,7 +26,7 @@ export default async function handler (
       date: Date.now(),
       text: req.body.text
     }})
-    .then((response) => {
+    .then((_response) => {
       res.send('Comment made');
       res.end();
     })
