@@ -32,9 +32,9 @@ export const NavBar = ({id}) => {
     <Flex justifyContent='space-between' p={5}>
       <Heading><Link href="/">Musi 🎸</Link></Heading>
       <Stack direction='row'>
+          <HomeButton/>
           <BandModal/>
           <RecordingModal/>
-          <HomeButton/>
           <SignOut/>
           <DarkMode/>
           {router.pathname === '/personal' && <MailBox/>}
