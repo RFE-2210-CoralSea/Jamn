@@ -4,7 +4,7 @@ import { NavBar } from '../components/NavBar'
 import { UserPost } from '../components/UserPost'
 import { ProfileImage } from '../components/ProfileImage'
 import { PersonalDescription } from '../components/PersonalDescription'
-import { Box, SimpleGrid, VStack, useColorModeValue, Center, Spinner } from '@chakra-ui/react'
+import { Box, SimpleGrid, VStack, Center, Spinner } from '@chakra-ui/react'
 import { unstable_getServerSession } from 'next-auth'
 import { UserStats } from '../components/UserStats'
 import useSWR from 'swr'
@@ -33,10 +33,10 @@ const personal = () => {
       <title>Your Homepage</title>
     </Head>
 
-      <Box h='100vh' maxH='100%' w='100vw' maxW='100%'>
+      <Box h='100vh' w='100vw' maxW='100%'>
         <NavBar/>
             <SimpleGrid columns={2} alignContent='center'>
-              <VStack pos='relative' >
+              <VStack w='100%'>
                 <ProfileImage
                   image={data.picture}
                   username={data.name}/>
@@ -47,7 +47,7 @@ const personal = () => {
                   roles={data.roles}/>
               </VStack>
 
-              <VStack mb='5rem' mr='40rem' spacing='2rem'>
+              <VStack mb='5rem' mr='30rem'spacing='2rem'>
                 <UserPost bands={data.roles}/>
                 {data.posts.map((post) => {
                   return <LazyVisualizer key={post.id} posts={post} bands={data.roles}/>
