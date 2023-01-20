@@ -33,10 +33,10 @@ const personal = () => {
       <title>Your Homepage</title>
     </Head>
 
-      <Box h='100vh' maxH='100%' w='100vw' maxW='100%' fontFamily='sans-serif'>
+      <Box h='100vh' maxH='100%' w='100vw' maxW='100%'>
         <NavBar/>
             <SimpleGrid columns={2} alignContent='center'>
-              <VStack pos='relative'>
+              <VStack pos='relative' >
                 <ProfileImage
                   image={data.picture}
                   username={data.name}/>

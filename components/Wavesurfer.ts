@@ -27,7 +27,7 @@ export const WrapperFunc = (songName:any, playButton:any, duration2:any, current
   audioContext.decodeAudioData(audioBuffer, (buffer) => {
     // create an instance of WaveSurfer
     const wavesurfer = WaveSurfer.create({
-      container: '#a' + songName.current.replace(/\s/g,''),
+      container: '#a' + songName.current.replace(/[^0-9a-z]/gi, ''),
       waveColor: '#cdedff',
       progressColor: '#1AAFFF',
       height: 48,

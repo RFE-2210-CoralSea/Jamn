@@ -25,7 +25,7 @@ export default function AudioVisualizer ({ posts, bands }:any) {
         bandName.current = band.name
       }
     }
-  } else {
+  } else if (bands) {
     bandName.current = bands[0].name
   }
 
@@ -77,7 +77,7 @@ export default function AudioVisualizer ({ posts, bands }:any) {
             w='3.5rem' h='3.5rem'
             borderRadius='50%'/>
 
-          <div id={'a'+ songName.current.replace(/\s/g,'')}/>
+          <div id={'a'+ songName.current.replace(/[^0-9a-z]/gi, '')}/>
         </Grid>
 
         <CommentSection comments={posts.comments}/>
