@@ -6,7 +6,7 @@ import { CommentSection } from './CommentSection'
 import { WrapperFunc } from './Wavesurfer'
 
 export default function AudioVisualizer ({ posts, bands }:any) {
-
+  console.log(posts)
   const songName = useRef()
   const playButton = useRef()
   const duration2 = useRef()
@@ -20,7 +20,7 @@ export default function AudioVisualizer ({ posts, bands }:any) {
   current.current = posts.date
 
   if (bands?.length > 1) {
-    for (const band in bands) {
+    for (const band of bands) {
       if (posts.bandId === band.id) {
         bandName.current = band.name
       }
@@ -80,7 +80,7 @@ export default function AudioVisualizer ({ posts, bands }:any) {
           <div id={'a'+ songName.current.replace(/[^0-9a-z]/gi, '')}/>
         </Grid>
 
-        <CommentSection comments={posts.comments}/>
+        <CommentSection comments={posts.comments} postId={posts.id} bandId={posts.bandId}/>
 
       </Grid>
   )
