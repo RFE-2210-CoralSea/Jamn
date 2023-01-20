@@ -12,7 +12,27 @@ export default async function handler (
     res.end();
   } else {
     const sessionData = await unstable_getServerSession(req, res, authOptions);
-    const userId = await prisma.users.findUnique({where: sessionData?.user?.email, select: {id: true}})
-
+    const userData = await prisma.users.findUnique(
+      {where:
+        {email: sessionData?.user?.email},
+        select: {
+          id: true
+        }
+      }
+    );
+    prisma.comments.create({data: {
+      postId: req.body.postId,
+      userId: userData?.id,
+      date: Date.now(),
+      text: req.body.text
+    }})
+    .then((response) => {
+      res.send(response);
+      res.end();
+    })
+    .catch((err) => {
+      res.send('Invalid comment, please check query parameters');
+      res.end();
+    })
   }
 }
