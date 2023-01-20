@@ -28,6 +28,7 @@ export const NavBar = () => {
     )
   }
 
+
   return (
     <Flex justifyContent='space-between' p={5} bg="#5e5e5e33" backdropFilter="auto" backdropBlur="6px">
       <Heading><Link href="/">Musi</Link></Heading>

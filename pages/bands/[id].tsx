@@ -5,7 +5,7 @@ import { ProfileImage } from '../../components/ProfileImage'
 import { BandDescription } from '../../components/BandDescription'
 import { Box, SimpleGrid, VStack, Spinner, Center } from '@chakra-ui/react'
 import { BandPost } from '../../components/BandPost'
-import { getSession } from 'next-auth/react'
+import { unstable_getServerSession } from 'next-auth'
 import { useRouter } from 'next/router'
 import { UserStats } from '../../components/UserStats'
 import prisma from '../../lib/Prisma';
@@ -72,7 +72,7 @@ export default function BandFeed(props: any) {
 }
 
 export async function getServerSideProps(context: any) {
-  const session = await getSession(context)
+  const session = await unstable_getServerSession(context.req, context.res);
 
   // TODO: test if user is a part of the given band
   // for now, just redirects if no session exists

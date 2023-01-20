@@ -1,15 +1,16 @@
 import { Box, Heading, Tag, Avatar, TagLabel, Text, Wrap } from '@chakra-ui/react'
-import { useColorModeValue } from '@chakra-ui/react'
+import { useColorModeValue } from '@chakra-ui/react';
 
 declare interface CommentProps {
   user: number,
   text: string,
-  date: string
+  date: string,
+  name: string
 }
 
-export const UserComment = ({ user, text, date }:CommentProps) => {
-
-
+export const UserComment = ({ user, text, date, name }:CommentProps) => {
+  const newDate = new Date(date);
+  console.log(user)
   return (
     <Box>
       <Heading size='xs'>
@@ -20,11 +21,11 @@ export const UserComment = ({ user, text, date }:CommentProps) => {
             name=''
             ml={-1}
             mr={2}/>
-          <TagLabel fontWeight='bold'>Joe Lin</TagLabel>
+          <TagLabel fontWeight='bold'>{name}</TagLabel>
         </Tag>
       </Heading>
       <Text pt='3' fontSize='lg' mb='1rem'>{text}</Text>
-      <Wrap fontSize='xs'><span>{date}</span></Wrap>
+      <Wrap fontSize='xs'><span>{`${newDate.toLocaleString()}`}</span></Wrap>
     </Box>
   )
 }
