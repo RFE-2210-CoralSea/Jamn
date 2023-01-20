@@ -23,10 +23,9 @@ export const MailBox = ({id, session}:IdProp) => {
      fetch('api/getInvitations')
       .then(async (response) => {
         const newData = await response.json()
-        console.log("This is the data" + JSON.stringify(newData))
         setData(newData)
       })
-  }, [data])
+  }, [])
 
 
   const acceptInvite = (bandId) => {
