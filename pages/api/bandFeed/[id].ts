@@ -57,11 +57,19 @@ export default async function handler(
           posts: {
             orderBy: { id: 'desc' },
             include: {
-              comments: true
+              comments:  {
+                include: {
+                  users: {
+                    select : {
+                      name: true
+                    }
+                  }
+                }
+              }
             }
           } }
     });
-    
+
     (BigInt.prototype as any).toJSON = function () {
           return Number(this)
     }
