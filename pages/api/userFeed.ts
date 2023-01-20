@@ -58,7 +58,15 @@ export default async function handler(
           posts: {
             orderBy: { id: 'desc' },
             include: {
-              comments: true
+              comments: {
+                include: {
+                  users: {
+                    select : {
+                      name: true
+                    }
+                  }
+                }
+              }
             }
           },
           instruments: true,

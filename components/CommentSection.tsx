@@ -7,9 +7,14 @@ declare interface CommentData {
   userId: number,
   text: string,
   date: string,
+  users: {
+  name: string,
+  },
+
 }
 
 export const CommentSection = ({ comments, postId }:any) => {
+
 
   const [comment, setComment] = useState('')
   const [submitting, setSubmitting] = useState(false)
@@ -43,7 +48,7 @@ export const CommentSection = ({ comments, postId }:any) => {
         <CardBody mt='-1.5rem'>
           <Stack divider={<StackDivider/>} spacing='3'>
             {comments?.map((comment:CommentData, index:number) => {
-              return <UserComment user={comment.userId} text={comment.text} date={comment.date} key={index}/>
+              return <UserComment user={comment.userId} text={comment.text} date={comment.date} key={index} name={comment.users.name}/>
             })}
             <StackDivider/>
           </Stack>
