@@ -8,6 +8,7 @@ import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import SignOut from './SignOut'
 import { MailBox } from './MailBox'
+import { useRouter } from 'next/router'
 
 export const NavBar = ({id}) => {
   const { data: session, status } = useSession()
@@ -24,6 +25,7 @@ export const NavBar = ({id}) => {
       </Flex>
     )
   }
+
 
   return (
     <Flex justifyContent='space-between' p={5}>

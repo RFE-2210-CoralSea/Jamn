@@ -56,6 +56,7 @@ export default async function handler(
         },
         include: {
           posts: {
+            orderBy: { id: 'desc' },
             include: {
               comments: true
             }
