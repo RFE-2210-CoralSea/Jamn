@@ -56,13 +56,16 @@ export const BandModal = () => {
 
   const logData = async (data: Data) => {
     data.image = imageSrc;
-    fetch('/api/createBand', {
-      method: 'POST',
-      headers: {
-        'Content-Type' : 'application/json',
-      },
-      body: JSON.stringify(data)
-    })
+    console.log(data)
+    // console.log(data)
+    // fetch('/api/createBand', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type' : 'application/json',
+    //   },
+    //   body: JSON.stringify(data)
+    // })
+    onClose()
   }
 
   return (
@@ -111,7 +114,7 @@ export const BandModal = () => {
           </ModalBody>
           <ModalFooter>
             <ButtonGroup>
-              <Button onClick={handleSubmit(handleOnSubmit)}>Create Band Page</Button>
+              <Button  onClick={handleSubmit(logData)}>Create Band Page</Button>
             </ButtonGroup>
           </ModalFooter>
         </ModalContent>
