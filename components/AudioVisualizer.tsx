@@ -1,25 +1,38 @@
-import { Grid, Text, Image, IconButton, Container, Flex } from '@chakra-ui/react'
+import { Grid, Text, Image, IconButton, Flex } from '@chakra-ui/react'
 import { useEffect, useRef } from 'react'
 import { AiOutlineRight } from 'react-icons/ai'
 import { useColorModeValue } from '@chakra-ui/react'
 import { CommentSection } from './CommentSection'
 import { WrapperFunc } from './Wavesurfer'
 
-export default function AudioVisualizer ({ posts }:any) {
+export default function AudioVisualizer ({ posts, bands }:any) {
 
-  const posterName = useRef(posts)
-  const playButton = useRef(posts)
-  const duration2 = useRef(posts)
-  const current = useRef(posts)
-  posterName.current = posts.name
-  playButton.current = posts.postId
-  duration2.current = posts.audio
-  current.current = posts.text
+  const songName = useRef()
+  const playButton = useRef()
+  const duration2 = useRef()
+  const current = useRef()
+  const bandName = useRef()
+  const songData = useRef()
+  songData.current= posts.audio.data
+  songName.current = posts.text
+  playButton.current = posts.id
+  duration2.current = 'duration' + posts.id
+  current.current = posts.date
+
+  if (bands?.length > 1) {
+    for (const band in bands) {
+      if (posts.bandId === band.id) {
+        bandName.current = band.name
+      }
+    }
+  } else if (bands) {
+    bandName.current = bands[0].name
+  }
 
   useEffect(() => {
-    if (posts.length) {
+    if (posts.id) {
       setTimeout(() => {
-        WrapperFunc(posterName, playButton, duration2, current)
+        WrapperFunc(songName, playButton, duration2, current, songData)
       }, 500)
     } else {
       return
@@ -27,10 +40,6 @@ export default function AudioVisualizer ({ posts }:any) {
   },[])
 
   return (
-    <Container
-      display='center'
-      >
-
       <Grid
         gridTemplateColumns='10rem 1fr'
         width='40rem'
@@ -52,7 +61,7 @@ export default function AudioVisualizer ({ posts }:any) {
           <Text
             fontSize='1.5rem'
             fontWeight='bold'>
-            {posterName.current} - <span>{posts.band}</span>
+            {songName.current} - <span>{bandName.current}</span>
 
             <Flex
               fontSize='0.8rem'>
@@ -68,13 +77,11 @@ export default function AudioVisualizer ({ posts }:any) {
             w='3.5rem' h='3.5rem'
             borderRadius='50%'/>
 
-          <div id={posterName.current}/>
+          <div id={'a'+ songName.current.replace(/[^0-9a-z]/gi, '')}/>
         </Grid>
 
         <CommentSection comments={posts.comments}/>
 
       </Grid>
-
-    </Container>
   )
 }

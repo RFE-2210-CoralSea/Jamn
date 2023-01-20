@@ -1,40 +1,118 @@
-import { FormControl, CardHeader, Card, Stack, CardBody, VisuallyHiddenInput, Input, Button } from "@chakra-ui/react";
-import { useState } from 'react'
+import { FormControl, CardHeader, Card, Stack, CardBody, Input, Button, Select, Tooltip, IconButton, ButtonGroup } from "@chakra-ui/react";
+import { useState, useRef } from 'react'
+import { AiOutlinePlayCircle } from "react-icons/ai";
 
-const submitPostHandler = (title:string, artist:string, file:any) => {
-  const postObj = {
-    "name": title,
-    "band": artist,
-    "audio": file
-  }
-  // send post req with postObj as body
+declare interface PostProps {
+  bands: [{
+    id: number,
+    name: string
+  }]
 }
 
-export const UserPost = ({bands}) => {
+function readFile(f: File): Promise<ArrayBuffer> {
+  return new Promise((resolve, reject) => {
+    let reader = new FileReader()
 
-  const [title, setTitle] = useState('')
-  const [artist, setArtist] = useState('')
-  const [files, setFiles] = useState({})
+    reader.addEventListener('loadend', (e) => {
+      resolve(e?.target?.result as ArrayBuffer)})
+    reader.addEventListener('error', reject)
+    reader.readAsArrayBuffer(f)
+  })
+}
+
+export const UserPost = ({bands}:PostProps) => {
+
+  const [ recording, setRecording ] = useState(false)
+  const [ recorder, setRecorder ] = useState<MediaRecorder | null>(null)
+  const [ url, setUrl ] = useState('')
+  const [ audio, setAudio ] = useState<Blob>()
+
+  const songName = useRef<HTMLInputElement>(null)
+  const band = useRef<HTMLSelectElement>(null)
+  const file = useRef<HTMLInputElement>(null)
+  const songKey = useRef<HTMLInputElement>(null)
+
+  const record = async () => {
+    navigator.mediaDevices.getUserMedia({ audio: true })
+      .then((stream) => {
+        setRecorder(new MediaRecorder(stream))
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+
+    if (!recorder) return
+
+    if (!recorder.ondataavailable) {
+      recorder.ondataavailable = (event) => {
+        setAudio(event.data)
+        setUrl(URL.createObjectURL(event.data))
+      }
+    }
+
+    if (recording) {
+      recorder.stop()
+      setRecording(false)
+    } else {
+      setRecording(true)
+      recorder.start()
+    }
+  }
+
+  const submit = async () => {
+    if (
+      band.current &&
+      songName.current &&
+      audio
+    ) {
+      console.log(audio, typeof audio)
+      await fetch('/api/newPost', {
+        method: 'POST',
+        body: JSON.stringify({
+          pdf: '123',
+          audio: Buffer.from(await readFile(audio as File)),
+          bandName: band.current.value as string,
+          songName: songName?.current?.value as string
+        })
+      })
+    } else {
+      return
+    }
+  }
+
 
   return (
-    <Card mt='9rem' w='40rem'>
+    <Card mt='9rem' w='40rem' boxShadow='dark-lg'>
       <CardHeader fontWeight='bold'>Make A New Post!</CardHeader>
       <CardBody mt='-1.5rem'>
-        <FormControl>
           <Stack spacing='3'>
-            <Input onChange={(e) => setTitle(e.target.value)} placeholder='Song Title'></Input>
-            <Input onChange={(e) => setArtist(e.target.value)} placeholder='Artists or Band'></Input>
-            <Stack direction='row' justifyContent='center'>
-            <Button onClick={() => document.getElementById('uploadSong')?.click()}> Upload Your Song
-              <VisuallyHiddenInput id='uploadSong' type='file'/>
-            </Button>
-            <Button onClick={() => document.getElementById('uploadSongPic')?.click()}> *Optional* Add cover art
-              <VisuallyHiddenInput id='uploadSongPic' type='file'/>
-            </Button>
-            </Stack>
+            <FormControl>
+              <Input ref={songName} placeholder='Song Title'></Input>
+            </FormControl>
+
+            <FormControl>
+            <Select placeholder='Select A Band' ref={band}>
+              {bands.map((band) => {
+                return <option value={band.name} key={band.id}>{band.name}</option>
+              })}
+            </Select>
+            </FormControl>
+
+            <FormControl>
+              <Input placeholder='Song Key' ref={songKey}/>
+            </FormControl>
+            <FormControl p='1rem'>
+              {url && <audio src={url} controls></audio>}
+            </FormControl>
+
           </Stack>
-        </FormControl>
-        <Button type='submit' mt='1rem' onClick={() => submitPostHandler(title, artist, files)}> Submit </Button>
+          <ButtonGroup>
+            <Tooltip hasArrow label='Start Recording!'>
+              <IconButton aria-label='startRecording' icon={<AiOutlinePlayCircle/>} onClick={record} colorScheme={'red'}/>
+            </Tooltip>
+            <Button> Upload PDF </Button>
+            <Button onClick={submit}> Submit </Button>
+          </ButtonGroup>
       </CardBody>
     </Card>
   )
