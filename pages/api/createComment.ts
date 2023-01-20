@@ -14,7 +14,7 @@ export default async function handler (
     const sessionData = await unstable_getServerSession(req, res, authOptions);
     const userData = await prisma.users.findUnique(
       {where:
-        {email: 'ivanday9@gmail.com'},
+        {email: sessionData?.user?.email},
         select: {
           id: true
         }
