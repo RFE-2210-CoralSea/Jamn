@@ -8,9 +8,12 @@ import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import SignOut from './SignOut'
 import { MailBox } from './MailBox'
+import { useRouter } from 'next/router'
 
 export const NavBar = ({id}) => {
   const { data: session, status } = useSession()
+  const router = useRouter()
+  console.log('router', router.pathname)
 
   // user is not logged in
   if (status === 'unauthenticated' || !session) {
@@ -34,7 +37,7 @@ export const NavBar = ({id}) => {
           <HomeButton/>
           <SignOut/>
           <DarkMode/>
-          <MailBox/>
+          {router.pathname === '/personal' && <MailBox/>}
       </Stack>
     </Flex>
   )
