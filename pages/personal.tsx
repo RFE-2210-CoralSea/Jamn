@@ -18,7 +18,7 @@ const fetcher = (...args:any) => fetch(...args).then(res => res.json())
 
 const personal = () => {
   const { data, error, isLoading } = useSWR('/api/userFeed', fetcher, { refreshInterval: 1000 })
-
+  console.log(data)
   if (isLoading) {
     return (
       <Center h='100vh'>
