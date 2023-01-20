@@ -1,13 +1,6 @@
 import { FormControl, CardHeader, Card, Stack, CardBody, Input, Button, Select, Tooltip, IconButton, ButtonGroup } from "@chakra-ui/react";
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef } from 'react'
 import { AiOutlinePlayCircle } from "react-icons/ai";
-
-declare interface PostProps {
-  bands: [{
-    id: number,
-    name: string
-  }]
-}
 
 function readFile(f: File): Promise<ArrayBuffer> {
   return new Promise((resolve, reject) => {
@@ -20,7 +13,7 @@ function readFile(f: File): Promise<ArrayBuffer> {
   })
 }
 
-export const UserPost = ({bands}:PostProps) => {
+export const BandPost = ({bandName}) => {
 
   const [ recording, setRecording ] = useState(false)
   const [ recorder, setRecorder ] = useState<MediaRecorder | null>(null)
@@ -28,11 +21,9 @@ export const UserPost = ({bands}:PostProps) => {
   const [ audio, setAudio ] = useState<Blob>()
 
   const songName = useRef<HTMLInputElement>(null)
-  const band = useRef<HTMLSelectElement>(null)
-  const file = useRef<HTMLInputElement>(null)
   const songKey = useRef<HTMLInputElement>(null)
 
-  useEffect(() => {
+  const record = async () => {
     navigator.mediaDevices.getUserMedia({ audio: true })
       .then((stream) => {
         setRecorder(new MediaRecorder(stream))
@@ -40,9 +31,7 @@ export const UserPost = ({bands}:PostProps) => {
       .catch((error) => {
         console.error(error)
       })
-  },[])
 
-  const record = async () => {
     if (!recorder) return
 
     if (!recorder.ondataavailable) {
@@ -63,16 +52,16 @@ export const UserPost = ({bands}:PostProps) => {
 
   const submit = async () => {
     if (
-      band.current &&
       songName.current &&
       audio
     ) {
+      console.log(audio, typeof audio)
       await fetch('/api/newPost', {
         method: 'POST',
         body: JSON.stringify({
           pdf: '123',
           audio: Buffer.from(await readFile(audio as File)),
-          bandName: band.current.value as string,
+          bandName: bandName as string,
           songName: songName?.current?.value as string
         })
       })
@@ -90,15 +79,6 @@ export const UserPost = ({bands}:PostProps) => {
             <FormControl>
               <Input ref={songName} placeholder='Song Title'></Input>
             </FormControl>
-
-            <FormControl>
-            <Select placeholder='Select A Band' ref={band}>
-              {bands.map((band) => {
-                return <option value={band.name} key={band.id}>{band.name}</option>
-              })}
-            </Select>
-            </FormControl>
-
             <FormControl>
               <Input placeholder='Song Key' ref={songKey}/>
             </FormControl>
