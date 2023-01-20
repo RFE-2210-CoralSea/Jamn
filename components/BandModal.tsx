@@ -93,11 +93,10 @@ export const BandModal = () => {
                 </form>
               </Box>
               <Box width="100%" display="grid" placeItems="center" marginTop={10}>
-
                 <Image src={imageSrc}
-                  boxSize="200px"
                   align="center"
                   objectFit="cover"
+                  borderRadius="15px"
                 />
               </Box>
               <Editable placeholder='Enter Band Name' bg={useColorModeValue('gray.200', 'black')} borderRadius='5' p={2}>
