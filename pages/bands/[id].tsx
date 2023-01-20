@@ -2,7 +2,7 @@ import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import { NavBar } from '../../components/NavBar'
 import { ProfileImage } from '../../components/ProfileImage'
-import { PersonalDescription } from '../../components/PersonalDescription'
+import { BandDescription } from '../../components/BandDescription'
 import { Box, Card, SimpleGrid, VStack, useColorModeValue, CardHeader, CardBody, Heading, Text, Stack, List, ListItem, Spinner, Center } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
 import { getSession } from 'next-auth/react'
@@ -38,7 +38,7 @@ export default function BandFeed(props: any) {
   }
 
   if (!data.roles) return <></>
-
+  console.log(data)
   return (
     <>
       <Head>
@@ -51,27 +51,12 @@ export default function BandFeed(props: any) {
             <VStack>
               <ProfileImage
                 image={data.image}
-                name={data.name}/>
-              <Box display='center' maxW='15rem'>
-                <Card boxShadow='dark-lg' bg={useColorModeValue('teal.100', 'teal.600')} rounded={10}>
-                  <CardHeader>
-                    <Heading borderBottom='1px solid black' alignSelf='center'>Description</Heading>
-                  </CardHeader>
-                  <CardBody>
-                    <Text mt='-1rem' fontSize='xl'>{data.description}</Text>
-                  </CardBody>
-                  <CardHeader>
-                    <Heading borderBottom='1px solid black' alignSelf='center'>Members</Heading>
-                  </CardHeader>
-                  <CardBody mt='-1rem'>
-                    <Stack spacing='3rem'>
-                      <List fontSize="xl" textAlign="center">
-                        {data.roles.map((member: any) => <ListItem>{member.name}</ListItem>)}
-                      </List>
-                    </Stack>
-                  </CardBody>
-                </Card>
-              </Box>
+                username={data.name}/>
+              <BandDescription
+                description={data.description}
+                members={data.roles}
+                bandId={data.id}
+              />
             </VStack>
             <VStack>
                 {data.posts.map((post: any) => {
@@ -104,7 +89,7 @@ export async function getServerSideProps(context: any) {
         notFound: true
       }
     }
-
+  console.log(`This is a band page session` + session)
   return {
     props: {
       session
