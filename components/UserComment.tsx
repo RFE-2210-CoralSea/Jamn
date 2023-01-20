@@ -24,7 +24,7 @@ export const UserComment = ({ user, text, date }:CommentProps) => {
         </Tag>
       </Heading>
       <Text pt='3' fontSize='lg' mb='1rem'>{text}</Text>
-      <Wrap fontSize='xs'><span>{date}</span></Wrap>
+      <Wrap fontSize='xs'><span>{new Date(date).toLocaleDateString("en-US")}</span></Wrap>
     </Box>
   )
 }
