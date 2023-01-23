@@ -1,6 +1,7 @@
 import NextAuth, { NextAuthOptions } from 'next-auth'
-import GoogleProvider from 'next-auth/providers/google'
 import CredentialsProvider from 'next-auth/providers/credentials'
+import GoogleProvider from 'next-auth/providers/google'
+
 import prisma from '../../../lib/Prisma'
 
 export const authOptions: NextAuthOptions = {
@@ -52,9 +53,7 @@ export const authOptions: NextAuthOptions = {
         username: { label: 'Username', type: 'text', placeholder: 'jsmith' },
         password: { label: 'Password', type: 'password' }
       },
-      async authorize(
-        credentials: Record<'username' | 'password', string> | undefined
-      ) {
+      async authorize(credentials: Record<'username' | 'password', string> | undefined) {
         /**
          * This function returns a user object or null
          * It should check the password against the hashed DB pass

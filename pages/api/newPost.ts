@@ -1,7 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { unstable_getServerSession } from 'next-auth'
-import { authOptions } from './auth/[...nextauth]'
+
 import prisma from '../../lib/Prisma'
+import { authOptions } from './auth/[...nextauth]'
 
 export const config = {
   api: {
@@ -11,10 +12,7 @@ export const config = {
   }
 }
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<any>
-) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   if (req.method !== 'POST') {
     res.status(422).end()
     return

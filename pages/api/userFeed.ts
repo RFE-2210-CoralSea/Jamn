@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import prisma from '../../lib/Prisma'
 import { unstable_getServerSession } from 'next-auth/next'
+
+import prisma from '../../lib/Prisma'
 
 type Comment = {
   name: string
@@ -39,10 +40,7 @@ type User = {
   roles?: Roles[]
 }
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<User>
-) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse<User>) {
   if (req.method === 'GET') {
     //Check to make sure user has a session
     const session = await unstable_getServerSession(req, res)
@@ -61,7 +59,7 @@ export default async function handler(
               comments: {
                 include: {
                   users: {
-                    select : {
+                    select: {
                       name: true
                     }
                   }

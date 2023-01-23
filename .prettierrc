@@ -2,6 +2,9 @@
   "semi": false,
   "trailingComma": "none",
   "singleQuote": true,
-  "printWidth": 80,
-  "bracketSpacing": true
+  "printWidth": 100,
+  "bracketSpacing": true,
+  "importOrder": ["^@core/(.*)$", "^@server/(.*)$", "^@ui/(.*)$", "^[./]"],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true
 }
