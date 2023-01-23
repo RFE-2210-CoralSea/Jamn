@@ -1,43 +1,66 @@
-import { Flex, Box, Editable, EditableInput, Input, EditablePreview } from '@chakra-ui/react'
-import { List, Tag, TagLabel, ListItem, useColorModeValue } from "@chakra-ui/react"
-import { Tabs, TabList, Tab, TabPanels, TabPanel, Avatar } from '@chakra-ui/react'
-import { Link, Text, Center } from '@chakra-ui/react'
+import {
+  Avatar,
+  Box,
+  Center,
+  Editable,
+  EditableInput,
+  EditablePreview,
+  Flex,
+  Input,
+  Link,
+  List,
+  ListItem,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+  Tag,
+  TagLabel,
+  Text,
+  useColorModeValue
+} from '@chakra-ui/react'
 import { EditableControls } from 'components'
 import { useState } from 'react'
 
 declare interface InstrumentData {
-  id: number,
-  userId: number,
-  instrument: string,
+  id: number
+  userId: number
+  instrument: string
 }
 
 declare interface PersonalDescriptionProps {
   instruments: InstrumentData[]
-  description: string,
+  description: string
   roles: RoleData[]
 }
 
 declare interface RoleData {
-  name: string,
+  name: string
   id: number
 }
 
-export const PersonalDescription = ({ description, instruments, roles }:PersonalDescriptionProps) => {
-
-  const UpdateDescriptionHandler = async (section:string, changedVal:string) => {
+export const PersonalDescription = ({
+  description,
+  instruments,
+  roles
+}: PersonalDescriptionProps) => {
+  const UpdateDescriptionHandler = async (section: string, changedVal: string) => {
     let updateData = {}
     if (section === 'bio') {
       updateData = {
-        'bio': changedVal
+        bio: changedVal
       }
     } else if (section === 'instruments') {
       updateData = {
-        'instruments': changedVal
+        instruments: changedVal
       }
     }
     const response = await fetch('api/userFeed', {
       method: 'PUT',
-      headers: { 'content-type': 'application/json' },
+      headers: {
+        'content-type': 'application/json'
+      },
       body: JSON.stringify(updateData)
     })
     return response
@@ -47,8 +70,8 @@ export const PersonalDescription = ({ description, instruments, roles }:Personal
   const [editInstrument, setInstrument] = useState('')
 
   return (
-    <Box w='16rem'>
-      <Tabs variant='soft-rounded' colorScheme={useColorModeValue('blue', 'green')}>
+    <Box w="16rem">
+      <Tabs variant="soft-rounded" colorScheme={useColorModeValue('blue', 'green')}>
         <TabList>
           <Tab>Bio</Tab>
           <Tab>Bands</Tab>
@@ -56,37 +79,63 @@ export const PersonalDescription = ({ description, instruments, roles }:Personal
         </TabList>
         <TabPanels>
           <TabPanel>
-            <Editable display="flex" gap={2} onSubmit={() => UpdateDescriptionHandler('bio', editDescrip)} defaultValue={description} fontSize='lg' fontWeight='bold'>
-              <EditablePreview/>
-              <Input onChange={(e) => setDescrip(e.target.value)} as={EditableInput}/>
-              <EditableControls/>
+            <Editable
+              display="flex"
+              gap={2}
+              onSubmit={() => UpdateDescriptionHandler('bio', editDescrip)}
+              defaultValue={description}
+              fontSize="lg"
+              fontWeight="bold"
+            >
+              <EditablePreview />
+              <Input onChange={(e) => setDescrip(e.target.value)} as={EditableInput} />
+              <EditableControls />
             </Editable>
           </TabPanel>
           <TabPanel>
             <Center>
-              <List fontSize="lg" fontWeight='bold'>
-              {roles.map((role) => {
-                return <Flex key={role.id} justifyContent='space-between' mb='1rem'>
-                        <Tag size='xl' colorScheme={useColorModeValue('blue', 'green')} borderRadius='full'>
-                            <Avatar size='sm' mr={2} />
-                            <TagLabel fontWeight='bold' mr={3} key={role.name}><Link href={`bands/${role.id}`}>{role.name}</Link></TagLabel>
-                        </Tag>
-                        </Flex>
-              })}
+              <List fontSize="lg" fontWeight="bold">
+                {roles.map((role) => {
+                  return (
+                    <Flex key={role.id} justifyContent="space-between" mb="1rem">
+                      <Tag
+                        size="xl"
+                        colorScheme={useColorModeValue('blue', 'green')}
+                        borderRadius="full"
+                      >
+                        <Avatar size="sm" mr={2} />
+                        <TagLabel fontWeight="bold" mr={3} key={role.name}>
+                          <Link href={`bands/${role.id}`}>{role.name}</Link>
+                        </TagLabel>
+                      </Tag>
+                    </Flex>
+                  )
+                })}
               </List>
             </Center>
-              {roles.length ? (<></>) : (<Text textAlign='center' fontWeight='bold'>You aren't apart of any bands!</Text>)}
+            {roles.length ? (
+              <></>
+            ) : (
+              <Text textAlign="center" fontWeight="bold">
+                You aren't apart of any bands!
+              </Text>
+            )}
           </TabPanel>
           <TabPanel>
-              <List fontSize="lg" textAlign="center" fontWeight='bold'>
+            <List fontSize="lg" textAlign="center" fontWeight="bold">
               {instruments.map((instrument) => {
                 return <ListItem key={instrument.id}>• {instrument.instrument}</ListItem>
               })}
-              </List>
-            <Editable textAlign='center' onSubmit={() => UpdateDescriptionHandler('instruments', editInstrument)} defaultValue='Add a new instrument' fontSize='lg'>
-              <EditablePreview/>
-              <Input onChange={(e) => setInstrument(e.target.value)} as={EditableInput}/>
-              <EditableControls/>
+            </List>
+            <Editable
+              textAlign="center"
+              onSubmit={() => UpdateDescriptionHandler('instruments', editInstrument)}
+              defaultValue="Add a new instrument"
+              fontSize="lg"
+            >
+              <EditablePreview />
+              <Input onChange={(e) => setInstrument(e.target.value)} as={EditableInput} />
+              <EditableControls />
             </Editable>
           </TabPanel>
         </TabPanels>
@@ -94,4 +143,3 @@ export const PersonalDescription = ({ description, instruments, roles }:Personal
     </Box>
   )
 }
-

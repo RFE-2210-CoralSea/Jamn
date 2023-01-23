@@ -1,24 +1,35 @@
-import { FormControl, CardHeader, Card, Stack, CardBody, Input, Button, Select, Tooltip, IconButton, ButtonGroup } from "@chakra-ui/react"
-import { useState, useRef } from 'react'
-import { AiOutlinePlayCircle } from "react-icons/ai"
+import {
+  Button,
+  ButtonGroup,
+  Card,
+  CardBody,
+  CardHeader,
+  FormControl,
+  IconButton,
+  Input,
+  Stack,
+  Tooltip
+} from '@chakra-ui/react'
 import readFile from 'lib/PostFileReader'
+import { useRef, useState } from 'react'
+import { AiOutlinePlayCircle } from 'react-icons/ai'
 
 declare interface BandPostProps {
   bandName: string
 }
 
-export const BandPost = ({bandName} :BandPostProps) => {
-
-  const [ recording, setRecording ] = useState(false)
-  const [ recorder, setRecorder ] = useState<MediaRecorder | null>(null)
-  const [ url, setUrl ] = useState('')
-  const [ audio, setAudio ] = useState<Blob>()
+export const BandPost = ({ bandName }: BandPostProps) => {
+  const [recording, setRecording] = useState(false)
+  const [recorder, setRecorder] = useState<MediaRecorder | null>(null)
+  const [url, setUrl] = useState('')
+  const [audio, setAudio] = useState<Blob>()
 
   const songName = useRef<HTMLInputElement>(null)
   const songKey = useRef<HTMLInputElement>(null)
 
   const record = async () => {
-    navigator.mediaDevices.getUserMedia({ audio: true })
+    navigator.mediaDevices
+      .getUserMedia({ audio: true })
       .then((stream) => {
         setRecorder(new MediaRecorder(stream))
       })
@@ -45,10 +56,7 @@ export const BandPost = ({bandName} :BandPostProps) => {
   }
 
   const submit = async () => {
-    if (
-      songName.current &&
-      audio
-    ) {
+    if (songName.current && audio) {
       console.log(audio, typeof audio)
       await fetch('/api/newPost', {
         method: 'POST',
@@ -64,30 +72,31 @@ export const BandPost = ({bandName} :BandPostProps) => {
     }
   }
 
-
   return (
-    <Card mt='9rem' w='40rem' boxShadow='dark-lg'>
-      <CardHeader fontWeight='bold'>Make A New Post!</CardHeader>
-      <CardBody mt='-1.5rem'>
-          <Stack spacing='3'>
-            <FormControl>
-              <Input ref={songName} placeholder='Song Title'></Input>
-            </FormControl>
-            <FormControl>
-              <Input placeholder='Song Key' ref={songKey}/>
-            </FormControl>
-            <FormControl p='1rem'>
-              {url && <audio src={url} controls></audio>}
-            </FormControl>
-
-          </Stack>
-          <ButtonGroup>
-            <Tooltip hasArrow label='Start Recording!'>
-              <IconButton aria-label='startRecording' icon={<AiOutlinePlayCircle/>} onClick={record} colorScheme={'red'}/>
-            </Tooltip>
-            <Button> Upload PDF </Button>
-            <Button onClick={submit}> Submit </Button>
-          </ButtonGroup>
+    <Card mt="9rem" w="40rem" boxShadow="dark-lg">
+      <CardHeader fontWeight="bold">Make A New Post!</CardHeader>
+      <CardBody mt="-1.5rem">
+        <Stack spacing="3">
+          <FormControl>
+            <Input ref={songName} placeholder="Song Title"></Input>
+          </FormControl>
+          <FormControl>
+            <Input placeholder="Song Key" ref={songKey} />
+          </FormControl>
+          <FormControl p="1rem">{url && <audio src={url} controls></audio>}</FormControl>
+        </Stack>
+        <ButtonGroup>
+          <Tooltip hasArrow label="Start Recording!">
+            <IconButton
+              aria-label="startRecording"
+              icon={<AiOutlinePlayCircle />}
+              onClick={record}
+              colorScheme={'red'}
+            />
+          </Tooltip>
+          <Button> Upload PDF </Button>
+          <Button onClick={submit}> Submit </Button>
+        </ButtonGroup>
       </CardBody>
     </Card>
   )
