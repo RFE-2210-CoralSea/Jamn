@@ -1,15 +1,13 @@
-import { Grid, Text, Image, IconButton, Flex } from '@chakra-ui/react'
+import { Grid, Text, Image, IconButton, Flex, useColorModeValue } from '@chakra-ui/react'
 import { useEffect, useRef } from 'react'
 import { AiOutlineRight } from 'react-icons/ai'
-import { useColorModeValue } from '@chakra-ui/react'
-import { CommentSection } from './CommentSection'
+import { CommentSection } from 'components'
 import { WrapperFunc } from './Wavesurfer'
 
 export default function AudioVisualizer ({ posts, bands }:any) {
-  console.log(posts)
   const songName = useRef()
   const playButton = useRef()
-  const duration2 = useRef()
+  const duration2 = useRef<string>()
   const current = useRef()
   const bandName = useRef()
   const songData = useRef()

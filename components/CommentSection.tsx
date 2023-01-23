@@ -1,7 +1,7 @@
 import { FormControl, Button, Input, Stack, Heading, StackDivider } from '@chakra-ui/react'
 import { Card, CardHeader, CardBody, CardFooter } from '@chakra-ui/react'
 import { useState } from 'react'
-import { UserComment } from './UserComment'
+import { UserComment } from 'components'
 
 declare interface CommentData {
   userId: number,
@@ -10,7 +10,6 @@ declare interface CommentData {
   users: {
   name: string,
   },
-
 }
 
 export const CommentSection = ({ comments, postId }:any) => {

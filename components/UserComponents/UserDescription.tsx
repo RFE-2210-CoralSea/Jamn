@@ -2,7 +2,7 @@ import { Flex, Box, Editable, EditableInput, Input, EditablePreview } from '@cha
 import { List, Tag, TagLabel, ListItem, useColorModeValue } from "@chakra-ui/react"
 import { Tabs, TabList, Tab, TabPanels, TabPanel, Avatar } from '@chakra-ui/react'
 import { Link, Text, Center } from '@chakra-ui/react'
-import { EditableControls } from './EditableControls'
+import { EditableControls } from 'components'
 import { useState } from 'react'
 
 declare interface InstrumentData {

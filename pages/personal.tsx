@@ -1,16 +1,13 @@
-import dynamic from 'next/dynamic'
 import Head from 'next/head'
-import { NavBar } from '../components/NavBar'
-import { UserPost } from '../components/UserPost'
-import { ProfileImage } from '../components/ProfileImage'
-import { PersonalDescription } from '../components/PersonalDescription'
-import { Box, SimpleGrid, VStack, Center, Spinner } from '@chakra-ui/react'
-import { unstable_getServerSession } from 'next-auth'
-import { UserStats } from '../components/UserStats'
+import dynamic from 'next/dynamic'
 import useSWR from 'swr'
+import { unstable_getServerSession } from 'next-auth'
+
+import { NavBar, UserPost, ProfileImage, PersonalDescription, UserStats } from 'components'
+import { Box, SimpleGrid, VStack, Center, Spinner } from '@chakra-ui/react'
 
 
-const LazyVisualizer = dynamic(() => import('../components/AudioVisualizer'), {
+const LazyVisualizer = dynamic(() => import('components/AudioVisualizer'), {
   ssr: false
 })
 

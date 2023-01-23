@@ -1,13 +1,13 @@
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import { NavBar } from '../../components/NavBar'
-import { ProfileImage } from '../../components/ProfileImage'
-import { BandDescription } from '../../components/BandDescription'
+import { ProfileImage } from '../../components/UserProfileImage'
+import { BandDescription } from '../../components/BandComponents/BandDescription'
 import { Box, SimpleGrid, VStack, Spinner, Center } from '@chakra-ui/react'
-import { BandPost } from '../../components/BandPost'
+import { BandPost } from '../../components/BandComponents/BandPost'
 import { unstable_getServerSession } from 'next-auth'
 import { useRouter } from 'next/router'
-import { UserStats } from '../../components/UserStats'
+import { UserStats } from '../../components/UserComponents/UserStats'
 import prisma from '../../lib/Prisma';
 import useSWR from 'swr'
 
@@ -33,7 +33,7 @@ const check = async (pid:string, email:string) => {
         }
       }
     })
-    
+
     return isInBand.roles.find((x) => x.bandId === Number(pid))
   }
   return search

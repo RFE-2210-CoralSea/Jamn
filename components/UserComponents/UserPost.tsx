@@ -1,23 +1,13 @@
-import { FormControl, CardHeader, Card, Stack, CardBody, Input, Button, Select, Tooltip, IconButton, ButtonGroup } from "@chakra-ui/react";
+import { FormControl, CardHeader, Card, Stack, CardBody, Input, Button, Select, Tooltip, IconButton, ButtonGroup } from '@chakra-ui/react'
 import { useState, useRef, useEffect } from 'react'
-import { AiOutlinePlayCircle } from "react-icons/ai";
+import { AiOutlinePlayCircle } from 'react-icons/ai'
+import readFile from 'lib/PostFileReader'
 
 declare interface PostProps {
   bands: [{
     id: number,
     name: string
   }]
-}
-
-function readFile(f: File): Promise<ArrayBuffer> {
-  return new Promise((resolve, reject) => {
-    let reader = new FileReader()
-
-    reader.addEventListener('loadend', (e) => {
-      resolve(e?.target?.result as ArrayBuffer)})
-    reader.addEventListener('error', reject)
-    reader.readAsArrayBuffer(f)
-  })
 }
 
 export const UserPost = ({bands}:PostProps) => {

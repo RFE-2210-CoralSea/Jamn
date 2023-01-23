@@ -2,7 +2,6 @@ import { IconButton, Tooltip, Text, Box, Button } from '@chakra-ui/react'
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, useDisclosure } from '@chakra-ui/react'
 import { AiOutlineMail } from 'react-icons/ai'
 import {Accordion, AccordionItem, AccordionButton, AccordionPanel,AccordionIcon, useColorModeValue } from '@chakra-ui/react'
-import { signIn } from 'next-auth/react'
 import {useState, useEffect} from 'react'
 import { useSession } from 'next-auth/react'
 

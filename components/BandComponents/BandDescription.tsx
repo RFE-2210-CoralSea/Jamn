@@ -1,11 +1,13 @@
-import { Flex, Box, Editable, EditableInput, Input, EditablePreview, EditableTextarea } from '@chakra-ui/react'
-import { List, Tag, TagLabel, useColorModeValue } from "@chakra-ui/react"
-import { Tabs, TabList, Tab, TabPanels, TabPanel, Avatar } from '@chakra-ui/react'
+import { Flex, Box, Editable, EditableInput, Input, EditablePreview, List, useColorModeValue } from '@chakra-ui/react'
+import { Tabs, TabList, Tab, TabPanels, TabPanel, TagLabel, Tag, Avatar } from '@chakra-ui/react'
 import { Link, Text, Center, Button} from '@chakra-ui/react'
-import { EditableControls } from './EditableControls'
-import { useState } from 'react'
 import { FormControl, FormLabel, FormHelperText,} from '@chakra-ui/react'
+
+import { EditableControls } from 'components'
+
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+
 
 type NewInputs = {
   email: string,

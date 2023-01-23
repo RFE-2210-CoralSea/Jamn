@@ -1,9 +1,8 @@
 import Head from 'next/head'
-import { Container, Box, Text } from '@chakra-ui/react'
-import { NavBar } from '../components/NavBar'
+import { Container, Box, Text, useColorModeValue } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
 import { useState } from 'react'
-import { useColorModeValue } from '@chakra-ui/react'
+import { NavBar } from 'components'
 
 // animation variants
 const vinylVariants = {

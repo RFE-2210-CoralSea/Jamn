@@ -3,5 +3,8 @@
   "trailingComma": "none",
   "singleQuote": true,
   "printWidth": 80,
-  "bracketSpacing": true
+  "bracketSpacing": true,
+  "importOrder": ["^@core/(.*)$", "^@server/(.*)$", "^@ui/(.*)$", "^[./]"],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true
 }

@@ -1,7 +1,7 @@
 import { Flex, Stack, Heading } from '@chakra-ui/react'
 import { DarkMode } from './DarkMode'
 import { Login } from './Login'
-import { BandModal } from './BandModal'
+import { BandModal } from './BandComponents/BandModal'
 import { RecordingModal } from './RecordingModal'
 import { HomeButton } from './HomeButton'
 import { useSession } from 'next-auth/react'
