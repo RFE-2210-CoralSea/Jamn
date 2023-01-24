@@ -15,18 +15,23 @@ import { EditableControls } from 'components'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-type NewInputs = {
+declare interface NewInputs {
   email: string
   bandId: number
 }
 
-type Props = {
+declare interface BandProps {
   description: string
   members: []
   bandId: number
 }
 
-export const BandDescription = ({ description, members, bandId }: Props) => {
+declare interface RoleValues {
+  name: string,
+  id: number,
+}
+
+export const BandDescription = ({ description, members, bandId }: BandProps) => {
   const [editDescrip, setDescrip] = useState('')
   const [editInstrument, setInstrument] = useState('')
 
@@ -73,7 +78,7 @@ export const BandDescription = ({ description, members, bandId }: Props) => {
           <TabPanel>
             <Center>
               <List fontSize="lg" fontWeight="bold">
-                {members.map((role) => {
+                {members.map((role:RoleValues) => {
                   return (
                     <Flex key={role.id} justifyContent="space-between" mb="1rem">
                       <Tag
