@@ -55,7 +55,11 @@ export default async function handler(
       include: {
         roles: {
           include: {
-            users: true
+            users: {
+              select: {
+                picture: true
+              }
+            }
           }
         },
         posts: {

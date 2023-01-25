@@ -14,6 +14,7 @@ import { FormControl, FormHelperText, FormLabel } from '@chakra-ui/react'
 import { EditableControls } from 'components'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import Link from 'next/link'
 
 declare interface NewInputs {
   email: string
@@ -87,16 +88,18 @@ export const BandDescription = ({ description, members, bandId }: BandProps) => 
                 {members.map((role:RoleValues) => {
                   return (
                     <Flex key={role.id} justifyContent="space-between" mb="1rem">
-                      <Tag
-                        size="xl"
-                        colorScheme={useColorModeValue('blue', 'green')}
-                        borderRadius="full"
-                      >
-                        <Avatar size="sm" mr={2} src={role.users.picture} />
-                        <TagLabel fontWeight="bold" mr={3} key={role.name}>
-                          <Text>{role.name}</Text>
-                        </TagLabel>
-                      </Tag>
+                      <Link href={`/users/${role.userId}`}>
+                        <Tag
+                          size="xl"
+                          colorScheme={useColorModeValue('blue', 'green')}
+                          borderRadius="full"
+                        >
+                          <Avatar size="sm" mr={2} src={role.users.picture} />
+                          <TagLabel fontWeight="bold" mr={3} key={role.name}>
+                            <Text>{role.name}</Text>
+                          </TagLabel>
+                        </Tag>
+                      </Link>
                     </Flex>
                   )
                 })}
