@@ -31,26 +31,30 @@ export const WrapperFunc = (
   const audioContext = new (window.AudioContext || window.AudioContext)()
 
   audioContext.decodeAudioData(audioBuffer, (buffer) => {
-    // create an instance of WaveSurfer
+
     const wavesurfer = WaveSurfer.create({
       container: '#a' + songName.current.replace(/[^0-9a-z]/gi, ''),
       waveColor: '#cdedff',
       progressColor: '#1AAFFF',
       height: 48,
-      audioBuffer: buffer
     })
-    // load the audio buffer
+
     wavesurfer.loadDecodedBuffer(buffer)
 
     playPause?.addEventListener('click', () => {
       wavesurfer.playPause()
     })
 
-    wavesurfer.on('ready', () => {
-      if (duration) {
+    if (duration) {
         duration.textContent = timeCalc(wavesurfer.getDuration())
-      }
-    })
+    }
+
+    // doesn't work - wavesurfer doesnt fire off 'ready' event
+    // wavesurfer.on('ready', () => {
+    //   if (duration) {
+    //     duration.textContent = timeCalc(wavesurfer.getDuration())
+    //   }
+    // })
 
     wavesurfer.on('audioprocess', () => {
       if (curr) {
