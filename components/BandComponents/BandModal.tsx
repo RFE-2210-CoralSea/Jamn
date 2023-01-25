@@ -49,7 +49,7 @@ export const BandModal = () => {
 
   const { isOpen, onOpen, onClose } = useDisclosure()
 
-  function handleOnChange(changeEvent) {
+  function handleOnChange(changeEvent: { target: { files: Blob[] } }) {
     const reader = new FileReader()
 
     reader.onload = function (onLoadEvent) {
@@ -59,7 +59,7 @@ export const BandModal = () => {
     reader.readAsDataURL(changeEvent.target.files[0])
   }
 
-  async function handleOnSubmit(event) {
+  async function handleOnSubmit(event: { preventDefault: () => void; target: any; currentTarget: any }) {
     event.preventDefault()
     console.log(event.target)
     const form = event.currentTarget
