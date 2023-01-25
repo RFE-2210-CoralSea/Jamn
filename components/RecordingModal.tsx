@@ -127,7 +127,7 @@ export const RecordingModal = () => {
               </FormControl>
               <Select placeholder="Select Band" ref={band}>
                 {!isLoading &&
-                  data.roles?.map((band: any) => <option value={band.name}>{band.name}</option>)}
+                  data.roles?.map((band: any) => <option key={band.name} value={band.name}>{band.name}</option>)}
               </Select>
               <FormControl>
                 <Input placeholder="Key" ref={songKey}></Input>

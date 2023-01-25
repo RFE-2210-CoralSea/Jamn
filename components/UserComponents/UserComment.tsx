@@ -14,16 +14,16 @@ declare interface CommentProps {
   text: string
   date: string
   name: string
+  picture: string
 }
 
-export const UserComment = ({ user, text, date, name }: CommentProps) => {
+export const UserComment = ({ user, text, date, name, picture }: CommentProps) => {
   const newDate = new Date(date)
-  console.log(user)
   return (
     <Box>
       <Heading size="xs">
         <Tag size="lg" colorScheme={useColorModeValue('blue', 'green')} borderRadius="full">
-          <Avatar src="" size="xs" name="" ml={-1} mr={2} />
+          <Avatar src={picture} size="xs" name="" ml={-1} mr={2} />
           <TagLabel fontWeight="bold">{name}</TagLabel>
         </Tag>
       </Heading>
