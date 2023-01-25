@@ -6,9 +6,9 @@ import { AiOutlineRight } from 'react-icons/ai'
 import { WrapperFunc } from './Wavesurfer'
 
 export default function AudioVisualizer({ posts, bands }: any) {
-  const songName = useRef()
+  const songName = useRef(posts)
   const playButton = useRef()
-  const duration2 = useRef<string>()
+  const duration2 = useRef(posts)
   const current = useRef()
   const bandName = useRef()
   const songData = useRef()
@@ -29,13 +29,7 @@ export default function AudioVisualizer({ posts, bands }: any) {
   }
 
   useEffect(() => {
-    if (posts.id) {
-      setTimeout(() => {
-        WrapperFunc(songName, playButton, duration2, current, songData)
-      }, 500)
-    } else {
-      return
-    }
+    WrapperFunc(songName, playButton, duration2, current, songData)
   }, [])
 
   return (
@@ -52,9 +46,7 @@ export default function AudioVisualizer({ posts, bands }: any) {
         <Text fontSize="1.5rem" fontWeight="bold">
           {songName.current} - <span>{bandName.current}</span>
           <Flex fontSize="0.8rem">
-            <span id={current.current}>
-              0:00 /<span id={duration2.current}>0:00</span>
-            </span>
+            <span id={current.current}>0:00</span>/<span id={duration2.current}>0:00</span>
           </Flex>
         </Text>
 
