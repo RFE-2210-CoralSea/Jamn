@@ -32,7 +32,6 @@ export const UserPost = ({ bands }: PostProps) => {
 
   const songName = useRef<HTMLInputElement>(null)
   const band = useRef<HTMLSelectElement>(null)
-  const file = useRef<HTMLInputElement>(null)
   const songKey = useRef<HTMLInputElement>(null)
 
   useEffect(() => {

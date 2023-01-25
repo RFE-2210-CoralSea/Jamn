@@ -39,7 +39,7 @@ declare interface RoleValues {
 export const BandDescription = ({ description, members, bandId }: BandProps) => {
   const [editDescrip, setDescrip] = useState('')
   const [editInstrument, setInstrument] = useState('')
-
+  console.log()
   const {
     register,
     handleSubmit,

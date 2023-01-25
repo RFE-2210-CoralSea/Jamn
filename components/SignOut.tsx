@@ -3,7 +3,7 @@ import { signOut } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { AiOutlineUser } from 'react-icons/ai'
 
-export default function SignOut() {
+export const SignOut = () => {
   const router = useRouter()
 
   const handleClick = () => {
