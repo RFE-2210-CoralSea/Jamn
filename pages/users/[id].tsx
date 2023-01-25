@@ -26,17 +26,16 @@ import prisma from '../../lib/Prisma'
 interface FeedProps {
   user: {
     bio: string,
-    email: string,
     id: number,
     name: string,
     picture: string,
     instruments: {
       instrument: string,
       id: number,
-      userId: number
     }[],
-    roles: {
+    bands: {
       name: string,
+      image: string,
       id: number
     }[]
   }
@@ -79,17 +78,17 @@ export default function UserFeed({ user }: FeedProps) {
                   <TabPanel>
                     <Center>
                       <List fontSize="lg" fontWeight="bold">
-                        {user.roles.map((role) => {
+                        {user.bands.map((band) => {
                           return (
-                            <Flex key={role.id} justifyContent="space-between" mb="1rem">
+                            <Flex key={band.id} justifyContent="space-between" mb="1rem">
                               <Tag
                                 size="xl"
                                 colorScheme={useColorModeValue('blue', 'green')}
                                 borderRadius="full"
                               >
-                                <Avatar size="sm" mr={2} />
-                                <TagLabel fontWeight="bold" mr={3} key={role.name}>
-                                  <Link href={`/bands/${role.id}`}>{role.name}</Link>
+                                <Avatar size="sm" mr={2} src={band.image} />
+                                <TagLabel fontWeight="bold" mr={3} key={band.name}>
+                                  <Link href={`/bands/${band.id}`}>{band.name}</Link>
                                 </TagLabel>
                               </Tag>
                             </Flex>
@@ -133,6 +132,8 @@ export async function getServerSideProps({ params }: GetServerSidePropsContext) 
     }
   }
 
+  const bands = []
+
   // query for a user's bands
   if (user.roles.length > 0) {
     for (let i = 0; i < user.roles.length; i++) {
@@ -142,18 +143,21 @@ export async function getServerSideProps({ params }: GetServerSidePropsContext) 
         }
       })
       if (bandNames) {
-        user.roles[i] = {
-          ...user.roles[i],
+        bands.push({
           name: bandNames.name,
+          image: bandNames.image,
           id: bandNames.id
-        }
+        })
       }
     }
   }
 
   return {
     props: {
-      user
+      user: {
+        ...user,
+        bands
+      }
     }
   }
 }
