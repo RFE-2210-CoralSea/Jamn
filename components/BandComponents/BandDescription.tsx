@@ -29,6 +29,10 @@ declare interface BandProps {
 declare interface RoleValues {
   name: string,
   id: number,
+  userId: number,
+  users: {
+    picture: string
+  }
 }
 
 export const BandDescription = ({ description, members, bandId }: BandProps) => {
@@ -42,7 +46,7 @@ export const BandDescription = ({ description, members, bandId }: BandProps) => 
     formState: { errors }
   } = useForm<NewInputs>()
 
-  // console.log('band members:', members)
+  console.log('band members:', members)
 
   const onSubmit = (data: any) => {
     data.bandId = bandId
@@ -88,7 +92,7 @@ export const BandDescription = ({ description, members, bandId }: BandProps) => 
                         colorScheme={useColorModeValue('blue', 'green')}
                         borderRadius="full"
                       >
-                        <Avatar size="sm" mr={2} />
+                        <Avatar size="sm" mr={2} src={role.users.picture} />
                         <TagLabel fontWeight="bold" mr={3} key={role.name}>
                           <Text>{role.name}</Text>
                         </TagLabel>
