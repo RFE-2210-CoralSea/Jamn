@@ -6,10 +6,10 @@ import {
   Flex,
   Input,
   List,
-  useColorModeValue
+  useColorModeValue,
 } from '@chakra-ui/react'
 import { Avatar, Tab, TabList, TabPanel, TabPanels, Tabs, Tag, TagLabel } from '@chakra-ui/react'
-import { Button, Center, Link, Text } from '@chakra-ui/react'
+import { Button, Center, Text } from '@chakra-ui/react'
 import { FormControl, FormHelperText, FormLabel } from '@chakra-ui/react'
 import { EditableControls } from 'components'
 import { useState } from 'react'
@@ -88,7 +88,7 @@ export const BandDescription = ({ description, members, bandId }: BandProps) => 
                       >
                         <Avatar size="sm" mr={2} />
                         <TagLabel fontWeight="bold" mr={3} key={role.name}>
-                          <Link href={`bands/${role.id}`}>{role.name}</Link>
+                          <Text>{role.name}</Text>
                         </TagLabel>
                       </Tag>
                     </Flex>

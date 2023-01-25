@@ -5,11 +5,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
 
-import { BandDescription } from '../../components/BandComponents/BandDescription'
-import { BandPost } from '../../components/BandComponents/BandPost'
-import { NavBar } from '../../components/NavBar'
-import { UserStats } from '../../components/UserComponents/UserStats'
-import { ProfileImage } from '../../components/UserProfileImage'
+import { BandDescription, BandPost, NavBar, UserStats, ProfileImage } from 'components'
 import prisma from '../../lib/Prisma'
 
 const LazyVisualizer = dynamic(() => import('../../components/AudioVisualizer'), {
