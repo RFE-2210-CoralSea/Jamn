@@ -105,7 +105,7 @@ export const PersonalDescription = ({
                       >
                         <Avatar size="sm" mr={2} />
                         <TagLabel fontWeight="bold" mr={3} key={role.name}>
-                          <Link href={`bands/${role.id}`}>{role.name}</Link>
+                          <Link href={`/bands/${role.id}`}>{role.name}</Link>
                         </TagLabel>
                       </Tag>
                     </Flex>
