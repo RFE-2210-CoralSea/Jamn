@@ -69,7 +69,8 @@ export default async function handler(
               include: {
                 users: {
                   select: {
-                    name: true
+                    name: true,
+                    picture: true
                   }
                 }
               }
