@@ -9,6 +9,7 @@ declare interface CommentData {
   date: string
   users: {
     name: string
+    picture: string
   }
 }
 
@@ -54,6 +55,7 @@ export const CommentSection = ({ comments, postId }: any) => {
                 date={comment.date}
                 key={index}
                 name={comment.users.name}
+                picture={comment.users.picture}
               />
             )
           })}
