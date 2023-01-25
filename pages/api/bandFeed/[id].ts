@@ -53,7 +53,11 @@ export default async function handler(
         id: parseInt(req.query.id)
       },
       include: {
-        roles: true,
+        roles: {
+          include: {
+            users: true
+          }
+        },
         posts: {
           orderBy: { id: 'desc' },
           include: {

@@ -54,7 +54,7 @@ export default function BandFeed(props: any) {
   }
 
   if (!data.roles) return <></>
-  console.log(data)
+  console.log('test', data)
   return (
     <>
       <Head>

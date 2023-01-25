@@ -42,6 +42,8 @@ export const BandDescription = ({ description, members, bandId }: BandProps) => 
     formState: { errors }
   } = useForm<NewInputs>()
 
+  // console.log('band members:', members)
+
   const onSubmit = (data: any) => {
     data.bandId = bandId
     fetch('/api/sendInvitation', {
