@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 import { BandModal, DarkMode, HomeButton, Login, MailBox, RecordingModal, SignOut } from 'components'
 
 declare interface NavBarProps {
-  color: string
+  color?: string
 }
 
 export const NavBar = ({ color }: NavBarProps) => {
