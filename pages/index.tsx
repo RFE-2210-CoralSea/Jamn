@@ -47,7 +47,7 @@ export default function Home() {
         bgPosition="center"
         position="relative"
       >
-        <NavBar />
+        <NavBar color={'white'}/>
         <Box textAlign="center" mt={200}>
           <Text color="white" fontSize="3xl" fontWeight="bold">
             A Social Media Platform for The
