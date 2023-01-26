@@ -21,9 +21,6 @@ Musi is a social media platform designed for musicians and artists to connect wi
 
 ## Features
 
-Landing Page
-![Alt Text](/public/landing_demo.gif)
-
 User Profile Page
 ![Alt Text](/public/personal_demo.gif)
 
