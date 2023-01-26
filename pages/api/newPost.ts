@@ -53,6 +53,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         bandId: band.id,
         userId,
         audio: Buffer.from(audio),
+        pdf: Buffer.from(''),
         image: band.image,
         text: songName,
         date: Date.now()
