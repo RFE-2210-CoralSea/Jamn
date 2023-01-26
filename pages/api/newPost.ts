@@ -27,7 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
   // parse request body
   try {
-    const { bandName, songName, pdf, audio } = JSON.parse(req.body)
+    const { bandName, songName, audio } = JSON.parse(req.body)
 
     // get userId and bandId
     const userId = (
@@ -53,7 +53,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         bandId: band.id,
         userId,
         audio: Buffer.from(audio),
-        pdf: Buffer.from(pdf),
         image: band.image,
         text: songName,
         date: Date.now()
