@@ -23,21 +23,18 @@ import {
 import { EditableControls } from 'components'
 import { useState } from 'react'
 
-declare interface InstrumentData {
-  id: number
-  userId: number
-  instrument: string
-}
-
 declare interface PersonalDescriptionProps {
-  instruments: InstrumentData[]
+  instruments: [{
+    id: number
+    userId: number
+    instrument: string
+  }]
   description: string
-  roles: RoleData[]
-}
-
-declare interface RoleData {
-  name: string
-  id: number
+  roles: [{
+    name: string
+    id: number
+    image: string
+  }]
 }
 
 export const PersonalDescription = ({
@@ -45,6 +42,7 @@ export const PersonalDescription = ({
   instruments,
   roles
 }: PersonalDescriptionProps) => {
+
   const UpdateDescriptionHandler = async (section: string, changedVal: string) => {
     let updateData = {}
     if (section === 'bio') {
@@ -103,7 +101,7 @@ export const PersonalDescription = ({
                         colorScheme={useColorModeValue('blue', 'green')}
                         borderRadius="full"
                       >
-                        <Avatar size="sm" mr={2} />
+                        <Avatar size="sm" mr={2} src={role.image}/>
                         <TagLabel fontWeight="bold" mr={3} key={role.name}>
                           <Link href={`/bands/${role.id}`}>{role.name}</Link>
                         </TagLabel>

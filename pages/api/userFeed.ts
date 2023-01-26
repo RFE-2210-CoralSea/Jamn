@@ -85,7 +85,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             if (bandNames) {
               user.roles[i] = {
                 name: bandNames.name,
-                id: bandNames.id
+                id: bandNames.id,
+                image: bandNames.image
               }
             }
           }
