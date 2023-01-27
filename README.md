@@ -21,14 +21,26 @@ Musi is a social media platform designed for musicians and artists to connect wi
 
 ## Features
 
-User Profile Page
+<h2>User Profile Page</h2>
+ 
 ![Alt Text](/public/personal_demo.gif)
+<br><br>
+Users are able to see a comprehensive feed of posts froma all bands they are members of as well as any personal information such as profile picture, instruments played, and bio.
 
-Band Creation
+<h2>Band Creation</h2>
+ 
 ![Alt Text](/public/band_creation_demo.gif)
+<br><br>
+Users are able to conveniently create a new band through a modal selector in the top right corner.  The creator is automatically assigned as an admin and images are stored using Cloudinary with the url stored in the database as well.
 
-Accept Band Invites
+<h2>Accept Band Invites</h2>
+ 
 ![Alt Text](/public/band_invites_demo.gif)
+<br><br>
+<p>Users can send invites to others to join their band by simply entering their email.  The recipient then has an inbox for all band invitations which they can accept or decline at leisure.</p>
 
-Band Profile Page
+<h2>Band Profile Page</h2>
+ 
 ![Alt Text](/public/band_demo.gif)
+<br><br>
+<p>The band profile page shows the bands feed with posts, comments, recordings, and pdf's of music.  You can view the members of the band, the band's description, and view the band's profile picture</p>
