@@ -48,7 +48,6 @@ export const RecordingModal = () => {
   const songName = useRef<HTMLInputElement>(null)
   const band = useRef<HTMLSelectElement>(null)
   const songKey = useRef<HTMLInputElement>(null)
-  const file = useRef<HTMLInputElement>(null)
 
   // setup audio recorder
   useEffect(() => {
@@ -88,12 +87,11 @@ export const RecordingModal = () => {
   // submit audio to db
   const submit = async () => {
     // ensure fields are filled out
-    if (file.current?.files && band.current && songName.current && audio) {
+    if (band.current && songName.current && audio) {
       // array buffer has to be converted to a regular buffer for some reason
       await fetch('/api/newPost', {
         method: 'POST',
         body: JSON.stringify({
-          pdf: Buffer.from(await readFile(file?.current?.files[0] as File)),
           audio: Buffer.from(await readFile(audio as File)),
           bandName: band.current.value as string,
           songName: songName?.current?.value as string
@@ -147,7 +145,7 @@ export const RecordingModal = () => {
               </Tooltip>
               <VisuallyHidden>
                 <FormControl>
-                  <Input id="upload-pdf" type="file" accept="application/pdf" ref={file}></Input>
+                  <Input id="upload-pdf" type="file" accept="application/pdf"></Input>
                 </FormControl>
               </VisuallyHidden>
               <Button onClick={() => document.getElementById('upload-pdf')?.click()}>
