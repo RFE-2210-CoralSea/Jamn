@@ -25,18 +25,6 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { AiOutlineUsergroupAdd } from 'react-icons/ai'
 
-type Inputs = {
-  photo: string
-  name: string
-  description: string
-}
-
-type Data = {
-  name: string
-  image: string
-  description: string
-}
-
 export const BandModal = () => {
   const [imageSrc, setImageSrc] = useState()
   const [uploadData, setUploadData] = useState()
@@ -45,7 +33,7 @@ export const BandModal = () => {
     handleSubmit,
     watch,
     formState: { errors }
-  } = useForm<Inputs>()
+  } = useForm<BandCreationInputs>()
 
   const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -77,7 +65,7 @@ export const BandModal = () => {
     setImageSrc(imageData.secure_url)
   }
 
-  const logData = async (data: Data) => {
+  const logData = async (data: BandCreationData) => {
     data.image = imageSrc
     fetch('/api/createBand', {
       method: 'POST',

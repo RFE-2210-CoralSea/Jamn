@@ -1,19 +1,14 @@
 import { Flex, Heading, Stack } from '@chakra-ui/react'
 import { useSession } from 'next-auth/react'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 import { BandModal, DarkMode, HomeButton, Login, MailBox, RecordingModal, SignOut } from 'components'
-
-declare interface NavBarProps {
-  color?: string
-}
 
 export const NavBar = ({ color }: NavBarProps) => {
   const { data: session, status } = useSession()
   const router = useRouter()
 
-  // user is not logged in
   if (status === 'unauthenticated' || !session) {
     return (
       <Flex

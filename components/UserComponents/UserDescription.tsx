@@ -20,49 +20,15 @@ import {
   Text,
   useColorModeValue
 } from '@chakra-ui/react'
+import { UpdateDescriptionHandler } from '../../lib/UserDescripFuncs'
 import { EditableControls } from 'components'
 import { useState } from 'react'
 
-declare interface PersonalDescriptionProps {
-  instruments: [{
-    id: number
-    userId: number
-    instrument: string
-  }]
-  description: string
-  roles: [{
-    name: string
-    id: number
-    image: string
-  }]
-}
-
-export const PersonalDescription = ({
+export const UserDescription = ({
   description,
   instruments,
   roles
-}: PersonalDescriptionProps) => {
-
-  const UpdateDescriptionHandler = async (section: string, changedVal: string) => {
-    let updateData = {}
-    if (section === 'bio') {
-      updateData = {
-        bio: changedVal
-      }
-    } else if (section === 'instruments') {
-      updateData = {
-        instruments: changedVal
-      }
-    }
-    const response = await fetch('api/userFeed', {
-      method: 'PUT',
-      headers: {
-        'content-type': 'application/json'
-      },
-      body: JSON.stringify(updateData)
-    })
-    return response
-  }
+}: UserDescriptionProps) => {
 
   const [editDescrip, setDescrip] = useState('')
   const [editInstrument, setInstrument] = useState('')

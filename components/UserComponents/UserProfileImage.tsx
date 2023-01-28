@@ -3,20 +3,15 @@ import { Avatar, AvatarBadge, Button, IconButton, Text, VisuallyHidden } from '@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-type ProfileImageProps = {
-  image: string
-  username?: string
-}
-
-export const ProfileImage = ({ image, username }: ProfileImageProps) => {
+export const UserProfileImage = ({ image, username }: UserProfileImageProps) => {
   const [imageSrc, setImageSrc] = useState()
-  const [uploadData, setUploadData] = useState()
+  const [, setUploadData] = useState()
   const {
     handleSubmit,
-    formState: { errors }
-  } = useForm<ProfileImageProps>()
+    formState: {}
+  } = useForm<UserProfileImageProps>()
 
-  const UploadHandler = async (event) => {
+  const UploadHandler = async (event: { preventDefault: () => void; currentTarget: any }) => {
     event.preventDefault()
     const form = event.currentTarget
     const fileInput = Array.from(form.elements).find(({ name }) => name === 'file')
@@ -46,12 +41,14 @@ export const ProfileImage = ({ image, username }: ProfileImageProps) => {
     })
   }
 
-  const handleOnChange = (changeEvent) => {
+  const handleOnChange = (changeEvent: { target: { files: Blob[] } }) => {
     const reader = new FileReader()
 
     reader.onload = function (onLoadEvent) {
-      setImageSrc(onLoadEvent.target.result)
-      setUploadData(undefined)
+      if (onLoadEvent.target) {
+        setImageSrc(onLoadEvent.target.result)
+        setUploadData(undefined)
+      }
     }
     reader.readAsDataURL(changeEvent.target.files[0])
     document.getElementById('submitPic')?.click()

@@ -3,15 +3,6 @@ import { Card, CardBody, CardFooter, CardHeader } from '@chakra-ui/react'
 import { UserComment } from 'components'
 import { useState } from 'react'
 
-declare interface CommentData {
-  userId: number
-  text: string
-  date: string
-  users: {
-    name: string
-    picture: string
-  }
-}
 
 export const CommentSection = ({ comments, postId }: any) => {
   const [comment, setComment] = useState('')
@@ -23,7 +14,6 @@ export const CommentSection = ({ comments, postId }: any) => {
       postId: postId,
       text: comment
     }
-    console.log(data)
     fetch('/api/createComment', {
       method: 'POST',
       headers: {

@@ -14,10 +14,6 @@ import readFile from 'lib/PostFileReader'
 import { useRef, useState } from 'react'
 import { AiOutlinePlayCircle } from 'react-icons/ai'
 
-declare interface BandPostProps {
-  bandName: string
-}
-
 export const BandPost = ({ bandName }: BandPostProps) => {
   const [recording, setRecording] = useState(false)
   const [recorder, setRecorder] = useState<MediaRecorder | null>(null)

@@ -3,7 +3,7 @@ import { CommentSection } from 'components'
 import { useEffect, useRef } from 'react'
 import { AiOutlineRight } from 'react-icons/ai'
 
-import { WrapperFunc } from './Wavesurfer'
+import { WrapperFunc } from '../lib/Wavesurfer'
 
 export default function AudioVisualizer({ posts, bands }: any) {
   const songName = useRef(posts)

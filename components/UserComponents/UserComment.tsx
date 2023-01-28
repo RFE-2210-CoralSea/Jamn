@@ -9,15 +9,7 @@ import {
   useColorModeValue
 } from '@chakra-ui/react'
 
-declare interface CommentProps {
-  user: number
-  text: string
-  date: string
-  name: string
-  picture: string
-}
-
-export const UserComment = ({ user, text, date, name, picture }: CommentProps) => {
+export const UserComment = ({ user, text, date, name, picture }: UserCommentProps) => {
   const newDate = new Date(date)
   return (
     <Box>

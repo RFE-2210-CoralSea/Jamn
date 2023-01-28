@@ -17,13 +17,10 @@ import {
   AccordionPanel,
   useColorModeValue
 } from '@chakra-ui/react'
+import { acceptInvite, declineInvite } from '../lib/InviteFuncs'
 import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 import { AiOutlineMail } from 'react-icons/ai'
-
-type IdProp = {
-  id: number
-}
 
 export const MailBox = () => {
   const { data: session } = useSession()
@@ -36,33 +33,6 @@ export const MailBox = () => {
       setData(newData)
     })
   }, [])
-
-  const acceptInvite = (bandId) => {
-    let response = {
-      bandId: bandId,
-      accept: true
-    }
-    fetch('/api/respondInvitation', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(response)
-    })
-  }
-  const declineInvite = (bandId) => {
-    let response = {
-      bandId: bandId,
-      accept: false
-    }
-    fetch('/api/respondInvitation', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(response)
-    })
-  }
 
   return (
     <>

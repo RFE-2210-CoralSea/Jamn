@@ -16,26 +16,6 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import Link from 'next/link'
 
-declare interface NewInputs {
-  email: string
-  bandId: number
-}
-
-declare interface BandProps {
-  description: string
-  members: []
-  bandId: number
-}
-
-declare interface RoleValues {
-  name: string,
-  id: number,
-  userId: number,
-  users: {
-    picture: string
-  }
-}
-
 export const BandDescription = ({ description, members, bandId }: BandProps) => {
   const [editDescrip, setDescrip] = useState('')
   const [editInstrument, setInstrument] = useState('')
@@ -45,7 +25,7 @@ export const BandDescription = ({ description, members, bandId }: BandProps) => 
     handleSubmit,
     watch,
     formState: { errors }
-  } = useForm<NewInputs>()
+  } = useForm<BandDescriptionInputs>()
 
   console.log('band members:', members)
 
@@ -85,7 +65,7 @@ export const BandDescription = ({ description, members, bandId }: BandProps) => 
           <TabPanel>
             <Center>
               <List fontSize="lg" fontWeight="bold">
-                {members.map((role:RoleValues) => {
+                {members.map((role:BandMembers) => {
                   return (
                     <Flex key={role.id} justifyContent="space-between" mb="1rem">
                       <Link href={`/users/${role.userId}`}>
