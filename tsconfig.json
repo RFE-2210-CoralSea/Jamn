@@ -23,7 +23,8 @@
     "**/*.ts",
     "**/*.tsx",
     "components/**/*.ts",
-    "components/**/*.tsx"
+    "components/**/*.tsx",
+    "types/**/*.ts"
   ],
   "exclude": ["node_modules"]
 }

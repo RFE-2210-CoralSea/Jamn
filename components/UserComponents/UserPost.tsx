@@ -1,30 +1,16 @@
 import {
-  Button,
-  ButtonGroup,
-  Card,
-  CardBody,
-  CardHeader,
+  Button, ButtonGroup, IconButton,
+  Card, CardBody, CardHeader,
   FormControl,
-  IconButton,
-  Input,
-  Select,
-  Stack,
-  Tooltip
+  Input, Select, Stack, Tooltip
 } from '@chakra-ui/react'
-import readFile from 'lib/PostFileReader'
-import { useEffect, useRef, useState } from 'react'
 import { AiOutlinePlayCircle } from 'react-icons/ai'
 
-declare interface PostProps {
-  bands: [
-    {
-      id: number
-      name: string
-    }
-  ]
-}
+import readFile from 'lib/PostFileReader'
 
-export const UserPost = ({ bands }: PostProps) => {
+import { useEffect, useRef, useState } from 'react'
+
+export const UserPost = ({ bands }: UserPostProps) => {
   const [recording, setRecording] = useState(false)
   const [recorder, setRecorder] = useState<MediaRecorder | null>(null)
   const [url, setUrl] = useState('')

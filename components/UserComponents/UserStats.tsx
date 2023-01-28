@@ -1,9 +1,6 @@
 import { Box, Stat, StatHelpText, StatLabel, StatNumber } from '@chakra-ui/react'
 
-declare interface StatProps {
-  stat: number
-}
-export const UserStats = ({ stat }: StatProps) => {
+export const UserStats = ({ stat }: UserStatProps) => {
   return (
     <Box textAlign="center">
       <Stat>

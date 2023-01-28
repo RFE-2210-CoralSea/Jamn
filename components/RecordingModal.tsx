@@ -36,7 +36,7 @@ const fetcher = (...args: string[]) => fetch(...args).then((res) => res.json())
 
 export const RecordingModal = () => {
   const { data, error, isLoading } = useSWR('/api/userFeed', fetcher)
-
+  console.log(data)
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [recording, setRecording] = useState(false)
   const [recorder, setRecorder] = useState<MediaRecorder | null>(null)
