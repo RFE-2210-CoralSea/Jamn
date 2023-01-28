@@ -1,12 +1,6 @@
 import {
-  Avatar,
-  Box,
-  Heading,
-  Tag,
-  TagLabel,
-  Text,
-  Wrap,
-  useColorModeValue
+  Avatar, Box, Heading, Tag, TagLabel,
+  Text, useColorModeValue, Wrap
 } from '@chakra-ui/react'
 
 export const UserComment = ({ user, text, date, name, picture }: UserCommentProps) => {

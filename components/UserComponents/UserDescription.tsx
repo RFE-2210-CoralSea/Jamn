@@ -1,28 +1,15 @@
 import {
-  Avatar,
-  Box,
-  Center,
-  Editable,
-  EditableInput,
-  EditablePreview,
-  Flex,
-  Input,
-  Link,
-  List,
-  ListItem,
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
-  Tag,
-  TagLabel,
-  Text,
+  Avatar, Box, Center, Flex, Input, Text,
+  Editable, EditableInput, EditablePreview,
+  Link, List, ListItem,
+  Tab, TabList, TabPanel, TabPanels, Tabs,
+  Tag, TagLabel,
   useColorModeValue
 } from '@chakra-ui/react'
-import { UpdateDescriptionHandler } from '../../lib/UserDescripFuncs'
+
 import { EditableControls } from 'components'
 import { useState } from 'react'
+import { UpdateDescriptionHandler } from '../../lib/UserDescripFuncs'
 
 export const UserDescription = ({
   description,
